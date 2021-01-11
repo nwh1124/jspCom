@@ -1,4 +1,4 @@
-package com.myhome.prac;
+package com.myhome.jspCommunity.servlet.old;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sbs.example.mysqlutil.MysqlUtil;
-import com.sbs.example.mysqlutil.SecSql;
+import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
+import com.sbs.example.jspCommunity.mysqlutil.SecSql;
 
-@WebServlet("/jspCommunity/usr/article/doWrite")
+@WebServlet("/usr/article/old/doModify")
 
-public class doWrite_servlet extends HttpServlet {
+public class doModifyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 				
+		int id = 0;
 		String title = "";
 		String body = "";
 		boolean input = false;
@@ -30,7 +31,14 @@ public class doWrite_servlet extends HttpServlet {
 		title = request.getParameter("title");
 		body = request.getParameter("body");
 		
-		if(title != null && body != null) {
+		try {
+			id = Integer.parseInt(request.getParameter("id"));
+		}
+		catch(Exception e) {
+			System.out.println("== 게시물 번호 입력 없음 ==");
+		}
+		
+		if(title != null && body != null && id > 0) {
 			input = true;
 		}
 		
@@ -40,13 +48,11 @@ public class doWrite_servlet extends HttpServlet {
 			
 			SecSql sql = new SecSql();
 			
-			sql.append("INSERT INTO article");
-			sql.append("SET regDate = NOW()");
-			sql.append(", updateDate = NOW()");
+			sql.append("update article");
+			sql.append("SET updateDate = NOW()");
 			sql.append(", title = ?", title);
 			sql.append(", body = ?", body);
-			sql.append(", memberId = 1");
-			sql.append(", boardId = 3");
+			sql.append("WHERE id = ?", id);
 			
 			MysqlUtil.update(sql);
 					
@@ -57,8 +63,9 @@ public class doWrite_servlet extends HttpServlet {
 		request.setAttribute("input", input);
 		request.setAttribute("title", title);
 		request.setAttribute("body", body);
+		request.setAttribute("id", id);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/jspCommunity/usr/article/doWrite.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/jspCommunity/usr/article/doModify.jsp");
 		rd.forward(request, response);
 		
 	}

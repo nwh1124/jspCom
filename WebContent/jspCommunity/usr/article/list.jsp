@@ -3,32 +3,34 @@
     
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="com.myhome.jspCommunity.dto.Article" %>
 <%
-List<Map<String, Object>> listMap = (List<Map<String, Object>>)request.getAttribute("listMap");
+List<Article> articles = (List<Article>)request.getAttribute("articles");
+String boardName = (String)request.getAttribute("boardName");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title><%=request.getAttribute("boardCode") %> Board</title>
+<title><%= boardName%> 게시판</title>
 </head>
 <body>
-	<h1>게시물 리스트</h1>
+	<h1><%= boardName%> 게시판</h1>
 	<%
-	for (Map<String, Object> memberMap : listMap) {
+	for (Article article : articles) {
 	%>
 	<div>
 		번호 :
-		<%=memberMap.get("id")%>
+		<%=article.id%>
 		<br />
 		작성일 :
-		<%=memberMap.get("regDate")%>
+		<%=article.regDate%>
 		<br />
 		제목 :
-		<%=memberMap.get("title")%>
+		<%=article.title%>
 		<br />
 		내용 :
-		<%=memberMap.get("body")%>
+		<%=article.body%>
 		<hr />
 	</div>
 	<%

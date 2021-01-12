@@ -52,20 +52,19 @@ public class dispatcherServlet extends HttpServlet {
 			
 			if(actionMethodName.equals("list")) {
 				jspPath = articleController.showList(req,resp);
-			}else if(actionMethodName.equals("write")) {
+			}else if(actionMethodName.equals("doWrite")) {
 				jspPath = articleController.doWrite(req,resp);
-			}else if(actionMethodName.equals("modify")) {
+			}else if(actionMethodName.equals("doModify")) {
 				jspPath = articleController.doModify(req,resp);
 			}else if(actionMethodName.equals("delete")) {
 				jspPath = articleController.doDelete(req,resp);
 			}else if(actionMethodName.equals("detail")) {
 				jspPath = articleController.showDetail(req,resp);
+			}else if(actionMethodName.equals("write")) {
+				jspPath = articleController.showWrite(req,resp);
+			}else if(actionMethodName.equals("modify")) {
+				jspPath = articleController.showModify(req,resp);
 			}
-//			else if(actionMethodName.equals("formWrite")) {
-//				jspPath = articleController.doFormWrite(req,resp);
-//			}else if(actionMethodName.equals("formModify")) {
-//				jspPath = articleController.doFormModify(req,resp);
-//			}
 		}
 		
 		if( jspPath == null ) {

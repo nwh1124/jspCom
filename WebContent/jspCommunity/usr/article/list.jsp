@@ -4,18 +4,22 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="com.myhome.jspCommunity.dto.Article" %>
+<%@ page import="com.myhome.jspCommunity.dto.Board" %>
 <%
 List<Article> articles = (List<Article>)request.getAttribute("articles");
-String boardName = (String)request.getAttribute("boardName");
+Board board = (Board)request.getAttribute("board");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title><%= boardName%> 게시판</title>
+<title><%= board.name%> 게시판</title>
 </head>
 <body>
-	<h1><%= boardName%> 게시판</h1>
+	<h1><%= board.name%> 게시판</h1>
+	<div>
+		<a href="write?boardId=<%=board.id %>">게시물 작성</a>
+	</div>
 	<%
 	for (Article article : articles) {
 	%>
@@ -27,7 +31,7 @@ String boardName = (String)request.getAttribute("boardName");
 		<%=article.regDate%>
 		<br />
 		제목 :
-		<%=article.title%>
+		<a href="detail?id=<%=article.id%>&boardId=<%=article.boardId%>"><%=article.title%></a>
 		<br />
 		내용 :
 		<%=article.body%>

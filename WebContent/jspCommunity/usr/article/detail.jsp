@@ -17,6 +17,11 @@
 </head>
 <body>
 	<h1>게시물 상세</h1>
+	<div>
+		<a href="modify?id=<%= article.id%>">수정</a>
+		<a href="delete?id=<%= article.id%>">삭제</a>
+		<a href="list?boardId=<%= article.boardId%>">목록</a>
+	</div>
 	<br><div>번호 : <%= article.id%></div>
 	<br><div>작성일 : <%= article.regDate%></div>
 	<br><div>작성자 : <%= memberName%></div>

@@ -2,18 +2,21 @@ package com.myhome.jspCommunity.dto;
 
 import java.util.Map;
 
+import lombok.Data;
+
+@Data
 public class Article {
 	
-	public int id;
-	public String regDate;
-	public String updateDate;
-	public String title;
-	public String body;
-	public int memberId;
-	public int boardId;
-	public int hitsCount;
-	public int likesCount;
-	public int commentsCount;
+	private int id;
+	private String regDate;
+	private String updateDate;
+	private String title;
+	private String body;
+	private int memberId;
+	private int boardId;
+	private int hitsCount;
+	private int likesCount;
+	private int commentsCount;
 		
 	public Article() {
 		
@@ -32,13 +35,6 @@ public class Article {
 		this.hitsCount = (int)map.get("likesCount");
 		this.hitsCount = (int)map.get("commentsCount");
 		
-	}
-
-	@Override
-	public String toString() {
-		return "Article [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", title=" + title
-				+ ", body=" + body + ", memberId=" + memberId + ", boardId=" + boardId + ", hitsCount=" + hitsCount
-				+ "]";
 	}
 
 }

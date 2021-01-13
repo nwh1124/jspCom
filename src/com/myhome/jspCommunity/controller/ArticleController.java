@@ -85,8 +85,8 @@ public class ArticleController {
 			return "common/redirect";
 		}
 		
-		String memberName = memberService.getMemberNameById(article.memberId);
-		String boardName = boardService.getBoardNameByBoardId(article.boardId);
+		String memberName = memberService.getMemberNameById(article.getMemberId());
+		String boardName = boardService.getBoardNameByBoardId(article.getBoardId());
 		
 		req.setAttribute("article", article);
 		req.setAttribute("memberName", memberName);

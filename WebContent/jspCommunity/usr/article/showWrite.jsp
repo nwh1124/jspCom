@@ -2,13 +2,11 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시물 등록</title>
-</head>
-<body>
+
+<% String pageTitle = "게시물 수정"; %>
+
+<%@ include file="../../part/head.jspf" %>
+
 <h1>게시물 등록</h1>
 <form action="doWrite" target="_blank">
   <input type="number" value="1" name="memberId" hidden>
@@ -26,5 +24,5 @@
   <input type="submit" value="등록">
   <input type="button" value="뒤로가기" onclick="history.back();">
 </form>
-</body>
-</html>
+
+<%@ include file="../../part/foot.jspf" %>

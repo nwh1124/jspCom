@@ -7,20 +7,20 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="com.myhome.jspCommunity.dto.Article" %>
 <%@ page import="com.myhome.jspCommunity.dto.Board" %>
+
 <%
 List<Article> articles = (List<Article>)request.getAttribute("articles");
 Board board = (Board)request.getAttribute("board");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title><%= board.getName()%> 게시판</title>
-</head>
-<body>
-	<h1><%= board.getName()%> 게시판</h1>
+
+<% String pageTitle = "게시물 목록"; %>
+
+<%@ include file="../../part/head.jspf" %>
+
+	<h1><%=pageTitle%></h1>
 	<div>
 		<a href="write?boardId=<%=board.getId() %>">게시물 작성</a>
+		<a href="../member/list">회원 목록</a>
 	</div>
 	<%
 	for (Article article : articles) {
@@ -42,5 +42,5 @@ Board board = (Board)request.getAttribute("board");
 	<%
 	}
 	%>
-</body>
-</html>
+	
+<%@ include file="../../part/foot.jspf" %>

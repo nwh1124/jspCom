@@ -39,4 +39,33 @@ public class MemberDao {
 		return MysqlUtil.selectRowStringValue(sql);
 	}
 
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String email, String phoneNum) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("INSERT INTO member");
+		sql.append("SET regDate = NOW()");
+		sql.append(", updateDate = NOW()");
+		sql.append(", loginId = ?", loginId);
+		sql.append(", loginPw = ?", loginPw);
+		sql.append(", name = ?", name);
+		sql.append(", nickname = ?", nickname);
+		sql.append(", email = ?", email);
+		sql.append(", phoneNumber = ?", phoneNum);
+		
+		MysqlUtil.update(sql);		
+		
+	}
+
+	public Member getMemberById(int loginedMemberId) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT *");
+		sql.append("FROM member");
+		sql.append("WHERE id = ?", loginedMemberId);
+				
+		return new Member(MysqlUtil.selectRow(sql));
+	}
+
 }

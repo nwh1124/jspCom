@@ -10,7 +10,6 @@
 <h1><c:out value="${pageTitle}"/></h1>
 	<div>
 		<a href="write?boardId=${board.id}">게시물 작성</a>
-		<a href="../member/list">회원 목록</a>
 	</div>
 	<c:forEach var="article" items="${articles}">
 		번호 :

@@ -46,7 +46,18 @@ public class dispatcherServlet extends HttpServlet {
 			
 			if(actionMethodName.equals("list")) {
 				jspPath = memberController.showList(req,resp);
+			}else if(actionMethodName.equals("join")) {
+				jspPath = memberController.showJoin(req,resp);
+			}else if(actionMethodName.equals("doJoin")) {
+				jspPath = memberController.doJoin(req,resp);
+			}else if(actionMethodName.equals("login")) {
+				jspPath = memberController.showLogin(req,resp);
+			}else if(actionMethodName.equals("doLogin")) {
+				jspPath = memberController.doLogin(req,resp);
+			}else if(actionMethodName.equals("whoami")) {
+				jspPath = memberController.showWhoami(req,resp);
 			}
+			
 		}else if(controllerName.equals("article")) {
 			ArticleController articleController = Container.articleController;
 			

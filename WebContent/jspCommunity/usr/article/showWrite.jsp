@@ -3,11 +3,11 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<% String pageTitle = "게시물 수정"; %>
+<c:set var="pageTitle" value="게시물 등록"/>
 
 <%@ include file="../../part/head.jspf" %>
 
-<h1>게시물 등록</h1>
+<h1><c:out value="${pageTitle}"/></h1>
 <form action="doWrite" target="_blank">
   <input type="number" value="1" name="memberId" hidden>
   <input type="number" value="3"name="boardId" hidden>

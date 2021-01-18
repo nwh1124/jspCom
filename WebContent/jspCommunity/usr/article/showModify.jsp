@@ -2,17 +2,16 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<% int id = Integer.parseInt(request.getParameter("id").toString()); %>
 
-<% String pageTitle = "게시물 수정"; %>
+<c:set var="pageTitle" value="게시물 수정"/>
 
 <%@ include file="../../part/head.jspf" %>
 
-<h1>pageTitle</h1>	
+<h1><c:out value="${pageTitle}"/></h1>
 <form action="doModify" target="_blank">
   <div>수정할 게시물 번호</div>
   <br>  
-  <input type="number" value="<%= id %>" name="articleId">
+  <input type="number" value="${param.id}" name="articleId">
   <hr>
   <div>수정할 제목</div>
   <br>

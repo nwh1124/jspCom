@@ -23,10 +23,10 @@ Nickname :
 ${member.nickname}
 <hr />
 Email :
-${member.nickname}
+${member.email}
 <hr />
 PhoneNumber :
-${member.nickname}
+${member.phoneNumber}
 <hr />
 	
  <input type="button" value="뒤로가기" onclick="history.back();">

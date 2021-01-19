@@ -8,7 +8,7 @@
 <%@ include file="../../part/head.jspf" %>
 
 <h1><c:out value="${pageTitle}"/></h1>
-<a href="../article/list?boardId=3">게시물 목록</a>
+<a href="../../usr/article/list?boardId=3">게시물 목록</a>
 <br>
 <c:forEach var="member" items="${members}">
 	번호 :

@@ -1,8 +1,6 @@
 package com.myhome.jspCommunity.servlet;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,16 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.myhome.jspCommunity.container.Container;
-import com.myhome.jspCommunity.controller.ArticleController;
-import com.myhome.jspCommunity.controller.MemberController;
+import com.myhome.jspCommunity.controller.UsrArticleController;
+import com.myhome.jspCommunity.controller.UsrMemberController;
+import com.myhome.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
-import com.sbs.example.jspCommunity.mysqlutil.SecSql;
 
 @WebServlet("/usr/*")
 
-public class dispatcherServlet extends HttpServlet {
+public class UserDispatcherServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -42,11 +41,9 @@ public class dispatcherServlet extends HttpServlet {
 		String jspPath = null;
 		
 		if( controllerName.equals("member")) {
-			MemberController memberController = Container.memberController;
+			UsrMemberController memberController = Container.memberController;
 			
-			if(actionMethodName.equals("list")) {
-				jspPath = memberController.showList(req,resp);
-			}else if(actionMethodName.equals("join")) {
+			if(actionMethodName.equals("join")) {
 				jspPath = memberController.showJoin(req,resp);
 			}else if(actionMethodName.equals("doJoin")) {
 				jspPath = memberController.doJoin(req,resp);
@@ -59,7 +56,7 @@ public class dispatcherServlet extends HttpServlet {
 			}
 			
 		}else if(controllerName.equals("article")) {
-			ArticleController articleController = Container.articleController;
+			UsrArticleController articleController = Container.articleController;
 			
 			if(actionMethodName.equals("list")) {
 				jspPath = articleController.showList(req,resp);

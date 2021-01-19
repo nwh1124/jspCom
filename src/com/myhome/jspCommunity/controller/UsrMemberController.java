@@ -1,46 +1,33 @@
 package com.myhome.jspCommunity.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dto.Member;
 import com.myhome.jspCommunity.service.MemberService;
 
-public class MemberController {
+public class UsrMemberController {
 	MemberService memberService;
 	
-	public MemberController() {
+	public UsrMemberController() {
 		memberService = Container.memberService;
 		
 	}
 
-	public String showList(HttpServletRequest req, HttpServletResponse resp) {		
-		List<Member> members = memberService.getMembers();
-		
-		req.setAttribute("members", members);
-		
-		return "admin/member/list";
-		
-	}
-
 	public String showJoin(HttpServletRequest req, HttpServletResponse resp) {
-		return "usr/member/showJoin";
+		return "usr/member/join";
 	}
 
 	public String doJoin(HttpServletRequest req, HttpServletResponse resp) {
 		
 		List<Member> members = memberService.getMembers();
-		
-		if( req.getParameter("loginId") == "" || req.getParameter("loginPw") == "" || req.getParameter("name") == "" 
-				|| req.getParameter("nickname") == "" || req.getParameter("email") == "" || req.getParameter("phoneNum") == "" ) {
-			req.setAttribute("alertMsg", "회원 정보를 모두 입력해주세요.");
-			req.setAttribute("historyBack", true);		
-			return "common/redirect";
-		}
-		
+				
 		for(Member member : members) {		
 			if( req.getParameter("loginId").equals(member.getLoginId()) ) {
 				req.setAttribute("alertMsg", "이미 존재하는 아이디입니다.");
@@ -56,7 +43,16 @@ public class MemberController {
 		String email = (String)req.getParameter("email");
 		String phoneNum = (String)req.getParameter("phoneNum");
 		
-		memberService.doJoin(loginId, loginPw, name, nickname, email, phoneNum);
+		Map<String, Object> joinArgs = new HashMap<>();
+		
+		joinArgs.put("loginId", loginId);
+		joinArgs.put("loginPw", loginPw);
+		joinArgs.put("name", name);
+		joinArgs.put("nickname", nickname);
+		joinArgs.put("email", email);
+		joinArgs.put("phoneNum", phoneNum);
+		
+		memberService.doJoin(joinArgs);
 		
 		req.setAttribute("alertMsg", "회원으로 등록되었습니다.");
 		req.setAttribute("historyBack", true);		
@@ -64,12 +60,14 @@ public class MemberController {
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
-		return "usr/member/showLogin";
+		return "usr/member/login";
 	}
 
 	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
 		
-		if( Container.session.getIsLogined() == true ) {
+		HttpSession session = req.getSession();
+		
+		if( session.getAttribute("loginedMember") != null ) {
 			req.setAttribute("alertMsg", "이미 로그인 중입니다.");
 			req.setAttribute("replaceUrl", "../article/list?boardId=3");			
 			return "common/redirect";
@@ -77,17 +75,10 @@ public class MemberController {
 		
 		List<Member> members = memberService.getMembers();
 		
-		if( req.getParameter("loginId") == "" || req.getParameter("loginPw") == "" ) {
-			req.setAttribute("alertMsg", "아이디와 비밀번호를 입력해주세요.");
-			req.setAttribute("replaceUrl", "login");			
-			return "common/redirect";
-		}
-		
 		for(Member member : members) {		
 			if( req.getParameter("loginId").equals(member.getLoginId()) ) {				
-				if( req.getParameter("loginPw").equals(member.getLoginPw()) ) {
-					Container.session.setLoginedMemberId(member.getId());
-					Container.session.setLogined(true);
+				if( req.getParameter("loginPw").equals(member.getLoginPw()) ) {					
+					session.setAttribute("loginedMember", member);
 					req.setAttribute("alertMsg", "로그인 되었습니다.");
 					req.setAttribute("replaceUrl", "../article/list?boardId=3");			
 					return "common/redirect";
@@ -116,7 +107,7 @@ public class MemberController {
 		
 		req.setAttribute("member", member);
 		
-		return "usr/member/showWhoami";
+		return "usr/member/whoami";
 	}
 
 }

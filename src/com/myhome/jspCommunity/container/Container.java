@@ -1,5 +1,8 @@
 package com.myhome.jspCommunity.container;
 
+import com.myhome.jspCommunity.controller.UsrArticleController;
+import com.myhome.jspCommunity.controller.UsrMemberController;
+import com.myhome.jspCommunity.controller.AdmMemberController;
 import com.myhome.jspCommunity.dao.ArticleDao;
 import com.myhome.jspCommunity.dao.MemberDao;
 import com.myhome.jspCommunity.dao.BoardDao;
@@ -8,9 +11,6 @@ import com.myhome.jspCommunity.service.ArticleService;
 import com.myhome.jspCommunity.service.MemberService;
 import com.myhome.jspCommunity.session.Session;
 import com.myhome.jspCommunity.service.BoardService;
-
-import com.myhome.jspCommunity.controller.ArticleController;
-import com.myhome.jspCommunity.controller.MemberController;
 
 public class Container {
 	
@@ -24,8 +24,9 @@ public class Container {
 	public static MemberService memberService;
 	public static BoardService boardService;
 	
-	public static ArticleController articleController;
-	public static MemberController memberController;				
+	public static UsrArticleController articleController;
+	public static UsrMemberController memberController;	
+	public static AdmMemberController admMemberController;				
 	
 	static {
 		
@@ -39,8 +40,9 @@ public class Container {
 		memberService = new MemberService();
 		boardService = new BoardService();
 		
-		articleController = new ArticleController();
-		memberController = new MemberController();
+		articleController = new UsrArticleController();
+		memberController = new UsrMemberController();
+		admMemberController = new AdmMemberController();
 		
 	}
 

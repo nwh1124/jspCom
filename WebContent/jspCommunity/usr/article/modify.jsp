@@ -5,10 +5,26 @@
 
 <c:set var="pageTitle" value="게시물 수정"/>
 
+<script>
+function check(){
+	if( modifyForm.title.value == "" ){
+		alert("수정할 제목을 입력해주세요.");
+		modifyForm.title.focus();
+		return false;
+	}else if( modifyForm.body.value == "" ){
+		alert("수정할 내용을 입력해주세요.");
+		modifyForm.body.focus();
+		return false;
+	}else {
+		return true;
+	}
+}
+</script>
+
 <%@ include file="../../part/head.jspf" %>
 
 <h1><c:out value="${pageTitle}"/></h1>
-<form action="doModify" target="_blank">
+<form action="doModify" name="modifyForm" onsubmit="return check()">
   <div>수정할 게시물 번호</div>
   <br>  
   <input type="number" value="${param.id}" name="articleId">

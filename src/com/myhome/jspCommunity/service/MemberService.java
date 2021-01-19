@@ -1,6 +1,7 @@
 package com.myhome.jspCommunity.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dao.MemberDao;
@@ -22,12 +23,13 @@ public class MemberService {
 		return memberDao.getMemberNameById(memberId);
 	}
 
-	public void doJoin(String loginId, String loginPw, String name, String nickname, String email, String phoneNum) {
-		memberDao.doJoin(loginId, loginPw, name, nickname, email, phoneNum);		
-	}
-
 	public Member getMemberById(int loginedMemberId) {
 		return memberDao.getMemberById(loginedMemberId);
+	}
+
+	public void doJoin(Map<String, Object> joinArgs) {
+		memberDao.doJoin(joinArgs);
+		
 	}
 	
 	

@@ -14,6 +14,8 @@ public class Member {
 	private String loginPw;
 	private String name;
 	private String nickname;
+	private String email;
+	private String phoneNumber;
 
 	public Member(Map<String, Object> map) {
 
@@ -24,6 +26,8 @@ public class Member {
 		this.loginPw = (String)map.get("loginPw");
 		this.name = (String)map.get("name");
 		this.nickname = (String)map.get("nickname");
+		this.email = (String)map.get("email");
+		this.phoneNumber = (String)map.get("phoneNumber");
 		
 	}
 

@@ -119,4 +119,15 @@ public class ArticleDao {
 		MysqlUtil.update(sql);				
 	}
 
+	public int getArticleMemberIdById(int id) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT memberId");
+		sql.append("FROM article");
+		sql.append("WHERE id = ?", id);
+		
+		return MysqlUtil.selectRowIntValue(sql);
+	}
+
 }

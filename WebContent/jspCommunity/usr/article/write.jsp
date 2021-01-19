@@ -5,11 +5,27 @@
 
 <c:set var="pageTitle" value="게시물 등록"/>
 
+<script>
+function check(){
+	if( writeForm.title.value == "" ){
+		alert("제목을 입력해주세요.");
+		writeForm.title.focus();
+		return false;
+	}else if( writeForm.body.value == "" ){
+		alert("내용을 입력해주세요.");
+		writeForm.body.focus();
+		return false;
+	}else {
+		return true;
+	}
+}
+</script>
+
 <%@ include file="../../part/head.jspf" %>
 
 <h1><c:out value="${pageTitle}"/></h1>
-<form action="doWrite" target="_blank">
-  <input type="number" value="1" name="memberId" hidden>
+<form action="doWrite" onsubmit="return check()" name="writeForm">
+  <input type="number" value="${memberId}" name="memberId" hidden>
   <input type="number" value="3"name="boardId" hidden>
   <br>
   <div>제목</div>

@@ -39,7 +39,25 @@ public class MemberDao {
 		return MysqlUtil.selectRowStringValue(sql);
 	}
 
-	public void doJoin(String loginId, String loginPw, String name, String nickname, String email, String phoneNum) {
+	public Member getMemberById(int loginedMemberId) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT *");
+		sql.append("FROM member");
+		sql.append("WHERE id = ?", loginedMemberId);
+				
+		return new Member(MysqlUtil.selectRow(sql));
+	}
+
+	public void doJoin(Map<String, Object> joinArgs) {
+		
+		String loginId = (String)joinArgs.get("loginId");
+		String loginPw = (String)joinArgs.get("loginPw");
+		String name = (String)joinArgs.get("name");
+		String nickname = (String)joinArgs.get("nickname");
+		String email = (String)joinArgs.get("email");
+		String phoneNum = (String)joinArgs.get("phoneNum");
 		
 		SecSql sql = new SecSql();
 		
@@ -53,19 +71,8 @@ public class MemberDao {
 		sql.append(", email = ?", email);
 		sql.append(", phoneNumber = ?", phoneNum);
 		
-		MysqlUtil.update(sql);		
+		MysqlUtil.update(sql);			
 		
-	}
-
-	public Member getMemberById(int loginedMemberId) {
-		
-		SecSql sql = new SecSql();
-		
-		sql.append("SELECT *");
-		sql.append("FROM member");
-		sql.append("WHERE id = ?", loginedMemberId);
-				
-		return new Member(MysqlUtil.selectRow(sql));
 	}
 
 }

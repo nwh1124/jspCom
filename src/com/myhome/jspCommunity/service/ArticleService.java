@@ -41,6 +41,10 @@ public class ArticleService {
 	public void doWrite(String title, String body, int memberId, int boardId) {
 		articleDao.doWrite(title, body, memberId, boardId);
 	}
+
+	public int getArticleMemberIdById(int id) {
+		return articleDao.getArticleMemberIdById(id);
+	}
 	
 	
 

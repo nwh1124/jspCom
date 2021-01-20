@@ -73,41 +73,49 @@ function doJoinFormCheck(){
 }
 </script>
 
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+
 <%@ include file="../../part/head.jspf" %>
 
-<h1><c:out value="${pageTitle}"/></h1>
-<form action="doJoin" onsubmit="return doJoinFormCheck()" name="doJoinForm">
-  <div>ID</div>
-  <br>  
-  <input type="text" placeholder="아이디를 입력해주세요." name="loginId">
-  <hr>
-  <div>Password</div>
-  <br>
-  <input type="password" placeholder="비밀 번호를 입력해주세요." name="loginPw">
-  <hr>
-  <div>Password Check</div>
-  <br>
-  <input type="password" placeholder="비밀 번호를 입력해주세요." name="loginPwCh">
-  <hr>
-  <div>Name</div>
-  <br>
-  <input type="text" placeholder="이름 입력해주세요." name="name">
-  <hr>
-  <div>Nickname</div>
-  <br>
-  <input type="text" placeholder="닉네임을 입력해주세요." name="nickname">
-  <hr>
-  <div>Email</div>
-  <br>
-  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">
-  <hr>
-  <div>Phone Number</div>
-  <br>
-  <input type="number" placeholder="휴대폰 번호를 입력해주세요." name="phoneNum">
-  <hr>
-  <input type="submit" value="가입">
-  <input type="button" value="뒤로가기" onclick="history.back();">
-</form>
+<t:layout >
+	<jsp:attribute name="contentBody">
+		<h1><c:out value="${pageTitle}"/></h1>
+		<form action="doJoin" onsubmit="return doJoinFormCheck()" name="doJoinForm">
+		  <div>ID</div>
+		  <br>  
+		  <input type="text" placeholder="아이디를 입력해주세요." name="loginId">
+		  <hr>
+		  <div>Password</div>
+		  <br>
+		  <input type="password" placeholder="비밀 번호를 입력해주세요." name="loginPw">
+		  <hr>
+		  <div>Password Check</div>
+		  <br>
+		  <input type="password" placeholder="비밀 번호를 입력해주세요." name="loginPwCh">
+		  <hr>
+		  <div>Name</div>
+		  <br>
+		  <input type="text" placeholder="이름 입력해주세요." name="name">
+		  <hr>
+		  <div>Nickname</div>
+		  <br>
+		  <input type="text" placeholder="닉네임을 입력해주세요." name="nickname">
+		  <hr>
+		  <div>Email</div>
+		  <br>
+		  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">
+		  <hr>
+		  <div>Phone Number</div>
+		  <br>
+		  <input type="number" placeholder="휴대폰 번호를 입력해주세요." name="phoneNum">
+		  <hr>
+		  <input type="submit" value="가입">
+		  <input type="button" value="뒤로가기" onclick="history.back();">
+		</form>
+	</jsp:attribute>
+</t:layout>
+
+
 
 
 <%@ include file="../../part/foot.jspf" %>

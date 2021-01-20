@@ -5,14 +5,22 @@
 
 <c:set var="pageTitle" value="게시물 목록"/>
 
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+
 <%@ include file="../../part/head.jspf" %>
 
-<h1><c:out value="${pageTitle}"/></h1>
+<t:layout >
+	<jsp:attribute name="contentBody">
+	<h1><c:out value="${pageTitle}"/></h1>
 	<div>
 		<a href="../home/main">홈페이지</a>	
-		<a href="write?boardId=${board.id}">게시물 작성</a>				
+		<br>
+		<a href="write?boardId=${board.id}">게시물 작성</a>
+		<br>				
 	</div>
+	<ul>
 	<c:forEach var="article" items="${articles}">
+	<li>
 		번호 :
 		${article.id}
 		<br />
@@ -25,6 +33,12 @@
 		내용 :
 		${article.body}
 		<hr />
+	</li>
 	</c:forEach>
+	</ul>
+	</jsp:attribute>
+</t:layout>
+
+
 	
 <%@ include file="../../part/foot.jspf" %>

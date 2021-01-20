@@ -21,24 +21,32 @@ function doWriteFormCheck(){
 }
 </script>
 
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+
 <%@ include file="../../part/head.jspf" %>
 
-<h1><c:out value="${pageTitle}"/></h1>
-<form action="doWrite" onsubmit="return doWriteFormCheck()" name="doWriteForm">
-  <input type="number" value="${memberId}" name="memberId" hidden>
-  <input type="number" value="3"name="boardId" hidden>
-  <br>
-  <div>제목</div>
-  <br>
-  <input type="text" name="title">
-  <hr>
-  <br>
-  <div>내용</div>
-  <br>
-  <textarea name="body"></textarea>
-  <hr>
-  <input type="submit" value="등록">
-  <input type="button" value="뒤로가기" onclick="history.back();">
-</form>
+<t:layout >
+	<jsp:attribute name="contentBody">
+		<h1><c:out value="${pageTitle}"/></h1>
+		<form action="doWrite" onsubmit="return doWriteFormCheck()" name="doWriteForm">
+		  <input type="number" value="${memberId}" name="memberId" hidden>
+		  <input type="number" value="3"name="boardId" hidden>
+		  <br>
+		  <div>제목</div>
+		  <br>
+		  <input type="text" name="title">
+		  <hr>
+		  <br>
+		  <div>내용</div>
+		  <br>
+		  <textarea name="body"></textarea>
+		  <hr>
+		  <input type="submit" value="등록">
+		  <input type="button" value="뒤로가기" onclick="history.back();">
+		</form>
+	</jsp:attribute>
+</t:layout>
+
+
 
 <%@ include file="../../part/foot.jspf" %>

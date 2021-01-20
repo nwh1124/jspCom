@@ -5,29 +5,30 @@
 
 <c:set var="pageTitle" value="게시물 수정"/>
 
-<script>
-function doModifyFormCheck(){
-	if( doModifyForm.title.value == "" ){
-		alert("수정할 제목을 입력해주세요.");
-		doModifyForm.title.focus();
-		return false;
-	}else if( doModifyForm.body.value == "" ){
-		alert("수정할 내용을 입력해주세요.");
-		doModifyForm.body.focus();
-		return false;
-	}else {
-		return true;
-	}
-}
-</script>
-
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <%@ include file="../../part/head.jspf" %>
 
-<t:layout >
+<t:layout>
 	<jsp:attribute name="contentBody">
-		<h1><c:out value="${pageTitle}"/></h1>
+
+	<script>
+		function doModifyFormCheck() {
+			if (doModifyForm.title.value == "") {
+				alert("수정할 제목을 입력해주세요.");
+				doModifyForm.title.focus();
+				return false;
+			} else if (doModifyForm.body.value == "") {
+				alert("수정할 내용을 입력해주세요.");
+				doModifyForm.body.focus();
+				return false;
+			} else {
+				return true;
+			}
+		}
+	</script>
+	
+		<h1><c:out value="${pageTitle}" /></h1>
 		<form action="doModify" onsubmit="return doModifyFormCheck()" name="doModifyForm">
 		  <div>수정할 게시물 번호</div>
 		  <br>  

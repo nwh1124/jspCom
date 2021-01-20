@@ -5,6 +5,10 @@
 
 <c:set var="pageTitle" value="게시물 등록"/>
 
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+
+<%@ include file="../../part/head.jspf" %>
+
 <script>
 function doWriteFormCheck(){
 	if( doWriteForm.title.value == "" ){
@@ -20,10 +24,6 @@ function doWriteFormCheck(){
 	}
 }
 </script>
-
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
-
-<%@ include file="../../part/head.jspf" %>
 
 <t:layout >
 	<jsp:attribute name="contentBody">

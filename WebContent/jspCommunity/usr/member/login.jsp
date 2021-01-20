@@ -5,32 +5,33 @@
 
 <c:set var="pageTitle" value="로그인"/>
 
-<script>
-function doLoginFormCheck(){
-	doLoginForm.loginId.value = doLoginForm.loginId.value.trim();
-	if( doLoginForm.loginId.value.length == 0 ){
-		alert("아이디를 입력해주세요.");
-		doLoginForm.loginId.focus();
-		return false;
-	}
-	doLoginForm.loginPw.value = doLoginForm.loginPw.value.trim();
-	if( doLoginForm.loginPw.value.length == 0 ){
-		alert("비밀번호를 입력해주세요.");
-		doLoginForm.loginPw.focus();
-		return false;
-	}
-
-	return true;
-	
-}
-</script>
-
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <%@ include file="../../part/head.jspf" %>
 
 <t:layout >
 	<jsp:attribute name="contentBody">
+	
+	<script>
+	function doLoginFormCheck(){
+		doLoginForm.loginId.value = doLoginForm.loginId.value.trim();
+		if( doLoginForm.loginId.value.length == 0 ){
+			alert("아이디를 입력해주세요.");
+			doLoginForm.loginId.focus();
+			return false;
+		}
+		doLoginForm.loginPw.value = doLoginForm.loginPw.value.trim();
+		if( doLoginForm.loginPw.value.length == 0 ){
+			alert("비밀번호를 입력해주세요.");
+			doLoginForm.loginPw.focus();
+			return false;
+		}
+	
+		return true;
+		
+	}
+	</script>
+
 		<h1><c:out value="${pageTitle}"/></h1>
 		<form action="doLogin" onsubmit="return doLoginFormCheck()" name="doLoginForm">
 		  <div>ID</div>

@@ -75,4 +75,15 @@ public class MemberDao {
 		
 	}
 
+	public void doDelete(int memberId) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("DELETE FROM member");
+		sql.append("WHERE id = ?", memberId);
+		
+		MysqlUtil.update(sql);
+		
+	}
+
 }

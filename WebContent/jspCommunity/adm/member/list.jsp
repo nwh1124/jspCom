@@ -9,8 +9,10 @@
 
 <h1><c:out value="${pageTitle}"/></h1>
 <a href="../../usr/article/list?boardId=3">게시물 목록</a>
-<br>
+<hr>
 <c:forEach var="member" items="${members}">
+<a href="delete?memberId=${member.id}">삭제</a>
+<br>
 	번호 :
 	${member.id}
 	<br />

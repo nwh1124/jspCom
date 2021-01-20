@@ -1,6 +1,7 @@
 package com.myhome.jspCommunity.container;
 
 import com.myhome.jspCommunity.controller.UsrArticleController;
+import com.myhome.jspCommunity.controller.UsrHomeController;
 import com.myhome.jspCommunity.controller.UsrMemberController;
 import com.myhome.jspCommunity.controller.AdmMemberController;
 import com.myhome.jspCommunity.dao.ArticleDao;
@@ -26,7 +27,8 @@ public class Container {
 	
 	public static UsrArticleController articleController;
 	public static UsrMemberController memberController;	
-	public static AdmMemberController admMemberController;				
+	public static AdmMemberController admMemberController;
+	public static UsrHomeController homeController;				
 	
 	static {
 		
@@ -43,6 +45,7 @@ public class Container {
 		articleController = new UsrArticleController();
 		memberController = new UsrMemberController();
 		admMemberController = new AdmMemberController();
+		homeController = new UsrHomeController();
 		
 	}
 

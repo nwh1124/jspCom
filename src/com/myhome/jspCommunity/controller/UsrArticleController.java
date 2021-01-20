@@ -43,7 +43,7 @@ public class UsrArticleController {
 		
 		if ( articles == null ) {
 			req.setAttribute("alertMsg", boardId + "번 게시판은 존재하지 않습니다.");
-			req.setAttribute("replaceUrl", "list?boardId=3");
+			req.setAttribute("replaceUrl", "../home/main");
 			return "common/redirect";
 		}	
 		
@@ -77,7 +77,7 @@ public class UsrArticleController {
 		articleService.doDelete(id);
 		
 		req.setAttribute("alertMsg", "삭제되었습니다.");
-		req.setAttribute("replaceUrl", "list?boardId=3");
+		req.setAttribute("replaceUrl", "../home/main");
 		return "common/redirect";
 	}
 
@@ -85,7 +85,7 @@ public class UsrArticleController {
 		
 		if( req.getParameter("id") == null ) {
 			req.setAttribute("alertMsg", "게시물 번호를 입력해주세요.");
-			req.setAttribute("replaceUrl", "detail?id=1");
+			req.setAttribute("replaceUrl", "../home/main");
 			return "common/redirect";
 		}
 		

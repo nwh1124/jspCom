@@ -6,25 +6,29 @@
 <c:set var="pageTitle" value="로그인"/>
 
 <script>
-function check(){
-	if( form.loginId.value == "" ){
+function doLoginFormCheck(){
+	doLoginForm.loginId.value = doLoginForm.loginId.value.trim();
+	if( doLoginForm.loginId.value.length == 0 ){
 		alert("아이디를 입력해주세요.");
-		form.loginId.focus();
+		doLoginForm.loginId.focus();
 		return false;
-	}else if( form.loginPw.value == "" ){
-		alert("비밀번호를 입력해주세요.");
-		form.loginPw.focus();
-		return false;
-	}else {
-		return true;
 	}
+	doLoginForm.loginPw.value = doLoginForm.loginPw.value.trim();
+	if( doLoginForm.loginPw.value.length == 0 ){
+		alert("비밀번호를 입력해주세요.");
+		doLoginForm.loginPw.focus();
+		return false;
+	}
+
+	return true;
+	
 }
 </script>
 
 <%@ include file="../../part/head.jspf" %>
 
 <h1><c:out value="${pageTitle}"/></h1>
-<form action="doLogin" onsubmit="return check()" name="form">
+<form action="doLogin" onsubmit="return doLoginFormCheck()" name="doLoginForm">
   <div>ID</div>
   <br>  
   <input type="text" placeholder="아이디를 입력해주세요." name="loginId">

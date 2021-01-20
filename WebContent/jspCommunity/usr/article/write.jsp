@@ -6,14 +6,14 @@
 <c:set var="pageTitle" value="게시물 등록"/>
 
 <script>
-function check(){
-	if( writeForm.title.value == "" ){
+function doWriteFormCheck(){
+	if( doWriteForm.title.value == "" ){
 		alert("제목을 입력해주세요.");
-		writeForm.title.focus();
+		doWriteForm.title.focus();
 		return false;
-	}else if( writeForm.body.value == "" ){
+	}else if( doWriteForm.body.value == "" ){
 		alert("내용을 입력해주세요.");
-		writeForm.body.focus();
+		doWriteForm.body.focus();
 		return false;
 	}else {
 		return true;
@@ -24,7 +24,7 @@ function check(){
 <%@ include file="../../part/head.jspf" %>
 
 <h1><c:out value="${pageTitle}"/></h1>
-<form action="doWrite" onsubmit="return check()" name="writeForm">
+<form action="doWrite" onsubmit="return doWriteFormCheck()" name="doWriteForm">
   <input type="number" value="${memberId}" name="memberId" hidden>
   <input type="number" value="3"name="boardId" hidden>
   <br>

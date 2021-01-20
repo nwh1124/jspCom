@@ -8,5 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title><c:out value="${pageTitle}"/></title>
+<link rel="stylesheet" 
+		href="${pageContext.request.contextPath}/static/common.css"/>
+<script src="${pageContext.request.contextPath}/static/common.js" defer="defer"></script>
 </head>
 <body>

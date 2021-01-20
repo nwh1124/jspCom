@@ -31,6 +31,10 @@ public class MemberService {
 		memberDao.doJoin(joinArgs);
 		
 	}
+
+	public void doDelete(int memberId) {
+		memberDao.doDelete(memberId);		
+	}
 	
 	
 

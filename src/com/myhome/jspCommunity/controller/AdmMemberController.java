@@ -22,8 +22,19 @@ public class AdmMemberController {
 		
 		req.setAttribute("members", members);
 		
-		return "admin/member/list";
+		return "adm/member/list";
 		
+	}
+
+	public String doDelete(HttpServletRequest req, HttpServletResponse resp) {
+		
+		int memberId = Integer.parseInt((String)req.getParameter("memberId"));
+		
+		memberService.doDelete(memberId);
+		
+		req.setAttribute("alertMsg", memberId + "번 회원이 삭제되었습니다.");
+		req.setAttribute("replaceUrl", "list");
+		return "common/redirect";
 	}
 
 }

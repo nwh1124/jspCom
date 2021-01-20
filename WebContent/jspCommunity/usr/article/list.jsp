@@ -9,7 +9,8 @@
 
 <h1><c:out value="${pageTitle}"/></h1>
 	<div>
-		<a href="write?boardId=${board.id}">게시물 작성</a>
+		<a href="../home/main">홈페이지</a>	
+		<a href="write?boardId=${board.id}">게시물 작성</a>				
 	</div>
 	<c:forEach var="article" items="${articles}">
 		번호 :

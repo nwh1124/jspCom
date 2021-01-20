@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dto.Member;
 import com.myhome.jspCommunity.service.MemberService;
+import com.myhome.jspCommunity.session.Session;
 
 public class UsrMemberController {
 	MemberService memberService;
@@ -60,6 +61,14 @@ public class UsrMemberController {
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		
+		if( Container.session.getIsLogined() ) {
+			req.setAttribute("alertMsg", "이미 로그인 중입니다.");
+			req.setAttribute("replaceUrl", "../home/main");			
+			return "common/redirect";
+		}
+		
 		return "usr/member/login";
 	}
 
@@ -67,20 +76,16 @@ public class UsrMemberController {
 		
 		HttpSession session = req.getSession();
 		
-		if( session.getAttribute("loginedMember") != null ) {
-			req.setAttribute("alertMsg", "이미 로그인 중입니다.");
-			req.setAttribute("replaceUrl", "../article/list?boardId=3");			
-			return "common/redirect";
-		}
-		
 		List<Member> members = memberService.getMembers();
 		
 		for(Member member : members) {		
 			if( req.getParameter("loginId").equals(member.getLoginId()) ) {				
 				if( req.getParameter("loginPw").equals(member.getLoginPw()) ) {					
 					session.setAttribute("loginedMember", member);
+					Container.session.setLogined(true);
+					Container.session.setLoginedMemberId(member.getId());
 					req.setAttribute("alertMsg", "로그인 되었습니다.");
-					req.setAttribute("replaceUrl", "../article/list?boardId=3");			
+					req.setAttribute("replaceUrl", "../home/main");			
 					return "common/redirect";
 					
 				}else {
@@ -97,17 +102,38 @@ public class UsrMemberController {
 	}
 
 	public String showWhoami(HttpServletRequest req, HttpServletResponse resp) {
-		if( Container.session.getIsLogined() == false ) {
+		HttpSession session = req.getSession();
+		
+		Member member = (Member)session.getAttribute("loginedMember");
+		
+		if( member == null ) {
 			req.setAttribute("alertMsg", "비회원입니다.");
 			req.setAttribute("replaceUrl", "login");
 			return "common/redirect";
 		}
-		
-		Member member = memberService.getMemberById(Container.session.getLoginedMemberId());
-		
+				
 		req.setAttribute("member", member);
 		
 		return "usr/member/whoami";
+	}
+
+	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
+		
+		HttpSession session = req.getSession();
+		
+		if( Container.session.getIsLogined() == false ) {
+			req.setAttribute("alertMsg", "로그인 상태가 아닙니다.");
+			req.setAttribute("replaceUrl", "../home/main");
+			return "common/redirect";
+		}
+		
+		session.setAttribute("loginedMember", null);
+		Container.session.setLogined(false);
+		Container.session.setLoginedMemberId(-1);
+
+		req.setAttribute("alertMsg", "로그아웃 되었습니다.");
+		req.setAttribute("replaceUrl", "../home/main");
+		return "common/redirect";
 	}
 
 }

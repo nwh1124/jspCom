@@ -12,33 +12,28 @@ import javax.servlet.http.HttpSession;
 
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.controller.UsrArticleController;
+import com.myhome.jspCommunity.controller.UsrHomeController;
 import com.myhome.jspCommunity.controller.UsrMemberController;
 import com.myhome.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 
 @WebServlet("/usr/*")
 
-public class UserDispatcherServlet extends HttpServlet {
+public class UsrDispatcherServlet extends DispatcherServlet {
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	@Override
+	protected String doAction(HttpServletRequest req, HttpServletResponse resp, String controllerName, String actionMethodName) {
+			
+		String jspPath = null;	
 		
-		req.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html; charset=UTF-8");
-		
-		String requestUri = req.getRequestURI();
-		String[] requestUriBits = requestUri.split("/");
-		
-		if(requestUriBits.length < 5) {
-			resp.getWriter().append("<h1>올바른 요청이 아닙니다</h1>");
-			return;
+		if( controllerName.equals("home")) {
+			UsrHomeController homeController = Container.homeController;
+			
+			if(actionMethodName.equals("main")) {
+				jspPath = homeController.showMain(req,resp);
+			}
+			
 		}
-		
-		String controllerName = requestUriBits[3];
-		String actionMethodName = requestUriBits[4];
-		
-		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
-		
-		String jspPath = null;
 		
 		if( controllerName.equals("member")) {
 			UsrMemberController memberController = Container.memberController;
@@ -51,6 +46,8 @@ public class UserDispatcherServlet extends HttpServlet {
 				jspPath = memberController.showLogin(req,resp);
 			}else if(actionMethodName.equals("doLogin")) {
 				jspPath = memberController.doLogin(req,resp);
+			}else if(actionMethodName.equals("logout")) {
+				jspPath = memberController.doLogout(req,resp);
 			}else if(actionMethodName.equals("whoami")) {
 				jspPath = memberController.showWhoami(req,resp);
 			}
@@ -75,14 +72,7 @@ public class UserDispatcherServlet extends HttpServlet {
 			}
 		}
 		
-		if( jspPath == null ) {
-			return;
-		}
-		
-		MysqlUtil.closeConnection();		
-		
-		RequestDispatcher rd = req.getRequestDispatcher("/jspCommunity/" + jspPath + ".jsp");
-		rd.forward(req, resp);
+		return jspPath;
 		
 	}
 	

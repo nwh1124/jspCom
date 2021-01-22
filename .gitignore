@@ -8,3 +8,4 @@ build/
 
 target/
 .factorypath
+WebContent/META-INF/config.json

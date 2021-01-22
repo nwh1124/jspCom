@@ -10,6 +10,7 @@ import com.myhome.jspCommunity.dao.BoardDao;
 
 import com.myhome.jspCommunity.service.ArticleService;
 import com.myhome.jspCommunity.service.MemberService;
+import com.myhome.jspCommunity.service.EmailService;
 import com.myhome.jspCommunity.session.Session;
 import com.myhome.jspCommunity.service.BoardService;
 
@@ -21,6 +22,7 @@ public class Container {
 	public static MemberDao memberDao;
 	public static BoardDao boardDao;
 
+	public static EmailService emailService;	
 	public static ArticleService articleService;
 	public static MemberService memberService;
 	public static BoardService boardService;
@@ -28,7 +30,9 @@ public class Container {
 	public static UsrArticleController articleController;
 	public static UsrMemberController memberController;	
 	public static AdmMemberController admMemberController;
-	public static UsrHomeController homeController;				
+	public static UsrHomeController homeController;
+
+					
 	
 	static {
 		
@@ -38,6 +42,7 @@ public class Container {
 		memberDao = new MemberDao();
 		boardDao = new BoardDao();
 		
+		emailService = new EmailService();
 		articleService = new ArticleService();
 		memberService = new MemberService();
 		boardService = new BoardService();

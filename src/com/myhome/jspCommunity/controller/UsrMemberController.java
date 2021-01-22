@@ -12,6 +12,7 @@ import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dto.Member;
 import com.myhome.jspCommunity.service.MemberService;
 import com.myhome.jspCommunity.session.Session;
+import com.myhome.util.Util;
 
 public class UsrMemberController {
 	MemberService memberService;
@@ -56,19 +57,11 @@ public class UsrMemberController {
 		memberService.doJoin(joinArgs);
 		
 		req.setAttribute("alertMsg", "회원으로 등록되었습니다.");
-		req.setAttribute("historyBack", true);		
+		req.setAttribute("replaceUrl", "../home/main");		
 		return "common/redirect";
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
-		HttpSession session = req.getSession();
-		
-		if( Container.session.getIsLogined() ) {
-			req.setAttribute("alertMsg", "이미 로그인 중입니다.");
-			req.setAttribute("replaceUrl", "../home/main");			
-			return "common/redirect";
-		}
-		
 		return "usr/member/login";
 	}
 
@@ -80,10 +73,10 @@ public class UsrMemberController {
 		
 		for(Member member : members) {		
 			if( req.getParameter("loginId").equals(member.getLoginId()) ) {				
-				if( req.getParameter("loginPw").equals(member.getLoginPw()) ) {					
-					session.setAttribute("loginedMember", member);
-					Container.session.setLogined(true);
-					Container.session.setLoginedMemberId(member.getId());
+				if( req.getParameter("loginPw").equals(member.getLoginPw()) ) {
+					
+					session.setAttribute("loginedMemberId", member.getId());
+					
 					req.setAttribute("alertMsg", "로그인 되었습니다.");
 					req.setAttribute("replaceUrl", "../home/main");			
 					return "common/redirect";
@@ -104,7 +97,7 @@ public class UsrMemberController {
 	public String showWhoami(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
 		
-		Member member = (Member)session.getAttribute("loginedMember");
+		Member member = memberService.getMemberById((int)session.getAttribute("loginedMemberId"));
 		
 		if( member == null ) {
 			req.setAttribute("alertMsg", "비회원입니다.");
@@ -119,21 +112,43 @@ public class UsrMemberController {
 
 	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
 		
-		HttpSession session = req.getSession();
-		
-		if( Container.session.getIsLogined() == false ) {
-			req.setAttribute("alertMsg", "로그인 상태가 아닙니다.");
-			req.setAttribute("replaceUrl", "../home/main");
-			return "common/redirect";
-		}
-		
-		session.setAttribute("loginedMember", null);
+		req.setAttribute("loginedMember", null);
+		req.setAttribute("islogined", false);
+		req.setAttribute("loginedMemberId", 0);
 		Container.session.setLogined(false);
 		Container.session.setLoginedMemberId(-1);
 
 		req.setAttribute("alertMsg", "로그아웃 되었습니다.");
 		req.setAttribute("replaceUrl", "../home/main");
 		return "common/redirect";
+	}
+
+	public String getLoginIdDup(HttpServletRequest req, HttpServletResponse resp) {
+		
+		Map<String, Object> rs = new HashMap<>();
+		
+		String loginId = req.getParameter("loginId");		
+		String resultCode = null;
+		String msg = null;
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if( member != null ) {
+			resultCode = "F-1";
+			msg = "이미 존재하는 아이디입니다.";
+			
+		}else {
+			resultCode = "S-1";
+			msg = "사용 가능한 아이디입니다.";
+			
+		}
+		
+		rs.put("resultCode", resultCode);
+		rs.put("msg", msg);
+		rs.put("loingId", loginId);
+
+		req.setAttribute("data", Util.getJsonText(rs));
+		return "common/pure";
 	}
 
 }

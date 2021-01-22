@@ -13,14 +13,14 @@
 	<jsp:attribute name="contentBody">
 
 	<script>
-		function doModifyFormCheck() {
-			if (doModifyForm.title.value == "") {
+		function doModifyForm__submit(form) {
+			if (form.title.value == "") {
 				alert("수정할 제목을 입력해주세요.");
-				doModifyForm.title.focus();
+				form.title.focus();
 				return false;
-			} else if (doModifyForm.body.value == "") {
+			} else if (form.body.value == "") {
 				alert("수정할 내용을 입력해주세요.");
-				doModifyForm.body.focus();
+				form.body.focus();
 				return false;
 			} else {
 				return true;
@@ -29,7 +29,7 @@
 	</script>
 	
 		<h1><c:out value="${pageTitle}" /></h1>
-		<form action="doModify" onsubmit="return doModifyFormCheck()" name="doModifyForm">
+		<form action="doModify" method="POST" onsubmit="return doModifyForm__submit(this); return false;">
 		  <div>수정할 게시물 번호</div>
 		  <br>  
 		  <input type="number" value="${param.id}" name="articleId">

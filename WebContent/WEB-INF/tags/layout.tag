@@ -56,27 +56,27 @@
       <div class="menu-bar__list">
 		<ul class="">
 			<li>
-				<a href="../article/write?boardId=3"> 
-				<i class="fas fa-comment-dollar"></i> 
-				<span>게시물 작성</span>
+				<a href="../home/main"> 
+				<i class="fas fa-home"></i>
+				<span>홈</span>
 				</a>
 			</li>
 			<li>
 				<a href="../article/list?boardId=3">
 				<i class="fas fa-comment-slash"></i> 
-				<span>게시물 목록</span>
-				</a>
-			</li>
-			<li>				
-				<a href="${loginMenuUrl}"> 
-				<i class="fas fa-comment-medical"></i> 
-				<c:out value="${loginMenu}"/>
+				<span>게시물</span>
 				</a>
 			</li>
 			<li>
 				<a href="../member/whoami"> 
 				<i class="fas fa-comment-dots"></i> 
 				<span>회원정보</span>
+				</a>
+			</li>
+			<li>				
+				<a href="${loginMenuUrl}"> 
+				<i class="fas fa-comment-medical"></i> 
+				<c:out value="${loginMenu}"/>
 				</a>
 			</li>
 		</ul>

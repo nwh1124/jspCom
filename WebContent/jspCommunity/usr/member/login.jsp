@@ -13,17 +13,17 @@
 	<jsp:attribute name="contentBody">
 	
 	<script>
-	function doLoginFormCheck(){
-		doLoginForm.loginId.value = doLoginForm.loginId.value.trim();
-		if( doLoginForm.loginId.value.length == 0 ){
+	function doLoginForm__submit(form){
+		form.loginId.value = form.loginId.value.trim();
+		if( form.loginId.value.length == 0 ){
 			alert("아이디를 입력해주세요.");
-			doLoginForm.loginId.focus();
+			form.loginId.focus();
 			return false;
 		}
-		doLoginForm.loginPw.value = doLoginForm.loginPw.value.trim();
-		if( doLoginForm.loginPw.value.length == 0 ){
+		form.loginPw.value = form.loginPw.value.trim();
+		if( form.loginPw.value.length == 0 ){
 			alert("비밀번호를 입력해주세요.");
-			doLoginForm.loginPw.focus();
+			form.loginPw.focus();
 			return false;
 		}
 	
@@ -33,7 +33,7 @@
 	</script>
 
 		<h1><c:out value="${pageTitle}"/></h1>
-		<form action="doLogin" onsubmit="return doLoginFormCheck()" name="doLoginForm">
+		<form action="doLogin" method="POST" onsubmit="return doLoginForm__submit(this); return false;">
 		  <div>ID</div>
 		  <br>  
 		  <input type="text" placeholder="아이디를 입력해주세요." name="loginId">

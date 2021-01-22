@@ -54,16 +54,8 @@ public class UsrArticleController {
 	}
 
 	public String doDelete(HttpServletRequest req, HttpServletResponse resp) {
-		
-		HttpSession session = req.getSession();
-		
-		if( session.getAttribute("loginedMember")  == null ) {
-			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-			req.setAttribute("replaceUrl", "../member/login");
-			return "common/redirect";
-		}
-		
-		Member loginedMember =  (Member)session.getAttribute("loginedMember");
+				
+		Member loginedMember =  (Member)req.getAttribute("loginedMember");
 		
 		int articleMemberId = articleService.getArticleMemberIdById(Integer.parseInt(req.getParameter("id")));
 		if ( articleMemberId != loginedMember.getId()) {
@@ -125,6 +117,15 @@ public class UsrArticleController {
 
 	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
 		
+		Member loginedMember =  (Member)req.getAttribute("loginedMember");
+		
+		int articleMemberId = articleService.getArticleMemberIdById(Integer.parseInt(req.getParameter("id")));
+		if ( articleMemberId != loginedMember.getId()) {
+			req.setAttribute("alertMsg", "권한이 없습니다.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		int articleId = Integer.parseInt(req.getParameter("articleId").toString());
 		String title = req.getParameter("title").toString();
 		String body = req.getParameter("body").toString();
@@ -138,30 +139,16 @@ public class UsrArticleController {
 	}
 
 	public String showWrite(HttpServletRequest req, HttpServletResponse resp) {		
-		HttpSession session = req.getSession();
 		
-		if( session.getAttribute("loginedMember")  == null ) {
-			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-			req.setAttribute("replaceUrl", "../member/login");
-			return "common/redirect";
-		}
-		
-		Member member = (Member)session.getAttribute("loginedMember");
-		session.setAttribute("memberId", member.getId());
+		Member member = (Member)req.getAttribute("loginedMember");
+		req.setAttribute("memberId", member.getId());
 		
 		return "usr/article/write";
 	}
 
 	public String showModify(HttpServletRequest req, HttpServletResponse resp) {
-		HttpSession session = req.getSession();
 		
-		if( session.getAttribute("loginedMember")  == null ) {
-			req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-			req.setAttribute("replaceUrl", "../member/login");
-			return "common/redirect";
-		}
-		
-		Member loginedMember =  (Member)session.getAttribute("loginedMember");
+		Member loginedMember =  (Member)req.getAttribute("loginedMember");
 		
 		int articleMemberId = articleService.getArticleMemberIdById(Integer.parseInt(req.getParameter("id")));
 		if ( articleMemberId != loginedMember.getId()) {

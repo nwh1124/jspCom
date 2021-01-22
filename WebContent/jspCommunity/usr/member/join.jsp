@@ -11,80 +11,126 @@
 <t:layout>
 	<jsp:attribute name="contentBody">
 	<script>
-		let doJoinFormSubmited = false;
-		function doJoinFormCheck() {
+			
+		let doJoinForm__submited = false;
+		let doJoinForm__checkedLoginId="";
 
-			if (doJoinFormSubmited) {
+		function doJoinForm__checkLoginIdDup(el){
+
+			// from은 function을 호출한 엘리먼트의 부모의 첫 번째 자식(loginId)
+			const from = $(el).closest('form').get(0);	
+			const loginId = from.loginId.value;
+
+			console.log(loginId);
+			
+			$.get(
+
+					"getLoginIdDup",
+					{						
+						loginId
+						// == loginId : loginId
+						// loginId(문자열 의미) : loginId (위에서 설정한 변수)
+						// loginId라는 문자열에 loginId라는 변수의 값을 넣는다
+					},
+					function(data){
+						if( data.msg ){
+							alert(data.msg);
+						}						
+						
+						if( data.resultCode.substr(0, 2) == "S-" ){							
+							DoJoinForm__checkedLoginId = data.loginId;		
+						}
+						
+					},
+					"json"					
+			);
+		
+		}
+		
+		function doJoinForm__submit(form) {
+
+			if (doJoinForm__submited) {
 				alert("처리중입니다.");
 				return;
 			}
-			doJoinForm.loginId.value = doJoinForm.loginId.value.trim();
-			if (doJoinForm.loginId.value.length == 0) {
+			
+			form.loginId.value = form.loginId.value.trim();
+			
+			if (form.loginId.value.length == 0) {
 				alert("ID를 입력해주세요.");
-				doJoinForm.loginId.focus();
+				form.loginId.focus();
 				return false;
 
 			}
-			doJoinForm.loginPw.value = doJoinForm.loginPw.value.trim();
-			if (doJoinForm.loginPw.value.length == 0) {
+						
+			if (form.loginId.value != doJoinForm__checkedLoginId) {
+				alert("중복 체크를 해주세요.");
+				form.btnLoginIdDupCheck.focus();
+				return false;
+
+			}
+			form.loginPw.value = form.loginPw.value.trim();
+			if (form.loginPw.value.length == 0) {
 				alert("PASSWORD를 입력해주세요.");
-				doJoinForm.loginPw.focus();
+				form.loginPw.focus();
 				return false;
 
 			}
-			doJoinForm.loginPwCh.value = doJoinForm.loginPwCh.value.trim();
-			if (doJoinForm.loginPwCh.value == 0) {
+			form.loginPwCh.value = form.loginPwCh.value.trim();
+			if (form.loginPwCh.value == 0) {
 				alert("PASSWORD Check를 입력해주세요.");
-				doJoinForm.loginPwCh.focus();
+				form.loginPwCh.focus();
 				return false;
 
 			}
-			if (doJoinForm.loginPwCh.value != doJoinForm.loginPw.value) {
+			if (form.loginPwCh.value != form.loginPw.value) {
 				alert("PASSWORD가 일치하지 않습니다.");
-				doJoinForm.loginPwCh.focus();
+				form.loginPwCh.focus();
 				return false;
 
 			}
-			doJoinForm.name.value = doJoinForm.name.value.trim();
-			if (doJoinForm.name.value == 0) {
+			form.name.value = form.name.value.trim();
+			if (form.name.value == 0) {
 				alert("이름을 입력해주세요.");
-				doJoinForm.name.focus();
+				form.name.focus();
 				return false;
 
 			}
-			doJoinForm.nickname.value = doJoinForm.nickname.value.trim();
-			if (doJoinForm.nickname.value == 0) {
+			form.nickname.value = form.nickname.value.trim();
+			if (form.nickname.value == 0) {
 				alert("닉네임을 입력해주세요.");
-				doJoinForm.nickname.focus();
+				form.nickname.focus();
 				return false;
 
 			}
-			doJoinForm.email.value = doJoinForm.email.value.trim();
-			if (doJoinForm.email.value == 0) {
+			form.email.value = form.email.value.trim();
+			if (form.email.value == 0) {
 				alert("email을 입력해주세요.");
-				doJoinForm.email.focus();
+				form.email.focus();
 				return false;
 
 			}
-			doJoinForm.phoneNum.value = doJoinForm.phoneNum.value.trim();
-			if (doJoinForm.phoneNum.value == 0) {
+			form.phoneNum.value = form.phoneNum.value.trim();
+			if (form.phoneNum.value == 0) {
 				alert("휴대폰 번호를 입력해주세요.");
-				doJoinForm.phoneNum.focus();
+				form.phoneNum.focus();
 				return false;
 
 			}
 
 			return true;
+			doJoinForm__submited = true;
 		}
 	</script>
 
 		<h1>
 			<c:out value="${pageTitle}" />
 		</h1>
-		<form action="doJoin" onsubmit="return doJoinFormCheck()" name="doJoinForm">
+		<form action="doJoin" method="POST" onsubmit="return doJoinForm__submit(this); return false;">
 		  <div>ID</div>
 		  <br>  
 		  <input type="text" placeholder="아이디를 입력해주세요." name="loginId">
+		  <button onclick="doJoinForm__checkLoginIdDup(this);" name="btnLoginIdDupCheck" type="button">중복체크</button>
 		  <hr>
 		  <div>Password</div>
 		  <br>

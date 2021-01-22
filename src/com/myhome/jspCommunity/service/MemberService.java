@@ -35,6 +35,10 @@ public class MemberService {
 	public void doDelete(int memberId) {
 		memberDao.doDelete(memberId);		
 	}
+
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
+	}
 	
 	
 

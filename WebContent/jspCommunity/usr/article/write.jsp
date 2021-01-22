@@ -10,14 +10,14 @@
 <%@ include file="../../part/head.jspf" %>
 
 <script>
-function doWriteFormCheck(){
-	if( doWriteForm.title.value == "" ){
+function doWriteForm__submit(form){
+	if( form.title.value == "" ){
 		alert("제목을 입력해주세요.");
-		doWriteForm.title.focus();
+		form.title.focus();
 		return false;
-	}else if( doWriteForm.body.value == "" ){
+	}else if( form.body.value == "" ){
 		alert("내용을 입력해주세요.");
-		doWriteForm.body.focus();
+		form.body.focus();
 		return false;
 	}else {
 		return true;
@@ -28,7 +28,7 @@ function doWriteFormCheck(){
 <t:layout >
 	<jsp:attribute name="contentBody">
 		<h1><c:out value="${pageTitle}"/></h1>
-		<form action="doWrite" onsubmit="return doWriteFormCheck()" name="doWriteForm">
+		<form action="doWrite" onsubmit="return doWriteForm__submit(this); return false;">
 		  <input type="number" value="${memberId}" name="memberId" hidden>
 		  <input type="number" value="3"name="boardId" hidden>
 		  <br>

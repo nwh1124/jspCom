@@ -12,27 +12,21 @@
 <t:layout >
 	<jsp:attribute name="contentBody">
 	<h1><c:out value="${pageTitle}"/></h1>
-	<div>
-		<a href="../home/main">홈페이지</a>	
-		<br>
+	<div class="main-content__subBtn">
+		<a href="../home/main">홈페이지</a>
 		<a href="write?boardId=${board.id}">게시물 작성</a>
-		<br>				
 	</div>
 	<ul>
 	<c:forEach var="article" items="${articles}">
 	<li>
 		번호 :
 		${article.id}
-		<br />
 		작성일 :
 		${article.regDate}
-		<br />
 		제목 :
 		<a href="detail?id=${article.id}&boardId=${article.boardId}">${article.title}</a>
-		<br />
-		내용 :
+		내용 : 
 		${article.body}
-		<hr />
 	</li>
 	</c:forEach>
 	</ul>

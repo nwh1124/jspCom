@@ -38,8 +38,11 @@ public class UsrArticleController {
 		}
 		
 		int boardId = Integer.parseInt((String)req.getParameter("boardId"));
-		int totalCount = articleService.getArticlesCountByBoardId(boardId);
-		List<Article> articles = articleService.getArticlesByBoardId(boardId);
+		String searchKeyword = req.getParameter("searchKeyword");
+		String searchKeywordType = req.getParameter("searchKeywordType");
+		int totalCount = articleService.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
+		
+		List<Article> articles = articleService.getArticlesByBoardId(boardId, searchKeyword, searchKeywordType);
 		Board board = boardService.getBoardByBoardId(boardId);
 		
 		if ( articles == null ) {

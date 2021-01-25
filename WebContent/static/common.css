@@ -34,7 +34,7 @@
 
 html, .tui-editor-contents {
 	font-family: 'LotteMartDream', sans-serif !important;
-	text-decoration:none !important;
+	text-decoration:none ;
 }
 /* 폰트 */
 
@@ -153,8 +153,9 @@ a{
   font-size:1rem;
 }
 
-.main-content__content-body:hover > a{
-	text-decoration:underline !important;
+.main-content__content-body > h1 {
+  width:100%;
+  border-bottom:2px solid;
 }
 /* 메인 컨텐츠 */
 /* PC환경 */

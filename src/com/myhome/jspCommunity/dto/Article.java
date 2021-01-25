@@ -17,6 +17,10 @@ public class Article {
 	private int hitsCount;
 	private int likesCount;
 	private int commentsCount;
+	
+	private String extra__writer;
+	private String extra__boardName;
+	private String extra__boardCode;
 		
 	public Article() {
 		
@@ -35,6 +39,9 @@ public class Article {
 		this.hitsCount = (int)map.get("likesCount");
 		this.hitsCount = (int)map.get("commentsCount");
 		
+		this.extra__writer = (String)map.get("extra__writer");
+		this.extra__boardName = (String)map.get("extra__boardName");
+		this.extra__boardCode = (String)map.get("extra__boardCode");
 	}
 
 }

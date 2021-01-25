@@ -12,6 +12,8 @@ import com.myhome.util.Util;
 
 public class MemberService {
 	
+	EmailService emailService = new EmailService();
+	
 	MemberDao memberDao;
 	
 	public MemberService() {
@@ -47,7 +49,7 @@ public class MemberService {
 		return memberDao.getMemberByNameAndEmail(name, email);
 	}
 
-	public void sendTempLoginPwToEmail(Member actor) {
+	public Map<String, Object> sendTempLoginPwToEmail(Member actor) {
 		
 		// 메일 제목과 내용 만들기
 		String siteName = App.getSite();
@@ -56,12 +58,26 @@ public class MemberService {
 		String tempPassword = Util.getTempPassword(6);
 		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
 		body += "<a href=\"" + siteLoginUrl + "\" target=\"_blank\">로그인 하러가기</a>";
-
+		
+		Map<String, Object> rs = new HashMap<>();
+		
 		// 메일 발송
-		EmailService.send(actor.getEmail(), title, body);
-
-		// 고객의 패스워드를 방금 생성한 임시패스워드로 변경
-		setTempPassword(actor, tempPassword);
+		int sendRs = emailService.send(actor.getEmail(), title, body);
+		
+		if(sendRs == 1) {
+			rs.put("resultCode", "S-1");
+			rs.put("msg", "등록된 " + actor.getEmail() + "으로 임시 비밀번호를 발송했습니다.");
+			
+			// 고객의 패스워드를 방금 생성한 임시패스워드로 변경
+			setTempPassword(actor, tempPassword);
+		}
+		else {
+			rs.put("resultCode", "F-1");
+			rs.put("msg", "메일 발송에 실패하였습니다.");
+			
+		}
+		
+		return rs;
 		
 	}
 

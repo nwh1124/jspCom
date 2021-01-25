@@ -37,7 +37,8 @@ public class UsrArticleController {
 			return "common/redirect";
 		}
 		
-		int boardId = Integer.parseInt((String)req.getParameter("boardId"));				
+		int boardId = Integer.parseInt((String)req.getParameter("boardId"));
+		int totalCount = articleService.getArticlesCountByBoardId(boardId);
 		List<Article> articles = articleService.getArticlesByBoardId(boardId);
 		Board board = boardService.getBoardByBoardId(boardId);
 		
@@ -47,6 +48,7 @@ public class UsrArticleController {
 			return "common/redirect";
 		}	
 		
+		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("articles", articles);
 		req.setAttribute("board", board);
 		

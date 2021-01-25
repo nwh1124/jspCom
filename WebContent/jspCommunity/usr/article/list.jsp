@@ -16,6 +16,9 @@
 		<a href="../home/main">홈페이지</a>
 		<a href="write?boardId=${board.id}">게시물 작성</a>
 	</div>
+	<div>
+	총 게시물 수 : ${totalCount}
+	</div>
 	<ul>
 	<c:forEach var="article" items="${articles}">
 	<li>

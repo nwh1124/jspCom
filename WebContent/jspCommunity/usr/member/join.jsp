@@ -39,8 +39,8 @@
 							alert(data.msg);
 						}						
 						
-						if( data.resultCode.substr(0, 2) == "S-" ){							
-							doJoinForm__checkedLoginId = data.loginId;
+						if( data.success ){							
+							doJoinForm__checkedLoginId = data.body.loginId;
 						}
 						
 					},

@@ -71,3 +71,4 @@ public class ResultData {
 	public boolean isSuccess() {
 		return resultCode.startsWith("S-");
 	}
+}

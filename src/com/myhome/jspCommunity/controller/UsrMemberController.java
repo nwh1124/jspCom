@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dto.Member;
+import com.myhome.jspCommunity.dto.ResultData;
 import com.myhome.jspCommunity.service.MemberService;
 import com.myhome.jspCommunity.session.Session;
 import com.myhome.util.Util;
@@ -27,16 +28,6 @@ public class UsrMemberController {
 	}
 
 	public String doJoin(HttpServletRequest req, HttpServletResponse resp) {
-		
-		List<Member> members = memberService.getMembers();
-				
-		for(Member member : members) {		
-			if( req.getParameter("loginId").equals(member.getLoginId()) ) {
-				req.setAttribute("alertMsg", "이미 존재하는 아이디입니다.");
-				req.setAttribute("historyBack", true);		
-				return "common/redirect";
-			}
-		}
 		
 		String loginId = (String)req.getParameter("loginId");
 		String loginPw = (String)req.getParameter("loginPwReal");
@@ -127,8 +118,6 @@ public class UsrMemberController {
 
 	public String getLoginIdDup(HttpServletRequest req, HttpServletResponse resp) {
 		
-		Map<String, Object> rs = new HashMap<>();
-		
 		String loginId = req.getParameter("loginId");		
 		String resultCode = null;
 		String msg = null;
@@ -144,13 +133,9 @@ public class UsrMemberController {
 			msg = "사용 가능한 아이디입니다.";
 			
 		}
-		
-		rs.put("resultCode", resultCode);
-		rs.put("msg", msg);
-		rs.put("loginId", loginId);
 
-		req.setAttribute("data", Util.getJsonText(rs));
-		return "common/pure";
+		req.setAttribute("data", new ResultData(resultCode, msg, "loginId", loginId));
+		return "common/json";
 	}
 
 	public String showFindLoginId(HttpServletRequest req, HttpServletResponse resp) {		
@@ -199,18 +184,15 @@ public class UsrMemberController {
 			return "common/redirect";
 		}
 		
-		Map<String, Object> sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
+		ResultData sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
 		
-		String resultCode = (String)sendTempLoginPwToEmailRs.get("resultCode");
-		String resultMsg = (String)sendTempLoginPwToEmailRs.get("msg");
-		
-		if( resultCode.startsWith("S-") == false ) {
-			req.setAttribute("alertMsg", resultMsg);
+		if( sendTempLoginPwToEmailRs.isFail() ) {
+			req.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
 			req.setAttribute("historyBack", true);
 			return "common/redirect";		
 		}
 		
-		req.setAttribute("alertMsg", "등록된 " + member.getEmail() + "으로 임시 비밀번호를 발송했습니다.");
+		req.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
 		req.setAttribute("replaceUrl", "../member/login");
 		return "common/redirect";
 	}

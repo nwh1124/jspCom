@@ -73,7 +73,7 @@ public class UsrMemberController {
 		
 		for(Member member : members) {		
 			if( req.getParameter("loginId").equals(member.getLoginId()) ) {				
-				if( req.getParameter("loginPw").equals(member.getLoginPw()) ) {
+				if( req.getParameter("loginPwReal").equals(member.getLoginPw()) ) {
 					
 					session.setAttribute("loginedMemberId", member.getId());
 					
@@ -153,23 +153,58 @@ public class UsrMemberController {
 		return "common/pure";
 	}
 
-	public String showFindLoginId(HttpServletRequest req, HttpServletResponse resp) {
-		
-		HttpSession session = req.getSession();
-		
+	public String showFindLoginId(HttpServletRequest req, HttpServletResponse resp) {		
 		return "/usr/member/findLoginId";
 	}
 
 	public String doFindLoginId(HttpServletRequest req, HttpServletResponse resp) {
-		
-		HttpSession session = req.getSession();
 		
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		
 		Member member = memberService.getMemberByNameAndEamil(name, email);
 		
-		return null;
+		if ( member == null ) {
+			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
+			req.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
+		req.setAttribute("alertMsg", String.format("로그인 아이디는 %s 입니다.", member.getLoginId()));
+		req.setAttribute("replaceUrl", "../member/login");
+		return "common/redirect";
+		
+	}
+
+	public String showFindLoginPw(HttpServletRequest req, HttpServletResponse resp) {
+		return "/usr/member/findLoginPw";
+	}
+
+	public String doFindLoginPw(HttpServletRequest req, HttpServletResponse resp) {
+		
+		String loginId = req.getParameter("loginId");
+		String email = req.getParameter("email");
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if( member == null ) {
+			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
+			req.setAttribute("replaceUrl", "../member/login");
+			return "common/redirect";
+		}
+		
+		if( member.getEmail().equals(email) == false) {			
+			req.setAttribute("alertMsg", "email 주소가 일치하지 않습니다.");
+			req.setAttribute("replaceUrl", "../member/login");
+			return "common/redirect";
+		}
+		
+		memberService.sendTempLoginPwToEmail(member);
+		
+		req.setAttribute("alertMsg", "등록된 " + member.getEmail() + "으로 임시 비밀번호를 발송했습니다.");
+		req.setAttribute("replaceUrl", "../member/login");
+		return "common/redirect";
 	}
 
 }
+

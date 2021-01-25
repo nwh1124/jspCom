@@ -93,6 +93,8 @@ public class MemberDao {
 		sql.append("SELECT *");
 		sql.append("FROM member");
 		sql.append("WHERE loginId = ?", loginId);
+		sql.append("ORDER BY email DESC");
+		sql.append("LIMIT 1");
 		
 		Map<String, Object> map = MysqlUtil.selectRow(sql);		
 		
@@ -105,7 +107,7 @@ public class MemberDao {
 		return member;		
 	}
 
-	public Member getMemberByNameAndEmail(String name, Object email) {
+	public Member getMemberByNameAndEmail(String name, String email) {
 		
 		SecSql sql = new SecSql();
 		
@@ -113,6 +115,8 @@ public class MemberDao {
 		sql.append("FROM member");
 		sql.append("WHERE name = ?", name);
 		sql.append("AND email = ?", email);
+		sql.append("ORDER BY email DESC");
+		sql.append("LIMIT 1");
 		
 		Map<String, Object> map = MysqlUtil.selectRow(sql);		
 		
@@ -123,6 +127,54 @@ public class MemberDao {
 		Member member = new Member(map);
 		
 		return member;
+	}
+
+	public int modify(Map<String, Object> args) {
+		
+		SecSql sql = new SecSql();
+		sql.append("UPDATE member");
+		sql.append("SET updateDate = NOW()");
+		
+		boolean needToUpdate = false;
+
+		if (args.get("loginPw") != null) {
+			needToUpdate = true;
+			sql.append(", loginPw = ?", args.get("loginPw"));
+		}
+
+		if (args.get("name") != null) {
+			needToUpdate = true;
+			sql.append(", `name` = ?", args.get("name"));
+		}
+		
+		if (args.get("nickname") != null) {
+			needToUpdate = true;
+			sql.append(", nickname = ?", args.get("nickname"));
+		}
+		
+		if (args.get("email") != null) {
+			needToUpdate = true;
+			sql.append(", email = ?", args.get("email"));
+		}
+		
+		if (args.get("cellphoneNo") != null) {
+			needToUpdate = true;
+			sql.append(", cellphoneNo = ?", args.get("cellphoneNo"));
+		}
+		
+		if (args.get("authLevel") != null) {
+			needToUpdate = true;
+			sql.append(", authLevel = ?", args.get("authLevel"));
+		}
+		
+		if ( needToUpdate == false ) {
+			return 0;
+		}
+
+		sql.append("WHERE id = ?", args.get("id"));
+
+		return MysqlUtil.update(sql);
+		
 	}
 
 }

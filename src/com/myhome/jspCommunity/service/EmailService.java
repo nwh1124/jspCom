@@ -3,10 +3,10 @@ package com.myhome.jspCommunity.service;
 import com.myhome.util.Util;
 
 public class EmailService {
-	private String gmailId;
-	private String gmailPw;
-	private String from;
-	private String fromName;
+	private static String gmailId;
+	private static String gmailPw;
+	private static String from;
+	private static String fromName;
 
 	public void init(String gmailId, String gmailPw, String from, String fromName) {
 		this.gmailId = gmailId;
@@ -15,7 +15,7 @@ public class EmailService {
 		this.fromName = fromName;
 	}
 
-	public int send(String to, String title, String body) {
+	public static int send(String to, String title, String body) {
 		return Util.sendMail(gmailId, gmailPw, from, fromName, to, title, body);
 	}
 

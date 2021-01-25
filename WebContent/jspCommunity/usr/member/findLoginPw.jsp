@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pageTitle" value="아이디 찾기"/>
+<c:set var="pageTitle" value="비밀번호 찾기"/>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <%@ include file="../../part/head.jspf" %>
@@ -23,10 +23,10 @@
 				return;
 			}
 			
-			form.name.value = form.name.value.trim();
-			if (form.name.value == 0) {
-				alert("이름을 입력해주세요.");
-				form.name.focus();
+			form.loginId.value = form.loginId.value.trim();
+			if (form.loginId.value == 0) {
+				alert("로그인 아이디를 입력해주세요.");
+				form.loginId.focus();
 				return false;			
 
 			}
@@ -39,24 +39,24 @@
 
 			}
 
-			form.submit();
-			doLoginIdForm__submited = true;
+			return true;
+			doLoginPwForm__submited = true;
 		}
 	</script>
 
 		<h1>
 			<c:out value="${pageTitle}" />
 		</h1>
-		<form action="doFindLoginId" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;">
+		<form action="doFindLoginPw" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;" target="_blank">
 		  <div>Name</div>
 		  <br>
-		  <input type="text" placeholder="이름을 입력해주세요." name="name">
+		  <input type="text" placeholder="로그인 아이디를 입력해주세요." name="loginId">
 		  <hr>
 		  <div>Email</div>
 		  <br>
 		  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">
 		  <hr>
-		  <input type="submit" value="아이디 찾기">
+		  <input type="submit" value="비밀번호 찾기">
 		  <input type="button" value="뒤로가기" onclick="history.back();">
 		</form>
 	</jsp:attribute>

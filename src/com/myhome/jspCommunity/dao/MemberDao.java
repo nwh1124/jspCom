@@ -105,4 +105,24 @@ public class MemberDao {
 		return member;		
 	}
 
+	public Member getMemberByNameAndEmail(String name, Object email) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT *");
+		sql.append("FROM member");
+		sql.append("WHERE name = ?", name);
+		sql.append("AND email = ?", email);
+		
+		Map<String, Object> map = MysqlUtil.selectRow(sql);		
+		
+		if( map.isEmpty() ) {
+			return null;
+		}
+		
+		Member member = new Member(map);
+		
+		return member;
+	}
+
 }

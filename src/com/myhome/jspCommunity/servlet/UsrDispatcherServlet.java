@@ -52,6 +52,10 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = memberController.showWhoami(req,resp);
 			}else if(actionMethodName.equals("getLoginIdDup")) {
 				jspPath = memberController.getLoginIdDup(req,resp);
+			}else if(actionMethodName.equals("findLoginId")) {
+				jspPath = memberController.showFindLoginId(req,resp);
+			}else if(actionMethodName.equals("doFindLoginId")) {
+				jspPath = memberController.doFindLoginId(req,resp);
 			}
 			
 		}else if(controllerName.equals("article")) {

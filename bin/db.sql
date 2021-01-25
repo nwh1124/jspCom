@@ -1,0 +1,133 @@
+DROP DATABASE IF EXISTS jspCommunity;
+
+CREATE DATABASE jspCommunity;
+
+USE jspCommunity;
+
+CREATE TABLE `member`(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+loginId CHAR(50) NOT NULL UNIQUE,
+loginPw CHAR(200) NOT NULL,
+`name` CHAR(50) NOT NULL,
+`nickname` CHAR(50) NOT NULL,
+email CHAR(50) NOT NULL,
+phoneNumber CHAR(50) NOT NULL,
+authLever TINYINT(1) NOT NULL DEFAULT 2 
+COMMENT '0: 탈퇴 1: 정지: 2: 미인증 3: 인증 4: 관리자',
+loginPwManage TINYINT(1) NOT NULL,
+eamilAuth TINYINT(1) NOT NULL
+);
+
+CREATE TABLE cMessage(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+`body` TEXT NOT NULL,
+senderMemberId INT(10) UNSIGNED NOT NULL,
+receiverMemberId INT(10) UNSIGNED NOT NULL,
+receiverDate DATETIME
+);
+
+CREATE TABLE board(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+`code` CHAR(50) UNIQUE,
+`name` CHAR(50) UNIQUE
+);
+
+CREATE TABLE article(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+title CHAR (100) NOT NULL,
+`body` LONGTEXT NOT NULL,
+memberId INT(10) NOT NULL,
+boardId INT(10) NOT NULL,
+hitsCount INT(10) NOT NULL DEFAULT 0,
+likesCount INT(10) NOT NULL DEFAULT 0,
+commentsCount INT(10) NOT NULL DEFAULT 0
+);
+
+CREATE TABLE recommend(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+relType CHAR(50) NOT NULL,
+relId INT(10) UNSIGNED NOT NULL,
+`point` TINYINT(1) NOT NULL DEFAULT 1
+);
+
+CREATE TABLE reply(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+relType CHAR(50) NOT NULL,
+relId INT(10) UNSIGNED NOT NULL,
+delDate DATETIME,
+delStatus TINYINT(1) NOT NULL
+);
+
+CREATE TABLE `file`(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+originalFileName CHAR(100) NOT NULL,
+fileExt CHAR(50) NOT NULL,
+typeCode CHAR(20) NOT NULL,
+type2Code CHAR(20) NOT NULL,
+fileSize INT(10) UNSIGNED NOT NULL,
+fileNo INT(10) UNSIGNED NOT NULL,
+fileDir CHAR(20) NOT NULL,
+fileExtTypeCode CHAR(20) NOT NULL,
+fileExtType2Code CHAR(20) NOT NULL
+);
+
+CREATE TABLE chatRoom(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+title CHAR (100) NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+delDate DATETIME,
+delStatus TINYINT(1) NOT NULL
+);
+
+CREATE TABLE chatRoomMsg(
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+chatRoomId INT(10) UNSIGNED NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+`body` TEXT NOT NULL,
+delDate DATETIME,
+delStatus TINYINT(1) NOT NULL
+);
+
+INSERT  INTO `article`(`id`,`regDate`,`updateDate`,`title`,`body`,`memberId`,`boardId`,`hitsCount`) VALUES 
+(1,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목1','내용1',1,1,0),
+(2,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목2','내용2',1,2,0),
+(3,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목3','내용3',1,1,0),
+(4,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목4','내용4',2,1,0),
+(5,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목5','내용5',2,2,0),
+(6,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목5','내용5',1,3,0),
+(7,'2021-01-07 12:42:11','2021-01-07 12:42:11','제목5','내용5',2,3,0),
+(8,'2021-01-07 19:05:34','2021-01-07 19:05:34','제목jsp','내용jsp',1,3,0);
+
+INSERT  INTO `board`(`id`,`regDate`,`updateDate`,`code`,`name`) VALUES 
+(1,'2021-01-07 12:42:11','2021-01-07 12:42:11','free','자유'),
+(2,'2021-01-07 12:42:11','2021-01-07 12:42:11','notice','공지사항'),
+(3,'2021-01-07 12:42:11','2021-01-07 12:42:11','guestBook','방명록');
+
+INSERT  INTO `member`(`id`,`regDate`,`updateDate`,`name`,`nickname`,`email`,`loginId`,`loginPw`) VALUES 
+(1,'2021-01-07 12:42:11','2021-01-07 12:42:11','김가나','가나초콜렛','nwh0716@gmail.com','user1','user1'),
+(2,'2021-01-07 12:42:11','2021-01-07 12:42:11','김다라','무구정광대다라니경','nwh0716@gmail.com','user2','user2');
+
+SELECT *
+FROM article;

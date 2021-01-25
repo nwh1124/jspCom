@@ -8,8 +8,6 @@
 
 <%@ include file="../../part/head.jspf" %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-
 <t:layout>
 	<jsp:attribute name="contentBody">
 	<script>
@@ -40,7 +38,7 @@
 						}						
 						
 						if( data.resultCode.substr(0, 2) == "S-" ){							
-							doJoinForm__checkedLoginId = data.loginId;
+							DoJoinForm__checkedLoginId = data.loginId;		
 						}
 						
 					},
@@ -64,70 +62,55 @@
 				return false;
 
 			}
-									
+						
 			if (form.loginId.value != doJoinForm__checkedLoginId) {
 				alert("중복 체크를 해주세요.");
 				form.btnLoginIdDupCheck.focus();
 				return false;
 
 			}
-			
 			form.loginPw.value = form.loginPw.value.trim();
-			
 			if (form.loginPw.value.length == 0) {
 				alert("PASSWORD를 입력해주세요.");
 				form.loginPw.focus();
 				return false;
-				
+
 			}
-			
 			form.loginPwCh.value = form.loginPwCh.value.trim();
-			
 			if (form.loginPwCh.value == 0) {
 				alert("PASSWORD Check를 입력해주세요.");
 				form.loginPwCh.focus();
 				return false;
 
 			}
-				
-			form.loginPwCh.value = form.loginPwCh.value.trim();
-			
 			if (form.loginPwCh.value != form.loginPw.value) {
 				alert("PASSWORD가 일치하지 않습니다.");
 				form.loginPwCh.focus();
 				return false;
-				
+
 			}
-			
 			form.name.value = form.name.value.trim();
-			
 			if (form.name.value == 0) {
 				alert("이름을 입력해주세요.");
 				form.name.focus();
 				return false;
-				
+
 			}
-			
 			form.nickname.value = form.nickname.value.trim();
-			
 			if (form.nickname.value == 0) {
 				alert("닉네임을 입력해주세요.");
 				form.nickname.focus();
 				return false;
-				
+
 			}
-			
 			form.email.value = form.email.value.trim();
-			
 			if (form.email.value == 0) {
 				alert("email을 입력해주세요.");
 				form.email.focus();
 				return false;
-				
+
 			}
-			
 			form.phoneNum.value = form.phoneNum.value.trim();
-			
 			if (form.phoneNum.value == 0) {
 				alert("휴대폰 번호를 입력해주세요.");
 				form.phoneNum.focus();
@@ -135,11 +118,7 @@
 
 			}
 
-			form.loginPwReal.value = sha256(form.loginPw.value);
-			form.loginPw.value = "";
-			form.loginPwCh.value = "";
-
-			form.submit();
+			return true;
 			doJoinForm__submited = true;
 		}
 	</script>
@@ -148,7 +127,6 @@
 			<c:out value="${pageTitle}" />
 		</h1>
 		<form action="doJoin" method="POST" onsubmit="return doJoinForm__submit(this); return false;">
-		  <input type="hidden" name="loginPwReal"/>
 		  <div>ID</div>
 		  <br>  
 		  <input type="text" placeholder="아이디를 입력해주세요." name="loginId">
@@ -164,7 +142,7 @@
 		  <hr>
 		  <div>Name</div>
 		  <br>
-		  <input type="text" placeholder="이름을 입력해주세요." name="name">
+		  <input type="text" placeholder="이름 입력해주세요." name="name">
 		  <hr>
 		  <div>Nickname</div>
 		  <br>

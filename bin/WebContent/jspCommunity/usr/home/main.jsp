@@ -18,7 +18,6 @@
 			<a href="../member/login">로그인</a>
 			<a href="../member/logout">로그아웃</a>
 			<a href="../member/whoami">회원정보</a>
-			<a href="../member/join">회원가입</a>
 		</div>
 	</jsp:attribute>
 </t:layout>

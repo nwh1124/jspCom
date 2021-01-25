@@ -39,7 +39,7 @@ public class UsrMemberController {
 		}
 		
 		String loginId = (String)req.getParameter("loginId");
-		String loginPw = (String)req.getParameter("loginPw");
+		String loginPw = (String)req.getParameter("loginPwReal");
 		String name = (String)req.getParameter("name");
 		String nickname = (String)req.getParameter("nickname");
 		String email = (String)req.getParameter("email");
@@ -112,9 +112,11 @@ public class UsrMemberController {
 
 	public String doLogout(HttpServletRequest req, HttpServletResponse resp) {
 		
-		req.setAttribute("loginedMember", null);
-		req.setAttribute("islogined", false);
-		req.setAttribute("loginedMemberId", 0);
+		HttpSession session = req.getSession();
+		
+		session.setAttribute("loginedMember", null);
+		session.setAttribute("islogined", false);
+		session.setAttribute("loginedMemberId", null);
 		Container.session.setLogined(false);
 		Container.session.setLoginedMemberId(-1);
 
@@ -145,10 +147,29 @@ public class UsrMemberController {
 		
 		rs.put("resultCode", resultCode);
 		rs.put("msg", msg);
-		rs.put("loingId", loginId);
+		rs.put("loginId", loginId);
 
 		req.setAttribute("data", Util.getJsonText(rs));
 		return "common/pure";
+	}
+
+	public String showFindLoginId(HttpServletRequest req, HttpServletResponse resp) {
+		
+		HttpSession session = req.getSession();
+		
+		return "/usr/member/findLoginId";
+	}
+
+	public String doFindLoginId(HttpServletRequest req, HttpServletResponse resp) {
+		
+		HttpSession session = req.getSession();
+		
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+		
+		Member member = memberService.getMemberByNameAndEamil(name, email);
+		
+		return null;
 	}
 
 }

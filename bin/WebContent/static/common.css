@@ -1,0 +1,312 @@
+/* 폰트 */
+@font-face {
+	font-family: 'LotteMartDream';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2')
+		format('woff2'),
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff')
+		format('woff');
+}
+
+@font-face {
+	font-family: 'LotteMartDream';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2')
+		format('woff2'),
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff')
+		format('woff');
+}
+
+@font-face {
+	font-family: 'LotteMartDream';
+	font-style: normal;
+	font-weight: 300;
+	src:
+		url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2')
+		format('woff2'),
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff')
+		format('woff');
+}
+
+html, .tui-editor-contents {
+	font-family: 'LotteMartDream', sans-serif !important;
+	text-decoration:none !important;
+}
+/* 폰트 */
+
+/* 노말라이즈 */
+body, ul, li{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+/* 노말라이즈 */
+/* 라이브러리 */
+.con{
+  width:1200px;
+  margin:0 auto;
+}
+
+.mobile-con{
+  min-width:430px;
+}
+
+.border-1p{
+  border:1px solid;
+}
+
+.flex-grow-1{
+  flex-grow:1;
+}
+/* 라이브러리 */
+/* 커스텀 */
+@media ( max-width:599px ) {
+  .visible-on-md-up {
+    display:none !important;
+  }
+}
+
+@media ( min-width:600px ) {
+  .visible-on-sm-down {
+    display:none !important;
+  }
+}
+/* 커스텀 */
+
+/* 바디 */
+.body-all{
+  height:96vh;
+  display:flex;
+  flex-direction:column;
+  margin-top:5px;
+  margin-bottom:10px;
+}
+/* 바디 */
+
+/* PC환경 */
+
+/* 탑 바 */
+.top-bar__logo{  
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-top:2px solid;
+  border-bottom:2px solid;
+  padding:20px 0;
+  font-size:3rem;
+}
+
+.top-bar__logo > i {
+  margin-right:10px;
+}
+/* 탑 바 */
+/* 메뉴 바 */
+.menu-bar__list > ul{
+  display:flex;
+  justify-content:space-around;
+}
+
+.menu-bar__list > ul > li{
+  display:flex;   
+  justify-content:center;
+  align-items:center;
+  width:calc(90%/4);
+  font-size:1.5rem;
+  padding:10px 0;
+}
+
+.menu-bar__list > ul > li > a{  
+  padding:10px 0;
+}
+
+.menu-bar__list > ul > li:hover > a{
+  background-color:black;
+  color:white;
+  display:block;
+  text-align:center;
+  border-radius:5px;
+  width:100%;
+  padding:10px 0;
+}
+/* 메뉴 바 */
+/* 메인 컨텐츠 */
+.main-content > .con{
+  height:100%;
+}
+
+.main-content__content-body{
+  height:100%;
+  border-top:2px solid;
+  border-bottom:2px solid;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-size:1rem;
+}
+
+.main-content__content-body:hover > a{
+	text-decoration:underline !important;
+}
+/* 메인 컨텐츠 */
+/* PC환경 */
+
+/* 모바일 */
+/* 탑 바 */
+.mobile-top-bar{
+  position:relative;
+}
+
+.mobile-top-bar__logo{  
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-top:2px solid;
+  border-bottom:2px solid;
+  padding:5px 0;
+  font-size:2rem;
+}
+
+.mobile-top-bar__logo > i {
+  margin-right:10px;
+}
+/* 탑 바 */
+/* 사이드 바 */
+.mobile-side-bar-btn-close, .mobile-side-bar-btn-open{
+  position:absolute;
+  top:5px;
+  left:0;
+  margin:7px;
+  width:30px;
+  height:30px;
+  font-size:2rem;
+  color:red;
+  cursor:pointer;
+}
+
+.mobile-side-bar-btn-open{
+  display:none;
+}
+
+.mobile-side-bar-btn-close.active{
+  display:none;
+}
+
+.mobile-side-bar-btn-open.active{
+  display:block;
+}
+
+.mobile-side-bar-btn.active{
+  display:none;
+}
+
+.mobile-side-bar__hidden-bar{
+  display:fixed;
+  position:absolute;
+  top:5.9vh;
+  left:-96vh;
+  height:90.8vh;
+  width:100%;
+  min-width:430px;
+  background-color:white;
+  color:black;
+  transition:all 0.5s;
+  border:1px solid;
+}
+
+.mobile-side-bar__hidden-bar.active{
+  left:-1px;
+}
+
+.mobile-side-bar__hidden-bar__menu-list {
+  position:absolute;
+  display:flex;  
+  flex-direction:column;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  box-sizing:border-box;
+}
+
+.mobile-side-bar__hidden-bar__menu-list > ul{
+  height:80%;
+}
+
+.mobile-side-bar__hidden-bar__menu-list > ul > li{
+  display:flex;
+  height:25%;
+  box-sizing:border-box;
+  justify-content:center;
+  align-items:center;
+  font-size:3rem;
+}
+
+.mobile-side-bar__hidden-bar__menu-list > ul > li:hover > a{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:90%;
+  height:80%;
+  background-color:black;
+  color:white;
+  border-radius:20px;
+}
+
+.mobile-side-bar__hidden-bar__menu-list > ul > li:hover > a > i {
+  margin-right:14px;
+}
+/* 사이드 바 */
+/* 카테고리 바 */
+.mobile-kategorie-bar__kategorie-list > ul{
+  display:flex;
+  justify-content:space-around;
+}
+
+.mobile-kategorie-bar__kategorie-list > ul > li{
+  display:flex;   
+  justify-content:center;
+  align-items:center;
+  width:calc(90%/4);
+  font-size:0.9rem;
+  padding:5px 0;
+}
+
+.mobile-kategorie-bar__kategorie-list > ul > li > a{  
+  padding:5px 0;
+}
+
+.mobile-kategorie-bar__kategorie-list > ul > li:hover > a{
+  background-color:black;
+  color:white;
+  display:block;
+  text-align:center;
+  border-radius:5px;
+  width:100%;
+  padding:5px 0;
+}
+/* 카테고리 바 */
+/* 메인 컨텐츠 */
+.mobile-main-content > .mobile-con{
+  height:100%;
+}
+
+.mobile-main-content__content-body{
+  height:100%;
+  border-top:2px solid;
+  border-bottom:2px solid;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-size:1rem;
+}
+/* 메인 컨텐츠 */
+/* 모바일 */

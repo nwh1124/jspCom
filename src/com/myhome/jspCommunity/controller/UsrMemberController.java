@@ -199,7 +199,7 @@ public class UsrMemberController {
 			return "common/redirect";
 		}
 		
-		memberService.sendTempLoginPwToEmail(member);
+		int sendRs = memberService.sendTempLoginPwToEmail(member);
 		
 		req.setAttribute("alertMsg", "등록된 " + member.getEmail() + "으로 임시 비밀번호를 발송했습니다.");
 		req.setAttribute("replaceUrl", "../member/login");

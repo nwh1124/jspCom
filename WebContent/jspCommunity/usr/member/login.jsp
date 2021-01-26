@@ -11,6 +11,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
+<style>
+.main-content__content-body > *:not(h1){
+	  flex-grow:1;
+}
+
+.main-content__content-body > form{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+</style>
+
 <t:layout >
 	<jsp:attribute name="contentBody">
 	

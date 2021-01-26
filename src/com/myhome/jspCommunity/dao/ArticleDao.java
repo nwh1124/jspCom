@@ -135,10 +135,21 @@ public class ArticleDao {
 		SecSql sql = new SecSql();
 		
 		sql.append("SELECT COUNT(*) AS cnt");
-		sql.append("FROM article");
+		sql.append("FROM article as A");
 		sql.append("WHERE 1");
 		if( boardId != 0 ) {	
 			sql.append("AND boardId = ?", boardId);
+		}
+		if(searchKeyword != null) {
+			if(searchKeywordType == null || searchKeywordType.equals("title")) {
+				sql.append("AND A.title LIKE CONCAT('%', ?, '%')", searchKeyword);
+			}
+			else if ( searchKeywordType.equals("body") ) {
+				sql.append("AND A.body LIKE CONCAT('%', ?, '%')", searchKeyword);
+			}
+			else if ( searchKeywordType.equals("titleAndBody") ) {
+				sql.append("AND (A.title LIKE CONCAT('%', ?, '%') OR A.body LIKE CONCAT('%', ?, '%')) ", searchKeyword, searchKeyword);
+			}
 		}
 		
 		return MysqlUtil.selectRowIntValue(sql);
@@ -150,6 +161,7 @@ public class ArticleDao {
 		
 		sql.append("SELECT A.*");
 		sql.append(", M.name as extra__writer");
+		sql.append(", M.nickname as extra__nickname");
 		sql.append(", B.name as extra__boardName");
 		sql.append(", B.code as extra__boardCode");
 		sql.append("FROM article as A");

@@ -17,8 +17,9 @@ public class Article {
 	private int hitsCount;
 	private int likesCount;
 	private int commentsCount;
-	
+
 	private String extra__writer;
+	private String extra__nickname;
 	private String extra__boardName;
 	private String extra__boardCode;
 		
@@ -38,8 +39,12 @@ public class Article {
 		this.hitsCount = (int)map.get("hitsCount");
 		this.hitsCount = (int)map.get("likesCount");
 		this.hitsCount = (int)map.get("commentsCount");
-		
+
 		this.extra__writer = (String)map.get("extra__writer");
+		this.extra__nickname = (String)map.get("extra__nickname");
+		if(this.extra__nickname.length() > 6) {
+			this.extra__nickname = this.extra__nickname.substring(0, 6) + "...";
+		}
 		this.extra__boardName = (String)map.get("extra__boardName");
 		this.extra__boardCode = (String)map.get("extra__boardCode");
 	}

@@ -12,26 +12,30 @@
 <t:layout >
 	<jsp:attribute name="contentBody">
 		<h1><c:out value="${pageTitle}"/></h1>
-		
-		<hr />
+		<span>
 		regDate :
 		${member.regDate}
-		<hr />
+		</span>
+		<span>
 		ID :
 		${member.loginId}
-		<hr />
+		</span>
+		<span>
 		Name :
 		${member.name}
-		<hr />
+		</span>
+		<span>
 		Nickname :
 		${member.nickname}
-		<hr />
+		</span>
+		<span>
 		Email :
 		${member.email}
-		<hr />
+		</span>
+		<span>
 		PhoneNumber :
 		${member.phoneNumber}
-		<hr />
+		</span>
 			
 		 <input type="button" value="뒤로가기" onclick="history.back();">
 	</jsp:attribute>

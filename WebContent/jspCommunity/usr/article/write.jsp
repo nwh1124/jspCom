@@ -43,6 +43,12 @@ function doWriteForm__submit(form){
 }
 </script>
 
+<style>
+form{
+width:100%;
+}
+</style>
+
 <t:layout >
 	<jsp:attribute name="contentBody">
 		<h1><c:out value="${pageTitle}"/></h1>
@@ -53,7 +59,7 @@ function doWriteForm__submit(form){
 		  <br>
 		  <div>제목</div>
 		  <br>
-		  <input type="text" name="title">
+		  <input type="text" name="title" maxlength="50">
 		  <hr>
 		  <br>
 		  <div>내용</div>

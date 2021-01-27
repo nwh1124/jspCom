@@ -53,6 +53,11 @@ public class ArticleService {
 	public int getArticlesCountByBoardId(int boardId, String searchKeyword, String searchKeywordType) {
 		return articleDao.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
 	}
+
+	public List<Article> getArticlesByBoardId(int boardId, int limitStart, int limitCount, String searchKeyword,
+			String searchKeywordType) {
+		return articleDao.getArticlesByBoardId(boardId, limitStart, limitCount, searchKeyword, searchKeywordType);
+	}
 	
 	
 

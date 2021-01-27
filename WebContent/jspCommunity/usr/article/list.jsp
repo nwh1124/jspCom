@@ -4,6 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="pageTitle" value="게시물 목록"/>
+<c:set var="itemsInAPage" value="10"/>
+<c:set var="btnsInAPageIndex" value="10"/>
+<c:set var="articleCount" value="${articles.size() }"/>
+<c:set var="totalPage" value="${articleCount / itemsInAPage }"/>
+<c:set var="btns" value="${btns}"/>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
@@ -23,6 +28,7 @@
   flex-direction:column;
   align-items:center;
   width:100%;
+  flex-grow:1;
 }
 
 .main-content__articleListSubMenu + ul > li{
@@ -38,18 +44,21 @@
 }
 
 .main-content__articleListSubMenu + ul > li > span:first-child{
-  width:10%;
+  width:8%;
+  text-align:left;
 }
 .main-content__articleListSubMenu + ul > li > span:nth-child(2){
-  width:20%;
+  width:8%;
+  text-align:left;
 }
 
 .main-content__articleListSubMenu + ul > li > span:nth-child(3){
-  width:5%;  
+  width:8%;  
+  text-align:right;
 }
 
 .main-content__articleListSubMenu + ul > li > span:nth-child(4){
-  width:45%;  
+  width:56%;  
   text-align:left;
 }
 
@@ -132,7 +141,7 @@
 		</span>
 		<span>		
 		작성일 :
-		${article.regDate}
+		${article.regDate.substring(5,10)}
 		</span>
 		<span>	
 		제목 :
@@ -149,6 +158,28 @@
 	</li>
 	</c:forEach>
 	</ul>
+	
+	<style>
+		.articleListPageBtns {
+		height:40px;
+		}
+	
+		.articleListPageBtns > a{
+		font-size:1.5rem;
+		padding:10px;
+		margin-bottom:10px;
+		}
+		
+		.articleListPageBtns > a:hover{
+		background-color:black;
+		color:white;
+		}
+	</style>
+	<div class="articleListPageBtns">
+		<c:forEach var="btn" items="${btns}">
+			${btn }
+		</c:forEach>
+	</div>
 	</jsp:attribute>
 </t:layout>
 

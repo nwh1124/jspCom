@@ -1,6 +1,7 @@
 package com.myhome.jspCommunity.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,7 @@ import com.myhome.jspCommunity.dto.Member;
 import com.myhome.jspCommunity.service.ArticleService;
 import com.myhome.jspCommunity.service.BoardService;
 import com.myhome.jspCommunity.service.MemberService;
+import com.myhome.util.Util;
 
 public class UsrArticleController {
 	
@@ -37,20 +39,68 @@ public class UsrArticleController {
 			return "common/redirect";
 		}
 		
-		int boardId = Integer.parseInt((String)req.getParameter("boardId"));
 		String searchKeyword = req.getParameter("searchKeyword");
 		String searchKeywordType = req.getParameter("searchKeywordType");
+
+		int boardId = Integer.parseInt((String)req.getParameter("boardId"));
 		int totalCount = articleService.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
 		
-		List<Article> articles = articleService.getArticlesByBoardId(boardId, searchKeyword, searchKeywordType);
+		int itemsInAPage = 15;
+		int page = Util.getAsInt(req.getParameter("page"), 1);
+		int limitStart = (page - 1) * itemsInAPage;		
+		
+		List<Article> articles = articleService.getArticlesByBoardId(boardId, limitStart, itemsInAPage, searchKeyword, searchKeywordType);
 		Board board = boardService.getBoardByBoardId(boardId);
 		
 		if ( articles == null ) {
 			req.setAttribute("alertMsg", boardId + "번 게시판은 존재하지 않습니다.");
 			req.setAttribute("replaceUrl", "../home/main");
 			return "common/redirect";
-		}	
+		}
 		
+		List<String> btns = new ArrayList<>();
+		
+		int startPage = page;		
+		int lastPage = page + 10;
+		
+		int beforeBtn = page - 10;
+		int nextBtn = page + 11;
+		
+		if(lastPage > totalCount / itemsInAPage) {
+			lastPage = totalCount / itemsInAPage;
+		}
+		if( lastPage == totalCount / itemsInAPage ) {
+			startPage = lastPage - 10;
+		}
+		if( startPage < 1 ) {
+			startPage = 1;
+		}
+
+		if( beforeBtn < 11) {
+			btns.add("<a href=\"list?boardId=3&page=" + beforeBtn + "\" hidden>" + "이전" + "</a>");
+		}
+		else {
+			btns.add("<a href=\"list?boardId=3&page=" + beforeBtn + "\">" + "이전" + "</a>");
+		}
+		
+		for(int i = startPage; i <= lastPage + 1; i++) {
+			if(page == i) {
+				btns.add("<a href=\"list?boardId=3&page=" + i + "\" class=\"red\">" + i + "</a>");
+			}else {
+				btns.add("<a href=\"list?boardId=3&page=" + i + "\">" + i + "</a>");
+			}
+		}
+		
+		if( nextBtn > lastPage + 11) {
+			btns.add("<a href=\"list?boardId=3&page=" + nextBtn + "\" hidden>" + "다음" + "</a>");
+		}
+		else {
+			btns.add("<a href=\"list?boardId=3&page=" + nextBtn + "\">" + "다음" + "</a>");
+		}
+		
+		
+		
+		req.setAttribute("btns", btns);
 		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("articles", articles);
 		req.setAttribute("board", board);

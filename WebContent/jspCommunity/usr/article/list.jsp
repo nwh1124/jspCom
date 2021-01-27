@@ -8,8 +8,7 @@
 <c:set var="btnsInAPageIndex" value="10"/>
 <c:set var="articleCount" value="${articles.size() }"/>
 <c:set var="totalPage" value="${articleCount / itemsInAPage }"/>
-<c:set var="btns" value="${btns}"/>
-
+<c:set var="page" value="${param.page}"/>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <%@ include file="../../part/head.jspf" %>
@@ -133,30 +132,30 @@
 		</div>		
 	</div>
 	<ul>
-	<c:forEach var="article" items="${articles}">
-	<li>
-		<span>	
-		번호 :
-		${article.id}
-		</span>
-		<span>		
-		작성일 :
-		${article.regDate.substring(5,10)}
-		</span>
-		<span>	
-		제목 :
-		</span>
-		<span>
-		<a href="detail?id=${article.id}&boardId=${article.boardId}">${article.title}</a>
-		</span>
-		<span>		
-		작성자 :
-		</span>
-		<span>
-		${article.extra__nickname}
-		</span>
-	</li>
-	</c:forEach>
+		<c:forEach var="article" items="${articles}">
+		<li>
+			<span>	
+			번호 :
+			${article.id}
+			</span>
+			<span>		
+			작성일 :
+			${article.regDate.substring(5,10)}
+			</span>
+			<span>	
+			제목 :
+			</span>
+			<span>
+			<a href="detail?id=${article.id}&boardId=${article.boardId}">${article.title}</a>
+			</span>
+			<span>		
+			작성자 :
+			</span>
+			<span>
+			${article.extra__nickname}
+			</span>
+		</li>
+		</c:forEach>
 	</ul>
 	
 	<style>
@@ -176,9 +175,20 @@
 		}
 	</style>
 	<div class="articleListPageBtns">
-		<c:forEach var="btn" items="${btns}">
-			${btn }
-		</c:forEach>
+	<c:if test="${pageBoxStartBeforeBtnNeedToShow}">
+		<c:set var="aUrl" value="?page=${pageBoxStartBeforePage}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">◀</a>
+	</c:if>
+	<c:forEach var="i" begin="${pageBoxStartPage}" end="${pageBoxEndPage}" step="1">
+		<c:set var="aClass" value="${page == i ? 'red' : ''}" />
+		<c:set var="aUrl" value="?page=${i}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a class="${aClass}" href="${aUrl}">${i}</a>
+	</c:forEach>
+	
+	<c:if test="${pageBoxEndAfterBtnNeedToShow}">
+		<c:set var="aUrl" value="?page=${pageBoxEndAfterPage}&boardId=${param.boardId}&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">▶</a>
+	</c:if>
 	</div>
 	</jsp:attribute>
 </t:layout>

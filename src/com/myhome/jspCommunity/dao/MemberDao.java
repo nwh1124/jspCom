@@ -177,4 +177,35 @@ public class MemberDao {
 		
 	}
 
+	public void doModify(int memberId, String loginId, String loginPw, String name, String nickname, String email,
+			String phoneNumber) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("UPDATE member");
+		sql.append("SET regDate = now()");
+		if( loginId.trim().length() > 0 ) {	
+			sql.append(", loginId = ?", loginId);
+		}
+		if( loginPw.trim().length() > 0 ) {	
+			sql.append(", loginPw = ?", loginPw);
+		}
+		if( name.trim().length() > 0 ) {	
+			sql.append(", name = ?", name);
+		}
+		if( nickname.trim().length() > 0 ) {	
+			sql.append(", nickname = ?", nickname);
+		}
+		if( email.trim().length() > 0 ) {	
+			sql.append(", email = ?", email);
+		}
+		if( phoneNumber.trim().length() > 0 ) {	
+			sql.append(", phoneNumber = ?", phoneNumber);
+		}
+		sql.append("WHERE id = ?", memberId);
+		
+		MysqlUtil.update(sql);
+		
+	}
+
 }

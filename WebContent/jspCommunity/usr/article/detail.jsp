@@ -12,11 +12,19 @@
 
 <t:layout >
 	<jsp:attribute name="contentBody">
+	
+	<script>
+		.content-body__article-detail__subMenu{
+			flex-grow:0;
+		}
+	</script>
 
 		<h1><c:out value="${pageTitle}"/></h1>
 		<div class="content-body__article-detail__subMenu">
-			<a href="modify?id=${article.id}">수정</a>
-			<a href="delete?id=${article.id}">삭제</a>
+			<c:if test="${ sessionScope.loginedMemberId > 0 && isWriter}">
+				<a href="modify?id=${article.id}">수정</a>
+				<a href="delete?id=${article.id}">삭제</a>
+			</c:if>
 			<a href="list?boardId=${article.boardId}">목록</a>
 		</div>
 		<div class="content-body__article-detail">
@@ -31,7 +39,7 @@
 			</div>
 			<span class="article-detail__title">제목 : ${article.title}</span>
 			<div class="article-detail__body">
-			<span>${article.body}</span> 
+			<span hidden>${article.body}</span> 
 			<div class="toast-ui-viewer">
 			</div>
 			</div>

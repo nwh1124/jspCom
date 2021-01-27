@@ -90,6 +90,12 @@ public class MemberService {
 	private void modify(Map<String, Object> param) {
 		memberDao.modify(param);		
 	}
+
+	public void doModify(int memberId, String loginId, String loginPw, String name, String nickname, String email,
+			String phoneNumber) {
+		memberDao.doModify(memberId, loginId, loginPw, name, nickname, email, phoneNumber);
+		
+	}
 	
 	
 

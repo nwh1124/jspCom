@@ -10,9 +10,19 @@
 
 <%@ include file="../../part/head.jspf" %>
 
+<style>
+.main-content__index{
+width:100%;
+display:flex;
+justify-content:space-around;
+font-size:1.3rem;
+padding-top:20px;
+}
+</style>
+
 <t:layout >
 	<jsp:attribute name="contentBody">
-		<div>
+		<div class="main-content__index">
 			<a href="../article/write?boardId=3">게시물 작성</a>
 			<a href="../article/list?boardId=3">게시물 목록</a>
 			<a href="../member/login">로그인</a>

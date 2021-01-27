@@ -60,6 +60,10 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = memberController.showFindLoginPw(req,resp);
 			}else if(actionMethodName.equals("doFindLoginPw")) {
 				jspPath = memberController.doFindLoginPw(req,resp);
+			}else if(actionMethodName.equals("memberModify")) {
+				jspPath = memberController.showMemberModify(req,resp);
+			}else if(actionMethodName.equals("doMemberModify")) {
+				jspPath = memberController.doMemberModify(req,resp);
 			}
 			
 		}else if(controllerName.equals("article")) {

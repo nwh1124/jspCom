@@ -156,7 +156,7 @@ a{
   font-size:1rem;
 }
 
-.main-content__content-body > *:not(h1){
+.main-content__content-body > *:not(h1):not(.content-body__article-detail__subMenu):not(input){
   flex-grow:1;
 }
 

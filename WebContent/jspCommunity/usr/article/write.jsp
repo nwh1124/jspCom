@@ -46,6 +46,7 @@ function doWriteForm__submit(form){
 <style>
 form{
 width:100%;
+padding-bottom:20px;
 }
 </style>
 
@@ -57,9 +58,8 @@ width:100%;
 		  <input type="number" value="3"name="boardId" hidden>
 		  <input type="hidden" name="body"/>
 		  <br>
-		  <div>제목</div>
 		  <br>
-		  <input type="text" name="title" maxlength="50">
+		  <input type="text" name="title" size="80" maxlength="80" placeholder="제목을 입력해주세요.">
 		  <hr>
 		  <br>
 		  <div>내용</div>

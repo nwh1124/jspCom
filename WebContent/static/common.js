@@ -48,7 +48,7 @@ function Editor__init() {
       el: node,
       previewStyle: 'vertical',
       initialValue: initialValue,
-      height:600,
+      height:500,
       width:1000,
       plugins: [toastui.Editor.plugin.codeSyntaxHighlight, youtubePlugin, codepenPlugin]
     });

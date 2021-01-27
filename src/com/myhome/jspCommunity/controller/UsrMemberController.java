@@ -197,5 +197,26 @@ public class UsrMemberController {
 		return "common/redirect";
 	}
 
+	public String showMemberModify(HttpServletRequest req, HttpServletResponse resp) {
+		return "/usr/member/memberModify";
+	}
+
+	public String doMemberModify(HttpServletRequest req, HttpServletResponse resp) {
+		
+		int memberId = Integer.parseInt((String)req.getParameter("memberId"));
+		String loginId = req.getParameter("loginId");
+		String loginPw = req.getParameter("loginPw");
+		String name = req.getParameter("name");
+		String nickname = req.getParameter("nickname");
+		String email = req.getParameter("email");
+		String phoneNumber = req.getParameter("phoneNumber");
+		
+		memberService.doModify(memberId, loginId, loginPw, name, nickname, email, phoneNumber);
+		
+		req.setAttribute("alertMsg", memberId + " 번 회원의 정보가 수정되었습니다.");
+		req.setAttribute("replaceUrl", "../member/whoami");
+		return "common/redirect";
+	}
+
 }
 

@@ -10,18 +10,36 @@
 <%@ include file="../../part/head.jspf" %>
 
 <script>
+let doWriteForm__submited = false;
+
 function doWriteForm__submit(form){
+
+	if(doWriteForm__submited){
+		alert('처리중입니다.');
+		return;
+	}
+	
 	if( form.title.value == "" ){
 		alert("제목을 입력해주세요.");
 		form.title.focus();
 		return false;
-	}else if( form.body.value == "" ){
-		alert("내용을 입력해주세요.");
-		form.body.focus();
-		return false;
-	}else {
-		return true;
 	}
+
+	const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	const body = editor.getMarkdown().trim();
+	
+	if ( body.length == 0 ) {
+		alert('내용을 입력해주세요.');
+		editor.focus();
+		
+		return;
+	}
+	
+	form.body.value = body;
+
+	form.submit();
+	doWriteForm__submited = true;
+	
 }
 </script>
 
@@ -31,6 +49,7 @@ function doWriteForm__submit(form){
 		<form action="doWrite" onsubmit="return doWriteForm__submit(this); return false;">
 		  <input type="number" value="${memberId}" name="memberId" hidden>
 		  <input type="number" value="3"name="boardId" hidden>
+		  <input type="hidden" name="body"/>
 		  <br>
 		  <div>제목</div>
 		  <br>
@@ -39,7 +58,8 @@ function doWriteForm__submit(form){
 		  <br>
 		  <div>내용</div>
 		  <br>
-		  <textarea name="body"></textarea>
+		  <script type="text/x-template"></script>
+		  <div class="toast-ui-editor"></div>
 		  <hr>
 		  <input type="submit" value="등록">
 		  <input type="button" value="뒤로가기" onclick="history.back();">

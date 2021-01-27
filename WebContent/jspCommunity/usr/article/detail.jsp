@@ -12,16 +12,6 @@
 
 <t:layout >
 	<jsp:attribute name="contentBody">
-	
-	<script>
-	function toastViewer() {	
-		var viewer = new toastui.Editor.factory({
-			el : document.querySelector('.article-detail__body'),
-			viewer : true			
-		});
-	}
-	toastViewer();
-	</script>
 
 		<h1><c:out value="${pageTitle}"/></h1>
 		<div class="content-body__article-detail__subMenu">
@@ -40,7 +30,11 @@
 				<span>댓글수 : ${article.commentsCount}</span>
 			</div>
 			<span class="article-detail__title">제목 : ${article.title}</span>
-			<span class="article-detail__body">내용 : ${article.body}</span>
+			<div class="article-detail__body">
+			<span>${article.body}</span> 
+			<div class="toast-ui-viewer">
+			</div>
+			</div>
 		</div>
 	</jsp:attribute>
 </t:layout>

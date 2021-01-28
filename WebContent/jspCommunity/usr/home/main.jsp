@@ -30,7 +30,10 @@ padding-top:20px;
 			<a href="../member/whoami">회원정보</a>
 			<a href="../member/join">회원가입</a>
 			<a href="../member/findLoginId">아이디 찾기</a>
-			<a href="../member/findLoginPw">비밀번호 찾기</a>
+			<a href="../member/findLoginPw">비밀번호 찾기</a>			
+		</div>
+		<div>
+			<a href="#">${data}</a>
 		</div>
 	</jsp:attribute>
 </t:layout>

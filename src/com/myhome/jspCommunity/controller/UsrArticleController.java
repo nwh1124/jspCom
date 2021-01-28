@@ -176,9 +176,9 @@ public class UsrArticleController {
 
 	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
 		
-		Member loginedMember =  (Member)req.getAttribute("loginedMember");
+		Member loginedMember =  memberService.getMemberById(Integer.parseInt(req.getSession().getAttribute("loginedMemberId").toString()));
 		
-		int articleMemberId = articleService.getArticleMemberIdById(Integer.parseInt(req.getParameter("id")));
+		int articleMemberId = articleService.getArticleMemberIdById(Integer.parseInt(req.getParameter("articleId")));
 		if ( articleMemberId != loginedMember.getId()) {
 			req.setAttribute("alertMsg", "권한이 없습니다.");
 			req.setAttribute("historyBack", true);

@@ -28,9 +28,14 @@
 			
 			if (form.title.value == "") {
 				alert("수정할 제목을 입력해주세요.");
-				form.title.focus();
+				
 				return false;
-			}
+			}	
+
+			const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+			const body = editor.getMarkdown().trim();
+
+			form.body.value = body;
 
 			form.submit();
 			doModifyForm__submitted = true;
@@ -40,15 +45,16 @@
 		<h1><c:out value="${pageTitle}" /></h1>
 		<form action="doModify" method="POST" onsubmit="return doModifyForm__submit(this); return false;">
 		  <input type="hidden" value="${param.id}" name="articleId">
+  		  <input type="hidden" name="body">
 		  <div>수정할 제목</div>
 		  <br>
-		  <input type="text" name="title" size="80" maxlength="80" placeholder="제목을 입력해주세요.">
+		  <input type="text" name="title" size="80" maxlength="80" placeholder="제목을 입력해주세요." value="${title}">
 		  <hr>
 		  <br>
 		  <div>수정할 내용</div>
 		  <br>
 		  <script type="text/x-template"></script>
-		  <div class="toast-ui-editor"></div>
+		  <div class="toast-ui-editor" ></div>
 		  <hr>
 		  <input type="submit" value="수정">
 		  <input type="button" value="뒤로가기" onclick="history.back();">

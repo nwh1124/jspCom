@@ -56,8 +56,7 @@ public class UsrMemberController {
 		return "usr/member/login";
 	}
 
-	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
-		
+	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {		
 		HttpSession session = req.getSession();
 		
 		List<Member> members = memberService.getMembers();
@@ -67,8 +66,15 @@ public class UsrMemberController {
 				if( req.getParameter("loginPwReal").equals(member.getLoginPw()) ) {
 					
 					session.setAttribute("loginedMemberId", member.getId());
-					
+										
 					req.setAttribute("alertMsg", "로그인 되었습니다.");
+					
+					if( Container.attrService.getValue("member__" + member.getId() + "__extra__isUsingTempPassword").equals("") == false ) {
+						if( Integer.parseInt(Container.attrService.getValue("member__" + member.getId() + "__extra__isUsingTempPassword")) == 1 ) {
+							req.setAttribute("alertMsg__tempPw", "사용 중인 임시 비밀번호를 변경해주세요.");
+							req.setAttribute("alertMsg__tempPwN", "1");
+						}
+					}
 					req.setAttribute("replaceUrl", "../home/main");			
 					return "common/redirect";
 					
@@ -108,8 +114,6 @@ public class UsrMemberController {
 		session.setAttribute("loginedMember", null);
 		session.setAttribute("islogined", false);
 		session.setAttribute("loginedMemberId", null);
-		Container.session.setLogined(false);
-		Container.session.setLoginedMemberId(-1);
 
 		req.setAttribute("alertMsg", "로그아웃 되었습니다.");
 		req.setAttribute("replaceUrl", "../home/main");

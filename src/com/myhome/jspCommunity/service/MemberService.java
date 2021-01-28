@@ -13,9 +13,12 @@ import com.myhome.util.Util;
 
 public class MemberService {
 	
-	EmailService emailService = new EmailService();
+	private AttrService attrService = new AttrService();
+	private EmailService emailService = new EmailService();
 	
 	MemberDao memberDao;
+
+	;
 	
 	public MemberService() {
 		memberDao = Container.memberDao;
@@ -85,6 +88,7 @@ public class MemberService {
 		modifyParam.put("loginPw", Util.sha256(tempPassword));
 		modify(modifyParam);
 		
+		attrService.setValue("member__" + actor.getId() + "__extra__isUsingTempPassword", "1", null);
 	}
 
 	private void modify(Map<String, Object> param) {

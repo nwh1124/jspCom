@@ -22,11 +22,12 @@
 		<h1><c:out value="${pageTitle}"/></h1>
 		<div class="content-body__article-detail__subMenu">
 			<c:if test="${ sessionScope.loginedMemberId > 0 && isWriter}">
-				<a href="modify?id=${article.id}">수정</a>
+				<a href="modify?id=${article.id}&title=${article.title}&body=${article.body}">수정</a>
 				<a href="delete?id=${article.id}">삭제</a>
 			</c:if>
 			<a href="list?boardId=${article.boardId}">목록</a>
 		</div>
+		<br>
 		<div class="content-body__article-detail">
 			<div class="article-detail__subInfo">
 				<span>번호 : ${article.id}</span>
@@ -37,7 +38,9 @@
 				<span>추천수 : ${article.likesCount}</span>
 				<span>댓글수 : ${article.commentsCount}</span>
 			</div>
+			<hr>
 			<span class="article-detail__title">제목 : ${article.title}</span>
+			<hr>
 			<div class="article-detail__body">
 			<span hidden>${article.body}</span> 
 			<div class="toast-ui-viewer">

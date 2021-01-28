@@ -167,6 +167,11 @@ public class MemberDao {
 			sql.append(", authLevel = ?", args.get("authLevel"));
 		}
 		
+		if (args.get("authLevel") != null) {
+			needToUpdate = true;
+			sql.append(", authLevel = ?", args.get("authLevel"));
+		}
+		
 		if ( needToUpdate == false ) {
 			return 0;
 		}
@@ -184,11 +189,9 @@ public class MemberDao {
 		
 		sql.append("UPDATE member");
 		sql.append("SET regDate = now()");
-		if( loginId.trim().length() > 0 ) {	
-			sql.append(", loginId = ?", loginId);
-		}
 		if( loginPw.trim().length() > 0 ) {	
 			sql.append(", loginPw = ?", loginPw);
+			sql.append(", tempPw = 0");
 		}
 		if( name.trim().length() > 0 ) {	
 			sql.append(", name = ?", name);
@@ -207,5 +210,5 @@ public class MemberDao {
 		MysqlUtil.update(sql);
 		
 	}
-
+	
 }

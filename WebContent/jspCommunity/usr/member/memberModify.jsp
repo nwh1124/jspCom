@@ -64,11 +64,13 @@
 				return false;
 				
 			}
-			
+
+			if(form.loginPwCh.value.trim().length == 0){
 			alert("PASSWORD Check를 입력해주세요.");
 			form.loginPw.focus();
 			return false;
-
+			}
+			
 		}
 		
 		form.loginPwReal.value = sha256(form.loginPw.value);

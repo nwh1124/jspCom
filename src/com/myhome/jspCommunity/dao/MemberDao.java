@@ -190,8 +190,7 @@ public class MemberDao {
 		sql.append("UPDATE member");
 		sql.append("SET regDate = now()");
 		if( loginPw.trim().length() > 0 ) {	
-			sql.append(", loginPw = ?", loginPw);
-			sql.append(", tempPw = 0");
+			sql.append(", loginPw = SHA2(?, 256)", loginPw);
 		}
 		if( name.trim().length() > 0 ) {	
 			sql.append(", name = ?", name);
@@ -206,8 +205,22 @@ public class MemberDao {
 			sql.append(", phoneNumber = ?", phoneNumber);
 		}
 		sql.append("WHERE id = ?", memberId);
-		
+
 		MysqlUtil.update(sql);
+		
+		if( loginPw.trim().length() > 0) {
+			
+			sql = new SecSql();
+			
+			sql.append("UPDATE attr");
+			sql.append("SET `value` = 0");
+			sql.append("WHERE relTypeCode = 'member'");
+			sql.append("AND relId = ?", memberId);
+			sql.append("AND typeCode = 'extra'");
+			sql.append("AND type2Code = 'isUsingTempPassword'");
+			
+			MysqlUtil.update(sql);
+		}
 		
 	}
 	

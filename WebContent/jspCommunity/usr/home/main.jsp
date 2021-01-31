@@ -1,7 +1,6 @@
 <%@ page language="java" 
     pageEncoding="UTF-8" isELIgnored="false"%>
     
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="pageTitle" value="홈페이지"/>
@@ -10,31 +9,43 @@
 
 <%@ include file="../../part/head.jspf" %>
 
-<style>
-.main-content__index{
-width:100%;
-display:flex;
-justify-content:space-around;
-font-size:1.3rem;
-padding-top:20px;
-}
-</style>
-
 <t:layout >
-	<jsp:attribute name="contentBody">
-		<div class="main-content__index">
-			<a href="../article/write?boardId=3">게시물 작성</a>
-			<a href="../article/list?boardId=3">게시물 목록</a>
-			<a href="../member/login">로그인</a>
-			<a href="../member/logout">로그아웃</a>
-			<a href="../member/whoami">회원정보</a>
-			<a href="../member/join">회원가입</a>
-			<a href="../member/findLoginId">아이디 찾기</a>
-			<a href="../member/findLoginPw">비밀번호 찾기</a>			
-		</div>
-		<div>
-			<a href="#">${data}</a>
-		</div>
+	<jsp:attribute name="bodyContent">
+	    
+	    <div class="title-bar padding-0-10 con-min-width">
+	      <h1 class="con">
+	        <span><i class="fas fa-home"></i></span>
+	        <span>HOME</span>
+	      </h1>      
+	    </div>
+	    
+	    <div class="index">
+	      <div class="con">
+	        <div class="index__latest-articles flex flex-column">
+	          <div class="index__lastest-articles__subtitle">
+	            <span>최신 글 목록</span>
+	          </div>
+	          <ul class="index__latest-articles__articles">
+              <c:forEach var="article" items="${latestArticles }">
+	            <li>
+	              <a href="../article/detail?id=${article.getId() }">
+	              	<span>
+	                  ${article.getTitle() }
+	                </span>
+	                <span>
+	                  ${article.getBody() }
+	                </span>	              
+	               </a>
+	            </li>
+              </c:forEach>
+	          </ul>
+	          <div class="loadMore">
+	            <input type="submit" class="btn btn-wrap" onclick="indexLastestArticles__loadMore(this);" name="btnLoadMore" value="더 보기"/>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    
 	</jsp:attribute>
 </t:layout>
 	

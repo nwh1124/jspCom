@@ -11,42 +11,97 @@
 <%@ include file="../../part/head.jspf" %>
 
 <t:layout >
-	<jsp:attribute name="contentBody">
+	<jsp:attribute name="bodyContent">
 	
-	<script>
-		.content-body__article-detail__subMenu{
-			flex-grow:0;
-		}
-	</script>
-
-		<h1><c:out value="${pageTitle}"/></h1>
-		<div class="content-body__article-detail__subMenu">
-			<c:if test="${ sessionScope.loginedMemberId > 0 && isWriter}">
-				<a href="modify?id=${article.id}&title=${article.title}&body=${article.body}">수정</a>
-				<a href="delete?id=${article.id}">삭제</a>
-			</c:if>
-			<a href="list?boardId=${article.boardId}">목록</a>
+	<style>
+	main{
+		display:flex;
+		flex-direction:column;
+	}
+	</style>
+	
+   <div class="title-bar padding-0-10 con-min-width">
+     <h1 class="con">
+       <span><i class="fas fa-edit"></i></span>
+       <span>게시물 상세</span>
+     </h1>      
+   </div>
+   
+   <div class="article-detail flex flex-column flex-grow-1">
+   	<div class="con flex flex-column flex-grow-1">			
+      <table class="article-detail__subInfoTable">
+         <colgroup>
+           <col width="150">
+           <col width="250">
+           <col width="300">
+           <col width="170">
+           <col width="170">
+           <col width="170">
+         </colgroup>
+         <thead>
+           <tr>
+             <th>번호</th>
+             <th>작성일</th>
+             <th>작성자</th>
+             <th>조회수</th>
+             <th>추천수</th>
+             <th>댓글수</th>
+           </tr>
+         </thead>        
+         <tbody>         
+          <tr>
+             <td>
+               <span class="article-detail-box__id">
+               ${article.getId() }
+               </span>
+             </td>
+             <td>
+               <span class="article-detail-box__reg-date">
+               ${article.getRegDate() }
+               </span>
+             </td>
+             <td>
+               <span class="article-detail-box__writer">
+                 ${article.getExtra__nickname() }
+               </span>
+             </td>
+            <td>
+              <span class="article-detail-box__hitsCount">
+              ${article.getHitsCount() }
+              </span>
+            </td>
+            <td>
+              <span class="article-detail-box__recommendsCount">
+              ${article.getLikesCount() }
+              </span>
+            </td>
+            <td>
+              <span class="article-detail-box__commentsCount">
+              ${article.getCommentsCount() }
+              </span>
+            </td>
+           </tr>
+           </tbody>
+      </table>
+      
+      <div class="article-detail__title">
+        <span>제목 | </span>
+        <span>${article.getTitle() }</span>
+      </div>
+      
+      <div class="article-detail__body flex flex-grow-1">
+        <span hidden>${article.body}</span> 
+		<div class="toast-ui-viewer"></div>
+      </div>
+           
+		<div class="btn-wrap">
+	        <a class="btn-warning btn" href="../article/modify?id=${article.getId() }" type="submit">Modify</a>
+	        <a class="btn-danger btn" href="../article/delete?id=${article.getId() }">Delete</a>
+			<a class="btn btn-success" href="../article/list?boardId=3">List</a>
 		</div>
-		<br>
-		<div class="content-body__article-detail">
-			<div class="article-detail__subInfo">
-				<span>번호 : ${article.id}</span>
-				<span>작성일 : ${article.regDate.substring(2,10)}</span>
-				<span>작성자 : <c:out value="${memberName}"/></span>
-				<span>게시판 : <c:out value="${boardName}"/> 게시판</span>
-				<span>조회수 : ${article.hitsCount}</span>
-				<span>추천수 : ${article.likesCount}</span>
-				<span>댓글수 : ${article.commentsCount}</span>
-			</div>
-			<hr>
-			<span class="article-detail__title">제목 : ${article.title}</span>
-			<hr>
-			<div class="article-detail__body">
-			<span hidden>${article.body}</span> 
-			<div class="toast-ui-viewer">
-			</div>
-			</div>
-		</div>
+	  </div>
+	</div>
+    
 	</jsp:attribute>
 </t:layout>
 

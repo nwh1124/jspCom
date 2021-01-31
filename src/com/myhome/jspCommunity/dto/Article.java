@@ -40,13 +40,15 @@ public class Article {
 		this.hitsCount = (int)map.get("likesCount");
 		this.hitsCount = (int)map.get("commentsCount");
 
-		this.extra__writer = (String)map.get("extra__writer");
-		this.extra__nickname = (String)map.get("extra__nickname");
-		if(this.extra__nickname.length() > 6) {
-			this.extra__nickname = this.extra__nickname.substring(0, 6) + "...";
+		if( map.get("extra__writer") != null ) {
+			this.extra__writer = (String)map.get("extra__writer");
+			this.extra__nickname = (String)map.get("extra__nickname");
+			if(this.extra__nickname.length() > 6) {
+				this.extra__nickname = this.extra__nickname.substring(0, 6) + "...";
+			}
+			this.extra__boardName = (String)map.get("extra__boardName");
+			this.extra__boardCode = (String)map.get("extra__boardCode");
 		}
-		this.extra__boardName = (String)map.get("extra__boardName");
-		this.extra__boardCode = (String)map.get("extra__boardCode");
 	}
 
 }

@@ -256,4 +256,29 @@ public class ArticleDao {
 		return articles;
 	}
 
+	public List<Article> getLatestArticlesForPrint(int input) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT *");
+		sql.append("FROM article");
+		sql.append("ORDER BY regDate DESC");
+		sql.append("limit ?", input);
+		
+		List<Map<String, Object>> listMap = MysqlUtil.selectRows(sql);
+		
+		if( listMap.isEmpty() ) {
+			return null;
+		}
+		
+		List<Article> articles = new ArrayList<>();
+		
+		for(Map<String, Object> map : listMap) {
+			articles.add(new Article(map));
+		}
+		
+		return articles;
+		
+	}
+
 }

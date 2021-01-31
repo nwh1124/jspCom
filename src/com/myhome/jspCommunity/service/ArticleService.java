@@ -58,6 +58,10 @@ public class ArticleService {
 			String searchKeywordType) {
 		return articleDao.getArticlesByBoardId(boardId, limitStart, limitCount, searchKeyword, searchKeywordType);
 	}
+
+	public List<Article> getLatestArticlesForPrint(int input) {
+		return articleDao.getLatestArticlesForPrint(input);
+	}
 	
 	
 

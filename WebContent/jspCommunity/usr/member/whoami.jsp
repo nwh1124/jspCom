@@ -10,7 +10,7 @@
 <%@ include file="../../part/head.jspf" %>
 
 <t:layout >
-	<jsp:attribute name="contentBody">
+	<jsp:attribute name="bodyContent">
 	
 	<style>
 	.content-body__whoami{

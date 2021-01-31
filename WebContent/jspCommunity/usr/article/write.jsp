@@ -43,33 +43,31 @@ function doWriteForm__submit(form){
 }
 </script>
 
-<style>
-form{
-width:100%;
-padding-bottom:20px;
-}
-</style>
-
 <t:layout >
-	<jsp:attribute name="contentBody">
-		<h1><c:out value="${pageTitle}"/></h1>
-		<form action="doWrite" onsubmit="return doWriteForm__submit(this); return false;">
+	<jsp:attribute name="bodyContent">
+	
+    <div class="title-bar padding-0-10 con-min-width">
+      <h1 class="con">
+        <span><i class="fas fa-edit"></i></span>
+        <span>게시물 작성</span>
+      </h1>      
+    </div>
+	
+    <div class="write-form-box form-box padding-0-10 con-min-width">	
+		<form class="con" action="doWrite" onsubmit="return doWriteForm__submit(this); return false;">
 		  <input type="number" value="${memberId}" name="memberId" hidden>
 		  <input type="number" value="3"name="boardId" hidden>
 		  <input type="hidden" name="body"/>
-		  <br>
-		  <br>
-		  <input type="text" name="title" size="80" maxlength="80" placeholder="제목을 입력해주세요.">
-		  <hr>
-		  <br>
-		  <div>내용</div>
-		  <br>
+		  <input class="write-title" type="text" name="title" width="100" maxlength="50" placeholder="제목을 입력해주세요.">
 		  <script type="text/x-template"></script>
 		  <div class="toast-ui-editor"></div>
-		  <hr>
-		  <input type="submit" value="등록">
-		  <input type="button" value="뒤로가기" onclick="history.back();">
+		  <div class="btn-wrap">
+			  <input class="btn-success btn" type="submit" value="등록">
+			  <input class="btn" type="button" value="뒤로가기" onclick="history.back();">
+		  </div>
 		</form>
+	</div>
+		
 	</jsp:attribute>
 </t:layout>
 

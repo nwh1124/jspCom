@@ -45,7 +45,7 @@ public class UsrArticleController {
 		int boardId = Integer.parseInt((String)req.getParameter("boardId"));
 		int totalCount = articleService.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
 		
-		int itemsInAPage = 15;
+		int itemsInAPage = 10;
 		int page = Util.getAsInt(req.getParameter("page"), 1);
 		int limitStart = (page - 1) * itemsInAPage;
 
@@ -53,7 +53,7 @@ public class UsrArticleController {
 		req.setAttribute("board", board);
 
 		List<Article> articles = articleService.getArticlesByBoardId(boardId, limitStart, itemsInAPage, searchKeyword, searchKeywordType);
-
+		
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 		
 		int pageBoxSize = 10;

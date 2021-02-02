@@ -83,6 +83,12 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = articleController.showWrite(req,resp);
 			}else if(actionMethodName.equals("modify")) {
 				jspPath = articleController.showModify(req,resp);
+			}else if(actionMethodName.equals("recommend")) {
+				jspPath = articleController.doRecommend(req,resp);
+			}else if(actionMethodName.equals("cancelRecommend")) {
+				jspPath = articleController.cancelRecommend(req,resp);
+			}else if(actionMethodName.equals("addReply")) {
+				jspPath = articleController.addReply(req,resp);
 			}
 		}
 		

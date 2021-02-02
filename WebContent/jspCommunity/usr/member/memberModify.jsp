@@ -10,7 +10,7 @@
 <%@ include file="../../part/head.jspf" %>
 
 <t:layout >
-	<jsp:attribute name="contentBody">
+	<jsp:attribute name="bodyContent">
 	
 	<style>
 	.content-body__whoami{
@@ -83,9 +83,14 @@
 	}
 	</script>
 	
-		<h1><c:out value="${pageTitle}"/></h1>
-
-		<form action="doMemberModify" onsubmit="return doMemberModifyForm__submit(this); return false;">
+   <div class="title-bar padding-0-10 con-min-width">
+     <h1 class="con">
+       <span><i class="fas fa-user-edit"></i></span>
+       <span><c:out value="${pageTitle}"/></span>
+     </h1>
+   </div>
+	<div class="con-min-width">
+		<form class="con member-modify" action="doMemberModify" onsubmit="return doMemberModifyForm__submit(this); return false;">
 			<input type=hidden name="memberId" value="${sessionScope.loginedMemberId}">
 			<input type=hidden name="loginPwReal">
 			<span>비밀번호</span>
@@ -100,9 +105,13 @@
 			<input type="email" name="email" placeholder="수정할 email주소를 입력해주세요.">
 			<span>PhoneNumber</span>
 			<input type="tel" name="phoneNumber" placeholder="수정할 번호를 입력해주세요.">
-			<input type="submit" value="회원 정보 수정">
+			
+		  <div class="btn-wrap">
+			  <input class="btn" type="submit" value="수정">
+			  <input class="btn" type="button" value="뒤로가기" onclick="history.back();">
+		  </div>
 		</form>
-		<input type="button" value="뒤로가기" onclick="history.back();">
+		</div>
 	</jsp:attribute>
 </t:layout>
 

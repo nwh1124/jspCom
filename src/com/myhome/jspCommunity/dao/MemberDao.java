@@ -190,7 +190,7 @@ public class MemberDao {
 		sql.append("UPDATE member");
 		sql.append("SET regDate = now()");
 		if( loginPw.trim().length() > 0 ) {	
-			sql.append(", loginPw = SHA2(?, 256)", loginPw);
+			sql.append(", loginPw = ?", loginPw);
 		}
 		if( name.trim().length() > 0 ) {	
 			sql.append(", name = ?", name);

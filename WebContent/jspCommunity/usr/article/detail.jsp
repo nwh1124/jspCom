@@ -3,8 +3,6 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="boardName" value="${boardName}"/>
-<c:set var="memberName" value="${memberName}"/>
 <c:set var="pageTitle" value="게시물 상세"/>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
@@ -19,6 +17,8 @@
 		flex-direction:column;
 	}
 	</style>
+	
+	
 	
    <div class="title-bar padding-0-10 con-min-width">
      <h1 class="con">
@@ -93,11 +93,47 @@
         <span hidden>${article.body}</span> 
 		<div class="toast-ui-viewer"></div>
       </div>
+      
+      <div class="article-detail__reply-view">
+         <ul class="article-detail__reply-view__writer-info flex flex-column">
+         <c:forEach var="reply" items="${replys}">
+           <li class="">             
+             <span>${reply.getExtra__nickname() }</span>
+             <span>${reply.getRegDate() }</span>
+             <div>${reply.getBody() }</div>
+           </li>         
+         </c:forEach>
+         </ul>
+       </div>
+         
+       <div class="article-detail__reply-write">
+         
+       </div>
            
 		<div class="btn-wrap">
-	        <a class="btn-warning btn" href="../article/modify?id=${article.getId() }" type="submit">Modify</a>
-	        <a class="btn-danger btn" href="../article/delete?id=${article.getId() }">Delete</a>
-			<a class="btn btn-success" href="../article/list?boardId=3">List</a>
+			<c:if test="${loginedMemberId == article.getMemberId() }">
+				<a class="btn-warning btn" href="../article/modify?id=${article.getId() }&title=${article.getTitle() }&body=${article.getBody()}" type="submit">Modify</a>
+			    <a class="btn-danger btn" href="../article/delete?id=${article.getId() }">Delete</a>
+			</c:if>
+	        <a class="btn btn-success" href="../article/list?boardId=3">List</a>
+	        
+	        <c:if test="${loginedMemberId > 0}">
+	        
+	        	<c:if test="${memberGivePointBefore == -1 }">        		
+		        	<a class="article-detail__recommend btn" href="../article/recommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Recommend</a>
+		        	<a class="article-detail__recommend btn btn-danger" href="../article/recommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">DisRecommend</a>
+	        	</c:if>
+	        	
+	        	<c:if test="${memberGivePointBefore == 1 }">        		
+		        	<a class="article-detail__recommend btn" href="../article/cancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Cancel Recommend</a>		        	
+	        	</c:if>
+	        	
+	        	<c:if test="${memberGivePointBefore == 2 }">
+		        	<a class="article-detail__recommend btn btn-danger" href="../article/cancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">Cancel DisRecommend</a>
+	        	</c:if>
+	        	
+	        </c:if>
+	        
 		</div>
 	  </div>
 	</div>

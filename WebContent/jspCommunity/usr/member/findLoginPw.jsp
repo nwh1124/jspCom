@@ -44,20 +44,22 @@
 		}
 	</script>
 
-		<h1>
-			<c:out value="${pageTitle}" />
-		</h1>
-		<form action="doFindLoginPw" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;" target="_blank">
+   <div class="title-bar padding-0-10 con-min-width">
+     <h1 class="con">
+       <span><i class="fas fa-search"></i></span>
+       <span><c:out value="${pageTitle}"/></span>
+     </h1>
+   </div>
+   
+		<form class="con member-findLoginPw" action="doFindLoginPw" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;" target="_blank">
 		  <div>Name</div>
-		  <br>
 		  <input type="text" placeholder="로그인 아이디를 입력해주세요." name="loginId">
-		  <hr>
 		  <div>Email</div>
-		  <br>
 		  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">
-		  <hr>
-		  <input type="submit" value="비밀번호 찾기">
-		  <input type="button" value="뒤로가기" onclick="history.back();">
+		  <div class="btn-wrap">
+			  <input class="btn" type="submit" value="비밀번호 찾기">
+			  <input class="btn" type="button" value="뒤로가기" onclick="history.back();">
+		  </div>
 		</form>
 	</jsp:attribute>
 </t:layout>

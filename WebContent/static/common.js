@@ -43,12 +43,16 @@ function renderCodepen(wrapperId, url) {
 function Editor__init() {
   $('.toast-ui-editor').each(function(index, node) {
     var initialValue = $(node).prev().html().trim().replace(/t-script/gi, 'script');
+    
+    var initBody = $('.initBody');
+
+	alert(initBody);
 
     var editor = new toastui.Editor({
       el: node,
       previewStyle: 'vertical',
       initialValue: initialValue,
-      height:500,
+      height:600,
       width:1000,
       plugins: [toastui.Editor.plugin.codeSyntaxHighlight, youtubePlugin, codepenPlugin]
     });
@@ -69,5 +73,5 @@ function EditorViewer__init() {
   });
 }
 
-EditorViewer__init();
-Editor__init(); 
+Editor__init();
+EditorViewer__init(); 

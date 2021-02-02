@@ -43,22 +43,25 @@
 			doLoginIdForm__submited = true;
 		}
 	</script>
-
-		<h1>
-			<c:out value="${pageTitle}" />
-		</h1>
-		<form action="doFindLoginId" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;">
+	
+   <div class="title-bar padding-0-10 con-min-width">
+     <h1 class="con">
+       <span><i class="fas fa-search"></i></span>
+       <span><c:out value="${pageTitle}"/></span>
+     </h1>
+   </div>
+   <div class="con con-min-width">
+   		<form class="member-findLoginId" action="doFindLoginId" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;">
 		  <div>Name</div>
-		  <br>
 		  <input type="text" placeholder="이름을 입력해주세요." name="name">
-		  <hr>
 		  <div>Email</div>
-		  <br>
 		  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">
-		  <hr>
-		  <input type="submit" value="아이디 찾기">
-		  <input type="button" value="뒤로가기" onclick="history.back();">
+		  <div class="btn-wrap">
+			  <input class="btn" type="submit" value="아이디 찾기">
+			  <input class="btn" type="button" value="뒤로가기" onclick="history.back();">
+		  </div>
 		</form>
+	</div>
 	</jsp:attribute>
 </t:layout>
 

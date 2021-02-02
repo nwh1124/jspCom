@@ -48,16 +48,17 @@
 	}
 	</script>
 	
-	    <div class="title-bar padding-0-10 con-min-width">
+   	<div class="title-bar padding-0-10 con-min-width">
       <h1 class="con">
         <span><i class="fas fa-sign-in-alt"></i></span>
-        <span>로그인</span>
+        <span>${pageTitle }</span>
       </h1>
     </div>
     
     <div class="login-form-box form-box padding-0-10 con-min-width">
       <form class="con" action="doLogin" method="POST" onsubmit="return doLoginForm__submit(this); return false;">
       	<input type="hidden" name="loginPwReal"/>
+      	<input type="hidden" name="encodedCurrentUri" value="${param.afterLoginUrl }"/>
         <table>
           <colgroup>
             <col width="150">

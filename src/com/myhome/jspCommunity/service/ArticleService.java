@@ -2,9 +2,12 @@ package com.myhome.jspCommunity.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dao.ArticleDao;
 import com.myhome.jspCommunity.dto.Article;
+import com.myhome.jspCommunity.dto.Reply;
 
 public class ArticleService {
 
@@ -62,7 +65,25 @@ public class ArticleService {
 	public List<Article> getLatestArticlesForPrint(int input) {
 		return articleDao.getLatestArticlesForPrint(input);
 	}
-	
-	
+
+	public void updateHitsCount(int id) {
+		articleDao.updateHitsCount(id);		
+	}
+
+	public int isAlraedyRecommend(String relTypeCode, int relId, int memberId) {
+		return articleDao.isAlraedyRecommend(relTypeCode, relId, memberId);
+	}
+
+	public void doRecommend(String relTypeCode, int relId, int memberId, int point) {
+		articleDao.doRecommend(relTypeCode, relId, memberId, point);		
+	}
+
+	public void cancelRecommend(String relTypeCode, int relId, int memberId, int point) {
+		articleDao.cancelRecommend(relTypeCode, relId, memberId, point);
+	}
+
+	public List<Reply> getReplyByArticleId(int id) {
+		return articleDao.getReplyByArticleId(id);
+	}
 
 }

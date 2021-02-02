@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.myhome.jspCommunity.dto.Article;
+import com.myhome.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 import com.sbs.example.jspCommunity.mysqlutil.SecSql;
 
@@ -133,7 +134,7 @@ public class ArticleDao {
 		
 		sql.append("SELECT memberId");
 		sql.append("FROM article");
-		sql.append("WHERE id = ?", id);
+		sql.append("WHERE id = ?", id);		
 		
 		return MysqlUtil.selectRowIntValue(sql);
 	}
@@ -279,6 +280,120 @@ public class ArticleDao {
 		
 		return articles;
 		
+	}
+
+	public void updateHitsCount(int id) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("UPDATE article");
+		sql.append("SET hitsCount = hitsCount + 1");
+		sql.append("WHERE id = ?", id);
+		
+		MysqlUtil.update(sql);
+		
+	}
+
+	public void doRecommend(String relTypeCode, int relId, int memberId, int point) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("INSERT INTO recommend");
+		sql.append("SET updateDate = NOW()");
+		sql.append(", regDate = NOW()");
+		sql.append(", point = ?", point);
+		sql.append(", relTypeCode = ?", relTypeCode);
+		sql.append(", relId = ?", relId);
+		sql.append(", memberId = ?", memberId);
+		
+		MysqlUtil.insert(sql);
+		
+		sql = new SecSql();
+		
+		sql.append("UPDATE article");
+		if(point == 1) {
+			sql.append("SET likesCount = likesCount + 1");
+		} 
+		else if(point == 2) {
+			sql.append("SET likesCount = likesCount - 1");
+		}
+		sql.append("WHERE id = ?", relId);		
+		
+		MysqlUtil.update(sql);
+		
+	}
+
+	public int isAlraedyRecommend(String relTypeCode, int relId, int memberId) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT point");
+		sql.append("FROM recommend");
+		sql.append("WHERE relTypeCode = ");
+		sql.append("?", relTypeCode);
+		sql.append("AND relId = ?", relId);
+		sql.append("AND memberId = ?", memberId);
+						
+		return MysqlUtil.selectRowIntValue(sql);
+		
+	}
+
+	public void cancelRecommend(String relTypeCode, int relId, int memberId, int point) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("DELETE FROM recommend");
+		sql.append("WHERE relId = ?", relId);
+		sql.append("AND relTypeCode = ?", relTypeCode);
+		sql.append("AND memberId = ?", memberId);
+		sql.append("AND point = ?", point);		
+						
+		MysqlUtil.update(sql);
+		
+		sql = new SecSql();
+		
+		sql.append("UPDATE article");
+		
+		if(point == 1) {
+			sql.append("SET likesCount = likesCount - 1");
+		} 
+		else if(point == 2) {
+			sql.append("SET likesCount = likesCount + 1");
+		}
+		
+		sql.append("WHERE id = ?", relId);		
+						
+		MysqlUtil.update(sql);
+		
+	}
+
+	public List<Reply> getReplyByArticleId(int id) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT R.*, M.nickname");
+		sql.append("FROM reply AS R");
+		sql.append("LEFT JOIN `member` AS M");
+		sql.append("ON R.memberId = M.id");
+		sql.append("WHERE relTypeCode = 'article'");
+		sql.append("AND relId = ?", id);
+						
+		List<Map<String, Object>> listMap = MysqlUtil.selectRows(sql);
+		
+		if ( listMap.isEmpty() ) {
+			return null;
+		}
+		
+		List<Reply> replys = new ArrayList<>();
+		
+		for(Map<String, Object> map : listMap) {
+			replys.add(new Reply(map));
+		}
+		
+		return replys;
+		
+		
+
 	}
 
 }

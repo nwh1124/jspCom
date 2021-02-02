@@ -39,8 +39,31 @@
 	            </li>
               </c:forEach>
 	          </ul>
-	          <div class="loadMore">
-	            <input type="submit" class="btn btn-wrap" onclick="indexLastestArticles__loadMore(this);" name="btnLoadMore" value="더 보기"/>
+	          <div class="loadMore con">
+	          <div class="loadMoreForm">			
+				<script>
+				let loadMoreArticlesNumber = 5;
+				let	doLoadMoreForm__submited = false;
+				
+				function doLoadMoreForm__submit(form){
+			
+					if( doLoadMoreForm__submited ){
+						alert("처리중입니다");
+						return false;
+					}
+
+					form.loadMoreArticles.value = loadMoreArticlesNumber + 5; 
+				
+					form.submit();
+					doLoadMoreForm__submited = true;
+					
+				}
+				</script>		
+					<form action="" name="doLoadMoreForm" onsubmit="doLoadMoreForm__submit(this); return false;">					
+						<input type="number" name="loadMoreArticles" value="5" hidden>
+	           			<input type="submit" class="btn btn-wrap" onclick="indexLastestArticles__loadMore(this);" name="btnLoadMore" value="더 보기"/>
+					</form>
+				</div>		
 	          </div>
 	        </div>
 	      </div>

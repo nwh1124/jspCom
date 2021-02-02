@@ -25,14 +25,72 @@
        <span>게시물 리스트</span>
      </h1>
    </div>
+	 
+	<div class="searchForm con">			
+		<script>
+		let	doSearchForm__submited = false;
+		
+		function doSearchForm__submit(form){
+	
+			if( doSearchForm__submited ){
+				alert("처리중입니다");
+				return false;
+			}
+	
+			if( form.searchKeyword.value.length == 0 ){
+				alert('검색어를 입력해주세요.')
+				form.searchKeyword.focus();
+	
+				return false;			
+			}
+		
+			form.submit();
+			doSearchForm__submited = true;
+			
+		}
+		</script>				
+			<div class="findArticlesCount">
+				<span>
+				총 게시물 | 
+				</span>
+				<span>
+					${totalCount }
+				</span>
+			</div>
+			<form action="" name="doSearchForm" onsubmit="doSearchForm__submit(this); return false;">
+				<input type="hidden" name="boardId" value="${param.boardId }">
+				
+
+				
+				<select class="searchKeywordType" name="searchKeywordType">
+					<option value="titleAndBody">제목 + 본문</option>
+					<option value="title">제목</option>
+					<option value="body">본문</option>
+				</select>
+				<script>
+					const param__searchKeywordType = '${param.searchKeywordType}';
+	
+					if( param__searchKeywordType ){
+						$('select[name="searchKeywordType"]').val('${param.searchKeywordType}');	
+					} else {
+						$('select[name="searchKeywordType"]').val('titleAndBody');
+					}				
+				</script>
+				
+				<input class="searchKeyword" type="text" name="searchKeyword" value="${param.searchKeyword }" placeholder="검색어를 입력해주세요.">
+				
+				<input class="btn" type="submit" value="검색"></input>
+			</form>
+	</div>		
 
    <div class="article-list-box padding-0-10 con-min-width">
      <div class="con">
        <table>
          <colgroup>
-           <col width="100">
-           <col width="200">
+           <col width="50">
            <col width="150">
+           <col width="150">
+           <col width="700">
          </colgroup>
          <thead>
            <tr>
@@ -40,6 +98,7 @@
              <th>날짜</th>
              <th>작성자</th>
              <th>제목</th>
+             <th>조회수</th>
            </tr>
          </thead>
          <tbody>
@@ -62,15 +121,20 @@
              </td>
              <td>
                <a href="../article/detail?id=${article.id }" class="article-list-box__title article-list-box__title--pc hover-link">
-                 ${article.getBody() }
+                 ${article.getTitle() }
                </a>
+             </td>
+             <td>
+               <span class="article-list-box__hitsCount">
+                 ${article.getHitsCount()}
+               </span>
              </td>
              <td class="visible-sm-down">
                <div class="flex">
                  <span class="article-list-box__id article-list-box__id--mobile">${article.getId() }</span>
 
-                 <a href="#" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">
-                 ${article.getBody() }
+                 <a href="../article/detail?id=${article.id }" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">
+                 ${article.getTitle() }
 			  </a>
                </div>
 
@@ -78,58 +142,13 @@
                  <span class="article-list-box__writer article-list-box__writer--mobile">${article.getExtra__nickname() }</span>
                  <span>|</span>
                  <span class="article-list-box__reg-date article-list-box__reg-date--mobile">${article.getRegDate() }</span>
+                 <span>| hit :</span>
+                 <span class="article-list-box__hitsCount article-list-box__hitsCount--mobile">${article.getHitsCount() }</span>
                </div>
              </td>
            </tr>
            
            </c:forEach>
-           
-<!--       <tr>             
-             <td class="visible-sm-down">
-               <div class="flex">
-                 <span class="article-list-box__id article-list-box__id--mobile"></span>
-
-                 <a href="#" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link"></a>
-               </div>
-
-               <div class="flex">
-                 <span class="article-list-box__writer article-list-box__writer--mobile"></span>
-                 <span>|</span>
-                 <span class="article-list-box__reg-date article-list-box__reg-date--mobile"></span>
-               </div>
-             </td>
-           </tr>
-           <tr>
-             <td>
-               <span class="article-list-box__id"></span>
-             </td>
-             <td>
-               <span class="article-list-box__reg-date">
-               </span>
-             </td>
-             <td>
-               <span class="article-list-box__writer">
-               </span>
-             </td>
-             <td>
-               <a href="#" class="article-list-box__title article-list-box__title--pc hover-link">
-               </a>
-             </td>
-             <td class="visible-sm-down">
-               <div class="flex">
-                 <span class="article-list-box__id article-list-box__id--mobile"></span>
-
-                 <a href="#" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link"></a>
-               </div>
-
-               <div class="flex">
-                 <span class="article-list-box__writer article-list-box__writer--mobile"></span>
-                 <span>|</span>
-                 <span class="article-list-box__reg-date article-list-box__reg-date--mobile"></span>
-               </div>
-             </td>
-           </tr>
--->
          </tbody>
        </table>
      </div>
@@ -141,94 +160,6 @@
        <a class="btn btn-info" href="#">LIST</a>
      </div>
    </div>
-
-
-<!-- 
-	<div class="main-content__articleListSubMenu">
-		<div class="main-content__subBtn">
-			<a href="write?boardId=${board.id}">
-				<i class="fas fa-edit"></i>
-				<span>게시물 작성</span>
-			</a>
-		</div>
-		<div>
-			총 게시물 수 : ${totalCount}
-		</div>	
-		<div>			
-			<script>
-			let	doSearchForm__submited = false;
-			
-			function doSearchForm__submit(form){
-		
-				if( doSearchForm__submited ){
-					alert("처리중입니다");
-					return;
-				}
-		
-				if( form.searchKeyword.value.length == 0 ){
-					alert('검색어를 입력해주세요.')
-					form.searchKeyword.focus();
-		
-					retrun;			
-				}
-			
-				form.submit();
-				doSearchForm__submited = true;
-				
-			}
-			</script>
-				<form action="" name="doSearchForm" onsubmit="doSearchForm__submit(this); return false;">
-					<input type="hidden" name="boardId" value="${param.boardId }">
-					
-					<select name="searchKeywordType">
-						<option value="titleAndBody">제목 + 본문</option>
-						<option value="title">제목</option>
-						<option value="body">본문</option>
-					</select>
-					<script>
-						const param__searchKeywordType = '${param.searchKeywordType}';
-		
-						if( param__searchKeywordType ){
-							$('select[name="searchKeywordType"]').val('${param.searchKeywordType}');	
-						} else {
-							$('select[name="searchKeywordType"]').val('titleAndBody');
-						}				
-					</script>
-					
-					<input type="text" name="searchKeyword" value="${param.searchKeyword }" placeholder="검색어를 입력해주세요.">
-					
-					<input type="submit" value="검색"></input>
-				</form>
-		</div>		
-	</div>
-	
-	<ul>
-		<c:forEach var="article" items="${articles}">
-		<li>
-			<span>	
-			번호 :
-			${article.id}
-			</span>
-			<span>		
-			작성일 :
-			${article.regDate.substring(5,10)}
-			</span>
-			<span>	
-			제목 :
-			</span>
-			<span>
-			<a href="detail?id=${article.id}&boardId=${article.boardId}">${article.title}</a>
-			</span>
-			<span>		
-			작성자 :
-			</span>
-			<span>
-			${article.extra__nickname}
-			</span>
-		</li>
-		</c:forEach>
-	</ul>
- -->
 
 	<style>
 	.articleListPageBtns {

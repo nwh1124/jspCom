@@ -100,6 +100,36 @@ public class MemberService {
 		memberDao.doModify(memberId, loginId, loginPw, name, nickname, email, phoneNumber);
 		
 	}
+
+	public void setIsUsingTempPassword(int actorId, boolean use) {
+		attrService.setValue("member__" + actorId + "__extra__isUsingTempPassword", use, null);
+	}
+	
+	public boolean isUsingTempPassword(int actorId) {
+		return attrService.getValueAsBoolean("member__" + actorId + "__extra__isUsingTempPassword");
+	}
+	
+	public int getOldPasswordDays() {
+		return 90;
+	}
+
+	public boolean isNeedToModifyOldLoginPw(int actorId) {
+		String date = attrService.getValue("member__" + actorId + "__extra__loginPwModifiedDate");
+		
+		if ( Util.isEmpty(date) ) {
+			return true;
+		}
+		
+		int pass = Util.getPassedSecondsFrom(date);
+		
+		int oldPasswordDays = getOldPasswordDays();
+		
+		if ( pass > oldPasswordDays * 60 * 60 * 24 ) {
+			return true;
+		}
+		
+		return false;
+	}
 	
 	
 

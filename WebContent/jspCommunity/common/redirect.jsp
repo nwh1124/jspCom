@@ -12,8 +12,8 @@
 	}
 
 	var alertMsg__tempPw = `<%= request.getAttribute("alertMsg__tempPw")%>`.trim();
-	var alertMsg__tempPwN = 0;
-	alertMsg__tempPwN = `<%= request.getAttribute("alertMsg__tempPwN")%>`.trim();
+	var alertMsg__isTempPw = 0;
+	alertMsg__tempPwN = `<%= request.getAttribute("alertMsg__isTempPw")%>`.trim();
 	
 	if( alertMsg__tempPwN == "1" ){
 		alert(alertMsg__tempPw);	

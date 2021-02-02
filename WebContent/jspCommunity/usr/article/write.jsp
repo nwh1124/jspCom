@@ -28,11 +28,11 @@ function doWriteForm__submit(form){
 	const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
 	const body = editor.getMarkdown().trim();
 	
-	if ( body.length == 0 ) {
+	if ( body.trim().length == 0 ) {
 		alert('내용을 입력해주세요.');
 		editor.focus();
 		
-		return;
+		return false;
 	}
 	
 	form.body.value = body;
@@ -55,7 +55,7 @@ function doWriteForm__submit(form){
 	
     <div class="write-form-box form-box padding-0-10 con-min-width">	
 		<form class="con" action="doWrite" onsubmit="return doWriteForm__submit(this); return false;">
-		  <input type="number" value="${memberId}" name="memberId" hidden>
+		  <input type="number" value="${loginedMemberId}" name="memberId" hidden>
 		  <input type="number" value="3"name="boardId" hidden>
 		  <input type="hidden" name="body"/>
 		  <input class="write-title" type="text" name="title" width="100" maxlength="50" placeholder="제목을 입력해주세요.">

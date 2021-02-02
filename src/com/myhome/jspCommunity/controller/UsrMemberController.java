@@ -15,7 +15,7 @@ import com.myhome.jspCommunity.service.MemberService;
 import com.myhome.jspCommunity.session.Session;
 import com.myhome.util.Util;
 
-public class UsrMemberController {
+public class UsrMemberController extends Controller {
 	MemberService memberService;
 	
 	public UsrMemberController() {
@@ -47,9 +47,7 @@ public class UsrMemberController {
 		
 		memberService.doJoin(joinArgs);
 		
-		req.setAttribute("alertMsg", "회원으로 등록되었습니다.");
-		req.setAttribute("replaceUrl", "../home/main");		
-		return "common/redirect";
+		return msgAndReplace(req, "회원으로 등록되었습니다", "../home/main");
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {
@@ -61,48 +59,56 @@ public class UsrMemberController {
 		
 		List<Member> members = memberService.getMembers();
 		
-		for(Member member : members) {		
-			if( req.getParameter("loginId").equals(member.getLoginId()) ) {				
-				if( req.getParameter("loginPwReal").equals(member.getLoginPw()) ) {
-					
-					session.setAttribute("loginedMemberId", member.getId());
-										
-					req.setAttribute("alertMsg", "로그인 되었습니다.");
-					
-					if( Container.attrService.getValue("member__" + member.getId() + "__extra__isUsingTempPassword").equals("") == false ) {
-						if( Integer.parseInt(Container.attrService.getValue("member__" + member.getId() + "__extra__isUsingTempPassword")) == 1 ) {
-							req.setAttribute("alertMsg__tempPw", "사용 중인 임시 비밀번호를 변경해주세요.");
-							req.setAttribute("alertMsg__tempPwN", "1");
-						}
-					}
-					req.setAttribute("replaceUrl", "../home/main");			
-					return "common/redirect";
-					
-				}else {
-					req.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
-					req.setAttribute("replaceUrl", "login");			
-					return "common/redirect";					
-				}				
-			}
+		String loginId = req.getParameter("loginId");
+		String loginPw = req.getParameter("loginPwReal");
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if ( member == null ) {
+			return msgAndBack(req, "존재하지 않는 회원 아이디입니다.");
 		}
 		
-		req.setAttribute("alertMsg", "존재하지 않는 아이디입니다.");
-		req.setAttribute("replaceUrl", "login");			
-		return "common/redirect";
+		if ( member.getLoginPw().equals(loginPw) == false ) {
+			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+		}
+		
+		session.setAttribute("loginedMemberId", member.getId());
+		session.setAttribute("loginedMember", member);
+		session.setAttribute("isLogined", true);
+
+		String alertMsg = String.format("%s 님 환영합니다.", member.getNickname());
+		String replaceUrl = "../home/main";
+		
+		if( Util.isEmpty(req.getParameter("afterLoginUrl")) == false ) {
+			replaceUrl = req.getParameter("afterLoginUrl");
+		}
+		
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
+		
+		if( isUsingTempPassword ) {
+			alertMsg = "현재 임시 비밀번호를 사용 중입니다. 변경해주세요.";
+			session.setAttribute("isUsingTempPassword", 1);
+			replaceUrl = "../member/memberModify";
+		}
+		
+		boolean isNeedToModifyOldLoginPw = memberService.isNeedToModifyOldLoginPw(member.getId());
+
+		if (isNeedToModifyOldLoginPw == false) {
+			int oldPasswordDays = memberService.getOldPasswordDays();
+			alertMsg = String.format("가장 마지막 비밀번호 변경일로부터 " + oldPasswordDays + "일이 경과하였습니다. 비밀번호를 변경해주세요.", member.getNickname());
+			session.setAttribute("isNeedToModifyOldLoginPw", 1);
+			replaceUrl = "../member/memberModify";
+		}
+			
+		return msgAndReplace(req, alertMsg, replaceUrl);
+		
 	}
 
 	public String showWhoami(HttpServletRequest req, HttpServletResponse resp) {
+		
 		HttpSession session = req.getSession();
 		
-		Member member = memberService.getMemberById((int)session.getAttribute("loginedMemberId"));
-		
-		if( member == null ) {
-			req.setAttribute("alertMsg", "비회원입니다.");
-			req.setAttribute("replaceUrl", "login");
-			return "common/redirect";
-		}
-				
-		req.setAttribute("member", member);
+		req.setAttribute("member", (Member)session.getAttribute("loginedMember"));
 		
 		return "usr/member/whoami";
 	}
@@ -112,12 +118,13 @@ public class UsrMemberController {
 		HttpSession session = req.getSession();
 		
 		session.setAttribute("loginedMember", null);
-		session.setAttribute("islogined", false);
 		session.setAttribute("loginedMemberId", null);
+		session.setAttribute("islogined", false);
+		session.setAttribute("isUsingTempPassword", 0);
+		session.setAttribute("isNeedToModifyOldLoginPw", 0);	
 
-		req.setAttribute("alertMsg", "로그아웃 되었습니다.");
-		req.setAttribute("replaceUrl", "../home/main");
-		return "common/redirect";
+
+		return msgAndReplace(req, "로그아웃 되었습니다.", "../home/main");
 	}
 
 	public String getLoginIdDup(HttpServletRequest req, HttpServletResponse resp) {
@@ -138,8 +145,7 @@ public class UsrMemberController {
 			
 		}
 
-		req.setAttribute("data", new ResultData(resultCode, msg, "loginId", loginId));
-		return "common/json";
+		return json(req, new ResultData(resultCode, msg, "loginId", loginId));
 	}
 
 	public String showFindLoginId(HttpServletRequest req, HttpServletResponse resp) {		
@@ -154,15 +160,10 @@ public class UsrMemberController {
 		Member member = memberService.getMemberByNameAndEamil(name, email);
 		
 		if ( member == null ) {
-			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
-			req.setAttribute("historyBack", true);
-			return "common/redirect";
+			return msgAndBack(req, "일치하는 회원이 존재하지 않습니다.");
 		}
 		
-		req.setAttribute("alertMsg", String.format("로그인 아이디는 %s 입니다.", member.getLoginId()));
-		req.setAttribute("replaceUrl", "../member/login");
-		return "common/redirect";
-		
+		return msgAndReplace(req, String.format("로그인 아이디는 %s입니다", member.getLoginId()), "../member/login");		
 	}
 
 	public String showFindLoginPw(HttpServletRequest req, HttpServletResponse resp) {
@@ -176,29 +177,21 @@ public class UsrMemberController {
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
-		if( member == null ) {
-			req.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
-			req.setAttribute("replaceUrl", "../member/login");
-			return "common/redirect";
+		if( member == null ) {			
+			return msgAndReplace(req, "일치하는 회원이 존재하지 않습니다.", "../member/login");
 		}
 		
 		if( member.getEmail().equals(email) == false) {			
-			req.setAttribute("alertMsg", "email 주소가 일치하지 않습니다.");
-			req.setAttribute("replaceUrl", "../member/login");
-			return "common/redirect";
+			return msgAndReplace(req, "이메일 주소가 일치하지 않습니다.", "../member/login");
 		}
 		
 		ResultData sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
 		
-		if( sendTempLoginPwToEmailRs.isFail() ) {
-			req.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
-			req.setAttribute("historyBack", true);
-			return "common/redirect";		
+		if( sendTempLoginPwToEmailRs.isFail() ) {			
+			return msgAndBack(req, sendTempLoginPwToEmailRs.getMsg());
 		}
 		
-		req.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
-		req.setAttribute("replaceUrl", "../member/login");
-		return "common/redirect";
+		return msgAndReplace(req, sendTempLoginPwToEmailRs.getMsg(), "../member/login");
 	}
 
 	public String showMemberModify(HttpServletRequest req, HttpServletResponse resp) {
@@ -209,17 +202,20 @@ public class UsrMemberController {
 		
 		int memberId = Integer.parseInt((String)req.getParameter("memberId"));
 		String loginId = req.getParameter("loginId");
-		String loginPw = req.getParameter("loginPw");
+		String loginPw = req.getParameter("loginPwReal");
 		String name = req.getParameter("name");
 		String nickname = req.getParameter("nickname");
 		String email = req.getParameter("email");
 		String phoneNumber = req.getParameter("phoneNumber");
 		
+		if( loginPw.trim().length() > 0) {
+			req.getSession().setAttribute("isUsingTempPassword", 0);
+			req.getSession().setAttribute("isNeedToModifyOldLoginPw", 0);			
+		}
+		
 		memberService.doModify(memberId, loginId, loginPw, name, nickname, email, phoneNumber);
 		
-		req.setAttribute("alertMsg", memberId + " 번 회원의 정보가 수정되었습니다.");
-		req.setAttribute("replaceUrl", "../member/whoami");
-		return "common/redirect";
+		return msgAndReplace(req, memberId + " 번 회원의 정보가 수정되었습니다.", "../member/whoami");
 	}
 
 }

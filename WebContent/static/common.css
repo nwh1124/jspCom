@@ -166,6 +166,19 @@ a {
 }
 /* 로고 끝 */
 
+/* 임시 비밀번호 경고 시작 */
+
+.warningBar{
+  position:absolute;
+  width:100%;
+  background-color:red;
+  text-align:center;
+  font-size:1rem;
+  padding:5px 0;
+}
+
+/* 임시 비밀번호 경고 끝 */
+
 /* 탑바 시작 */
 .top-bar {
   height:80px;
@@ -207,12 +220,6 @@ a {
 .top-bar__menu-box-1 > ul > li > a > span:last-child {
   margin-left:5px;
 }
-/* 사이드 메뉴 시작 */
-
-.top-bar__side-menu-box__side-menu-btn {
-}
-
-/* 사이드 메뉴 끝 */
 
 /* 탑바 끝 */
 
@@ -253,6 +260,11 @@ a {
   border-bottom:1px solid #ebebeb;
 }
 
+.index__latest-articles__articles > li:hover > a > span:first-child{
+	text-decoration:underline;
+	color:red;
+}
+
 .index__latest-articles__articles > li {
   border-top:1px solid #ebebeb;
   padding-top:10px;
@@ -284,6 +296,34 @@ a {
   padding-left:10px;
 }
 /* 게시물 등록 끝 */
+
+/* 게시물 수정 시작 */
+
+.article-modify{
+  border-top:3px solid;
+  padding-top:10px;
+  padding-left:10px;
+}
+
+.member-modify__title{
+  height:20px;
+  margin-bottom:10px;
+}
+
+@media(min-width:801px){
+  .member-modify__title{
+    width:800px;
+  } 
+}
+
+@media(max-width:800px){
+  .member-modify__title{
+    width:350px;
+  } 
+}
+
+/* 게시물 수정 끝 */
+
 /* 게시물 상세 시작 */
 .article-detail > .con {
   border-top:3px solid;
@@ -342,10 +382,195 @@ a {
   padding-bottom:10px;
   border-top:1px solid #dfdfdf;
   border-bottom:1px solid #dfdfdf;
-  margin-bottom:10px;
   flex-grow:1;
 }
 /* 게시물 상세 끝 */
+
+
+/* 회원 정보 시작 */
+@media ( min-width:801px ) {
+.member-whoami > .con > .btn-wrap{
+    flex-direction:row;
+  }
+}
+@media ( max-width:800px ) {
+.member-whoami > .con > .btn-wrap{
+    flex-direction:column;
+  }
+}
+.member-whoami > .con{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+.member-whoami__info{
+  border-top:3px solid;
+  padding-top:10px;
+  font-size:1.3rem;
+}
+
+.member-whoami__info > li {
+  border-bottom:1px solid #dfdfdf;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.member-whoami__info > li > span:first-child{
+  display:inline-block;
+  text-align:center;
+  width:20%;
+  border-right:1px solid #dfdfdf;
+}
+
+.member-whoami__info > li > span:last-child{
+  display:inline-block;
+  text-align:center;
+  width:70%;
+}
+/* 회원 정보 끝 */
+
+/* 회원 정보 수정 시작 */
+.member-modify{
+  padding-left:10px;
+  padding-right:10px;
+}
+
+
+@media(min-width:801px){
+	.member-modify input:not(.btn){
+	  height:30px;
+	  width:800px;
+	}
+		
+}
+
+@media(max-width:800px){
+	.member-modify input:not(.btn){
+	  height:30px;
+	  width:350px;
+	}
+		
+	
+}
+
+/* 회원 정보 수정 끝 */
+
+/* 회원 가입 시작 */
+
+.member-join{
+  padding-left:10px;
+}
+
+.member-join > input {
+  height:30px;
+  width:800px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.member-join > input:nth-child(3){
+  width:700px;
+}
+
+/* 회원 가입 끝 */
+
+/* 회원 로그인 아이디 찾기 시작 */
+
+.member-findLoginId{
+	padding-left:10px;
+}
+
+@media(min-width:801px){
+	.member-findLoginId > input {
+	  height:30px;
+	  width:800px;
+	  margin-top:10px;
+	  margin-bottom:10px;
+	}	
+	
+}
+
+@media(max-width:800px){
+	.member-findLoginId > input {
+	  height:30px;
+	  width:350px;
+	  margin-top:10px;
+	  margin-bottom:10px;
+	}	
+	
+}
+
+/* 회원 로그인 아이디 찾기 끝 */
+
+/* 회원 로그인 비밀번호 찾기 시작 */
+
+.member-findLoginPw{
+	padding-left:10px;
+}
+
+@media(min-width:801px){
+	.member-findLoginPw > input {
+	  height:30px;
+	  width:800px;
+	  margin-top:10px;
+	  margin-bottom:10px;
+	}	
+	
+}
+
+@media(max-width:800px){
+	.member-findLoginPw > input {
+	  height:30px;
+	  width:350px;
+	  margin-top:10px;
+	  margin-bottom:10px;
+	}	
+	
+}
+
+
+/* 회원 로그인 비밀번호 찾기 끝 */
+
+/* 게시물 리스트 서치 시작 */
+
+.searchForm {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:5px;
+  padding-left:10px;  
+}
+
+@media(min-width:801px){
+.searchForm  .searchKeywordType {
+  width:100px;
+  height:30px;
+}
+.searchForm  .searchKeyword{
+  width:300px;
+  height:25px;
+}
+}
+
+@media(max-width:800px){
+  .findArticlesCount{
+    display:none;
+  }
+  .searchForm  .searchKeywordType {
+  width:50px;
+  height:30px;
+}
+.searchForm  .searchKeyword{
+  width:250px;
+  height:25px;
+}
+  .searchKeyword + .btn{
+    margin-top:10px;
+  }
+}
+
+/* 게시물 리스트 서치 끝 */
 /* 게시물 리스트 박스 시작 */
 
 /* 게시물 리스트 박스 - PC 시작 */
@@ -378,6 +603,11 @@ a {
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+}
+
+.article-list-box__hitsCount{
+	display:block;
+  text-align:center;
 }
 /* 게시물 리스트 박스 - PC 끝 */
 
@@ -421,11 +651,42 @@ a {
     margin-left:5px;
     margin-right:5px;
   }
+
+  .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) > span:nth-child(4) {
+    margin-left:5px;
+    margin-right:5px;
+  }
 }
 
 /* 게시물 리스트 박스 - MOBILE 끝 */
 
 /* 게시물 리스트 박스 끝 */
+
+/* 댓글 시작 */
+/* 댓글 뷰 시작 */
+.article-detail__reply-view{
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.article-detail__reply-view__writer-info li {
+  border-bottom:1px solid #dfdfdf;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.article-detail__reply-view__writer-info li > span:first-child{
+  font-size:1.2rem;
+  margin-right:5px;
+}
+
+.article-detail__reply-view__writer-info li > div{
+  font-size:1.2rem;
+  margin-top:5px;
+}
+/* 댓글 뷰 끝 */
+
+/* 댓글 끝 */
 
 /* 버튼 시작 */
 .btn {
@@ -445,6 +706,8 @@ a {
   box-sizing: border-box;
   justify-content: center;
   text-align: center;
+  margin-top:10px;
+  margin-bottom:10px;
 }
 
 .btn-success {

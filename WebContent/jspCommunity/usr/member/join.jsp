@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <t:layout>
-	<jsp:attribute name="contentBody">
+	<jsp:attribute name="bodyContent">
 	<script>
 			
 		let doJoinForm__submited = false;
@@ -144,42 +144,34 @@
 		}
 	</script>
 
-		<h1>
-			<c:out value="${pageTitle}" />
-		</h1>
-		<form action="doJoin" method="POST" onsubmit="return doJoinForm__submit(this); return false;">
+   <div class="title-bar padding-0-10 con-min-width">
+     <h1 class="con">
+       <span><i class="fas fa-user-plus"></i></span>
+       <span>${pageTitle }</span>
+     </h1>
+   </div>
+		
+		<form class="con member-join" action="doJoin" method="POST" onsubmit="return doJoinForm__submit(this); return false;">
 		  <input type="hidden" name="loginPwReal"/>
 		  <div>ID</div>
-		  <br>  
 		  <input type="text" placeholder="아이디를 입력해주세요." name="loginId">
-		  <button onclick="doJoinForm__checkLoginIdDup(this);" name="btnLoginIdDupCheck" type="button">중복체크</button>
-		  <hr>
+		  <button class="btn" onclick="doJoinForm__checkLoginIdDup(this);" name="btnLoginIdDupCheck" type="button">중복체크</button>
 		  <div>Password</div>
-		  <br>
 		  <input type="password" placeholder="비밀 번호를 입력해주세요." name="loginPw">
-		  <hr>
 		  <div>Password Check</div>
-		  <br>
 		  <input type="password" placeholder="비밀 번호를 입력해주세요." name="loginPwCh">
-		  <hr>
 		  <div>Name</div>
-		  <br>
 		  <input type="text" placeholder="이름을 입력해주세요." name="name">
-		  <hr>
 		  <div>Nickname</div>
-		  <br>
 		  <input type="text" placeholder="닉네임을 입력해주세요." name="nickname">
-		  <hr>
 		  <div>Email</div>
-		  <br>
 		  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">
-		  <hr>
 		  <div>Phone Number</div>
-		  <br>
 		  <input type="number" placeholder="휴대폰 번호를 입력해주세요." name="phoneNum">
-		  <hr>
-		  <input type="submit" value="가입">
-		  <input type="button" value="뒤로가기" onclick="history.back();">
+		  <div class="btn-wrap">
+			  <input class="btn" type="submit" value="가입">
+			  <input class="btn" type="button" value="뒤로가기" onclick="history.back();">
+		  </div>
 		</form>
 	</jsp:attribute>
 </t:layout>

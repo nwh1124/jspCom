@@ -3,7 +3,10 @@ package com.myhome.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
@@ -138,6 +141,48 @@ public class Util {
 		}
 		
 		return defaultValue;
+	}
+
+	public static String getUriEncoded(String url) {		
+		try {
+			return URLEncoder.encode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return url;
+		}
+	}
+	
+	public static String getNowDateStr() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		String dateStr = format1.format(System.currentTimeMillis());
+
+		return dateStr;
+	}
+
+	public static int getPassedSecondsFrom(String from) {
+		SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date n;
+		try {
+			n = fDate.parse(from);
+		} catch (ParseException e) {
+			return -1;
+		}
+
+		return (int) ((new Date().getTime() - n.getTime()) / 1000);
+	}
+
+	public static boolean isEmpty(Object obj) {
+		if (obj == null) {
+			return true;
+		}
+
+		if (obj instanceof String) {
+			if (((String) obj).trim().length() == 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

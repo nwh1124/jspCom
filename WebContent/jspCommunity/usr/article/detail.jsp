@@ -109,7 +109,13 @@
 		                     let Id;
 		                     
 		                         function deleteActive(Id) {
-		                             $('.article-detail__reply-view__writer-info__body-modify--' + Id).addClass('block');
+			                         if($('.article-detail__reply-view__writer-info__body-modify--' + Id).hasClass('block')){
+			                        	 $('.article-detail__reply-view__writer-info__body-modify--' + Id).removeClass('block');
+			                         }
+			                         else {
+			                        	 $('.article-detail__reply-view__writer-info__body-modify--' + Id).addClass('block');
+			                         }
+		                             
 		                         }
 		                     </script>
 		                     <a class="article-detail__reply-view__writer-info__modify" style="cursor:pointer" onclick="deleteActive(${reply.getId()});">수정</a>

@@ -263,7 +263,7 @@ public class ArticleDao {
 		
 		sql.append("SELECT *");
 		sql.append("FROM article");
-		sql.append("ORDER BY regDate DESC");
+		sql.append("ORDER BY id DESC");
 		sql.append("limit ?", input);
 		
 		List<Map<String, Object>> listMap = MysqlUtil.selectRows(sql);

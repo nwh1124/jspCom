@@ -9,6 +9,8 @@
 
 <%@ include file="../../part/head.jspf" %>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <t:layout >
 	<jsp:attribute name="bodyContent">
 	
@@ -76,10 +78,11 @@
 		form.loginPwReal.value = sha256(form.loginPw.value);
 		form.loginPw.value = "";
 		form.loginPwCh.value = "";
-		
+
 		form.submit();
 		doMemberModifyForm__submited = true;
-		
+
+		return true;		
 	}
 	</script>
 	
@@ -91,8 +94,8 @@
    </div>
 	<div class="con-min-width">
 		<form class="con member-modify" action="doMemberModify" onsubmit="return doMemberModifyForm__submit(this); return false;">
-			<input type=hidden name="memberId" value="${sessionScope.loginedMemberId}">
-			<input type=hidden name="loginPwReal">
+			<input type="hidden" name="memberId" value="${sessionScope.loginedMemberId}">
+			<input type="hidden" name="loginPwReal">
 			<span>비밀번호</span>
 			<input type="password" name="loginPw" placeholder="수정할 비밀번호를 입력해주세요." size="30">
 			<span>비밀번호 확인</span>

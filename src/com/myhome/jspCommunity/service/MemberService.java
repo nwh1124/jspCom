@@ -95,9 +95,9 @@ public class MemberService {
 		memberDao.modify(param);		
 	}
 
-	public void doModify(int memberId, String loginId, String loginPw, String name, String nickname, String email,
+	public void doModify(int memberId, String loginPw, String name, String nickname, String email,
 			String phoneNumber) {
-		memberDao.doModify(memberId, loginId, loginPw, name, nickname, email, phoneNumber);
+		memberDao.doModify(memberId, loginPw, name, nickname, email, phoneNumber);
 		
 	}
 

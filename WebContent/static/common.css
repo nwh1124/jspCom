@@ -87,6 +87,14 @@ a {
 .red{
 	color:red;
 }
+
+.none{
+	display:none;
+}
+
+.block{
+	display:block !important;
+}
 /* 라이브러리 - 일반 끝 */
 
 /* 라이브러리 - 디버그 시작 */
@@ -381,7 +389,6 @@ a {
   padding-top:10px;
   padding-bottom:10px;
   border-top:1px solid #dfdfdf;
-  border-bottom:1px solid #dfdfdf;
   flex-grow:1;
 }
 /* 게시물 상세 끝 */
@@ -670,7 +677,7 @@ a {
 }
 
 .article-detail__reply-view__writer-info li {
-  border-bottom:1px solid #dfdfdf;
+  border-top:1px solid #dfdfdf;
   padding-top:10px;
   padding-bottom:10px;
 }
@@ -684,7 +691,53 @@ a {
   font-size:1.2rem;
   margin-top:5px;
 }
+
+.article-detail__reply-view__writer-info > .deletedReply{
+	color:#afafaf;
+}
 /* 댓글 뷰 끝 */
+
+/* 댓글 쓰기 시작 */
+.article-detail__reply-write{
+  margin-top:10px;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.article-detail__reply-write__info{
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.article-detail__reply-write__form {
+  display:flex;
+  flex-direction:column;
+}
+
+.article-detail__reply-write__form-btn{
+  width:200px;
+}
+
+@media(min-width:801px){ 
+  .article-detail__reply-write__form-input{
+    width:100%;
+    min-height:60px;
+    border:1px solid #dfdfdf;
+    font-size:1.2rem;
+    padding-left:10px
+  } 
+}
+
+@media(max-width:800px){ 
+  .article-detail__reply-write__form-input{
+    width:100%;
+    min-height:60px;
+    border:1px solid #dfdfdf;
+    font-size:1.2rem;
+    padding-left:10px
+  } 
+}
+/* 댓글 쓰기 끝 */
 
 /* 댓글 끝 */
 

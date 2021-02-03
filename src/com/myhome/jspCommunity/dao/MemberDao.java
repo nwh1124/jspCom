@@ -182,13 +182,14 @@ public class MemberDao {
 		
 	}
 
-	public void doModify(int memberId, String loginId, String loginPw, String name, String nickname, String email,
-			String phoneNumber) {
+	public void doModify(int memberId, String loginPw, String name, String nickname, String email,
+			String phoneNumber) {		
 		
 		SecSql sql = new SecSql();
 		
 		sql.append("UPDATE member");
 		sql.append("SET regDate = now()");
+		
 		if( loginPw.trim().length() > 0 ) {	
 			sql.append(", loginPw = ?", loginPw);
 		}
@@ -204,6 +205,7 @@ public class MemberDao {
 		if( phoneNumber.trim().length() > 0 ) {	
 			sql.append(", phoneNumber = ?", phoneNumber);
 		}
+		
 		sql.append("WHERE id = ?", memberId);
 
 		MysqlUtil.update(sql);

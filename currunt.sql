@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.1.7 (64 bit)
-MySQL - 10.4.14-MariaDB : Database - jspCommunity
+SQLyog Community v13.1.5  (64 bit)
+MySQL - 10.4.17-MariaDB : Database - jspCommunity
 *********************************************************************
 */
 
@@ -310,7 +310,7 @@ CREATE TABLE `attr` (
 /*Data for the table `attr` */
 
 insert  into `attr`(`id`,`regDate`,`updateDate`,`relTypeCode`,`relId`,`typeCode`,`type2Code`,`value`,`expireDate`) values 
-(9,'2021-01-28 18:30:51','2021-01-28 18:30:51','member',1,'extra','isUsingTempPassword','1',NULL);
+(9,'2021-01-28 18:30:51','2021-01-28 18:30:51','member',1,'extra','isUsingTempPassword','0',NULL);
 
 /*Table structure for table `board` */
 
@@ -363,7 +363,7 @@ CREATE TABLE `chatRoom` (
   `title` char(100) NOT NULL,
   `memberId` int(10) unsigned NOT NULL,
   `delDate` datetime DEFAULT NULL,
-  `delStatus` tinyint(1) NOT NULL,
+  `delStatus` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -381,7 +381,7 @@ CREATE TABLE `chatRoomMsg` (
   `memberId` int(10) unsigned NOT NULL,
   `body` text NOT NULL,
   `delDate` datetime DEFAULT NULL,
-  `delStatus` tinyint(1) NOT NULL,
+  `delStatus` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -424,9 +424,9 @@ CREATE TABLE `member` (
   `nickname` char(50) NOT NULL,
   `email` char(50) NOT NULL,
   `phoneNumber` char(50) NOT NULL,
-  `authLever` tinyint(1) NOT NULL DEFAULT 2 COMMENT '0: 탈퇴 1: 정지: 2: 미인증 3: 인증 4: 관리자',
-  `loginPwManage` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 : 미인증, 1 : 인증',
-  `eamilAuth` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 : 미인증, 1 : 인증',
+  `authLever` int(1) NOT NULL DEFAULT 2 COMMENT '0: 탈퇴 1: 정지: 2: 미인증 3: 인증 4: 관리자',
+  `loginPwManage` int(1) NOT NULL DEFAULT 0 COMMENT '0 : 미인증, 1 : 인증',
+  `eamilAuth` int(1) NOT NULL DEFAULT 0 COMMENT '0 : 미인증, 1 : 인증',
   PRIMARY KEY (`id`),
   UNIQUE KEY `loginId` (`loginId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
@@ -434,7 +434,7 @@ CREATE TABLE `member` (
 /*Data for the table `member` */
 
 insert  into `member`(`id`,`regDate`,`updateDate`,`loginId`,`loginPw`,`name`,`nickname`,`email`,`phoneNumber`,`authLever`,`loginPwManage`,`eamilAuth`) values 
-(1,'2021-01-07 12:42:11','2021-01-28 18:30:51','user1','9936839cf52c3fa4112cc4a8af0837491b21d9d995904bc7b331c722d2ff916e','김가나','가나초콜렛','nwh0716@gmail.com','',2,0,0),
+(1,'2021-02-03 10:46:48','2021-01-28 18:30:51','user1','0a041b9462caa4a31bac3567e0b6e6fd9100787db2ab433d96f6d178cabfce90','김가나','가나초콜렛','nwh0716@gmail.com','',2,0,0),
 (2,'2021-01-28 19:30:19','2021-01-07 12:42:11','user2','6025d18fe48abd45168528f18a82e265dd98d421a7084aa09f61b341703901a3','김다라','무구정광대다라니경','nwh0716@gmail.com','123',2,0,0);
 
 /*Table structure for table `recommend` */
@@ -446,9 +446,9 @@ CREATE TABLE `recommend` (
   `regDate` datetime NOT NULL,
   `updateDate` datetime NOT NULL,
   `memberId` int(10) unsigned NOT NULL,
-  `relType` char(50) NOT NULL,
+  `relTypeCode` char(50) NOT NULL,
   `relId` int(10) unsigned NOT NULL,
-  `point` tinyint(1) NOT NULL DEFAULT 1,
+  `point` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -463,14 +463,22 @@ CREATE TABLE `reply` (
   `regDate` datetime NOT NULL,
   `updateDate` datetime NOT NULL,
   `memberId` int(10) unsigned NOT NULL,
-  `relType` char(50) NOT NULL,
+  `relTypeCode` char(50) NOT NULL,
   `relId` int(10) unsigned NOT NULL,
+  `body` text NOT NULL,
   `delDate` datetime DEFAULT NULL,
-  `delStatus` tinyint(1) NOT NULL,
+  `delStatus` int(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `reply` */
+
+insert  into `reply`(`id`,`regDate`,`updateDate`,`memberId`,`relTypeCode`,`relId`,`body`,`delDate`,`delStatus`) values 
+(1,'2021-02-03 10:35:47','2021-02-03 10:35:47',1,'article',0,'댓글 테스트',NULL,0),
+(2,'2021-02-03 10:36:39','2021-02-03 10:36:39',1,'article',0,'ㅇㅇ',NULL,0),
+(3,'2021-02-03 10:37:40','2021-02-03 10:37:40',1,'article',0,'ㅁㄴㅇ',NULL,0),
+(4,'2021-02-03 10:38:11','2021-02-03 10:38:11',1,'article',304,'ㅁㄴㅇㄹ',NULL,0),
+(5,'2021-02-03 10:38:16','2021-02-03 10:38:16',1,'article',304,'댓글 테스트',NULL,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

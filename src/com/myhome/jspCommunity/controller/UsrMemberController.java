@@ -57,8 +57,6 @@ public class UsrMemberController extends Controller {
 	public String doLogin(HttpServletRequest req, HttpServletResponse resp) {		
 		HttpSession session = req.getSession();
 		
-		List<Member> members = memberService.getMembers();
-		
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPwReal");
 		
@@ -201,19 +199,21 @@ public class UsrMemberController extends Controller {
 	public String doMemberModify(HttpServletRequest req, HttpServletResponse resp) {
 		
 		int memberId = Integer.parseInt((String)req.getParameter("memberId"));
-		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPwReal");
+		String loginPw2 = req.getParameter("loginPw");
 		String name = req.getParameter("name");
 		String nickname = req.getParameter("nickname");
 		String email = req.getParameter("email");
-		String phoneNumber = req.getParameter("phoneNumber");
+		String phoneNumber = req.getParameter("phoneNumber");	
+		
+		System.out.println(loginPw + " " + loginPw2);
 		
 		if( loginPw.trim().length() > 0) {
 			req.getSession().setAttribute("isUsingTempPassword", 0);
 			req.getSession().setAttribute("isNeedToModifyOldLoginPw", 0);			
 		}
 		
-		memberService.doModify(memberId, loginId, loginPw, name, nickname, email, phoneNumber);
+		memberService.doModify(memberId, loginPw, name, nickname, email, phoneNumber);
 		
 		return msgAndReplace(req, memberId + " 번 회원의 정보가 수정되었습니다.", "../member/whoami");
 	}

@@ -120,6 +120,7 @@ public class UsrArticleController extends Controller {
 			memberGivePointBefore = articleService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
 		}		
 		
+		articleService.updateHitsCount(id);
 		List<Reply> replys = articleService.getReplyByArticleId(id);
 		Article article = articleService.getArticleById(id);
 		

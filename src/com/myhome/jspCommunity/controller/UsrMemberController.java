@@ -44,10 +44,10 @@ public class UsrMemberController extends Controller {
 		joinArgs.put("nickname", nickname);
 		joinArgs.put("email", email);
 		joinArgs.put("phoneNum", phoneNum);
+				
+		ResultData sendTempLoginPwToEmailRs = memberService.sendEmailToJoiner(new Member(joinArgs));
 		
-		memberService.doJoin(joinArgs);
-		
-		return msgAndReplace(req, "회원으로 등록되었습니다", "../home/main");
+		return msgAndReplace(req, sendTempLoginPwToEmailRs.getMsg(), "../member/login");
 	}
 
 	public String showLogin(HttpServletRequest req, HttpServletResponse resp) {

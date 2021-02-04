@@ -91,7 +91,8 @@
                         <col width="150">
                         <col width="200">
                         <col width="700">
-                        <col width="100">
+                        <col width="50">
+                        <col width="50">
                     </colgroup>
                     <thead>
                         <tr>
@@ -100,6 +101,7 @@
                             <th>작성자</th>
                             <th>제목</th>
                             <th>조회수</th>
+                            <th>추천수</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,6 +132,11 @@
                                         ${article.getHitsCount()}
                                     </span>
                                 </td>
+                                <td>
+                                    <span class="article-list-box__hitsCount">
+                                        ${article.getLikesCount()}
+                                    </span>
+                                </td>
                                 <td class="visible-sm-down">
                                     <div class="flex">
                                         <span class="article-list-box__id article-list-box__id--mobile">${article.getId() }</span>
@@ -145,6 +152,8 @@
                                         <span class="article-list-box__reg-date article-list-box__reg-date--mobile">${article.getRegDate() }</span>
                                         <span>| hit :</span>
                                         <span class="article-list-box__hitsCount article-list-box__hitsCount--mobile">${article.getHitsCount() }</span>
+                                        <span>| likes :</span>
+                                        <span class="article-list-box__hitsCount article-list-box__likesCount--mobile">${article.getLikesCount() }</span>
                                     </div>
                                 </td>
                             </tr>

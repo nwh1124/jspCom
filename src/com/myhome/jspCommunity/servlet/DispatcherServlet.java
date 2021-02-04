@@ -61,7 +61,25 @@ public abstract class DispatcherServlet extends HttpServlet{
 			return null;
 		}
 		
-		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
+//		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
+//		서버 연결 전까지 쓰이던 간단한 연결법
+		
+		String profilesActive = System.getProperty("spring.profiles.active");
+		
+		boolean isProductionMode = false;
+
+		if (profilesActive != null && profilesActive.equals("production")) {
+		  isProductionMode = true;
+		}
+				
+		if ( isProductionMode ) {
+		  MysqlUtil.setDBInfo("127.0.0.1", "sbsstLocal", "sbs123414", "jspCommunity");
+		}
+		else {
+		  MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");			
+		}
+		
+		// 마리아DB 서버 연결 이후 연결법
 
 		String controllerTypeName = requestUriBits[2];
 		String controllerName = requestUriBits[3];

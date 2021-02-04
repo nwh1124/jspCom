@@ -375,6 +375,10 @@ a {
     font-size:0.7rem;
   }
   
+  .article-detail table tbody td:not(:nth-child(2)){
+    font-size:0.9rem;
+  }
+  
 }
 
 .article-detail__title{
@@ -589,6 +593,7 @@ a {
 }
 
 .article-list-box > .con > table > thead > tr > th {
+	text-align:center;
 }
 
 .article-list-box > .con > table th,
@@ -596,6 +601,10 @@ a {
   padding-top:15px;
   padding-bottom:15px;
   text-align:center;
+}
+
+.article-list-box > .con > table .article-list-box__title--mobile{
+	text-align:left;	
 }
 
 .article-list-box > .con > table tr {
@@ -649,15 +658,12 @@ a {
   .article-list-box__title--mobile {
     margin-left:5px;
   }
-  
-  .article-list-box tr th {
-  }  
 
   .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) {
     margin-top:10px;
   }
 
-  .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) > span:nth-child(2) {
+  .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) > span:nth-child(2n) {
     margin-left:5px;
     margin-right:5px;
   }

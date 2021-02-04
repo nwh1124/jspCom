@@ -55,7 +55,7 @@
  		  <input type="hidden" name="body">
 	  <input class="member-modify__title" type="text" name="title" size="80" maxlength="80" placeholder="제목을 입력해주세요." value="${param.title}">
 	  <script type="text/x-template"></script>
-	  <div class="toast-ui-editor"></div>
+	  <div class="toast-ui-editor">${param.body }</div>
 	  <div class="btn-wrap">
 		  <input class="btn" type="submit" value="수정">
 		  <input class="btn" type="button" value="뒤로가기" onclick="history.back();">

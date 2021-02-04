@@ -206,6 +206,18 @@
                     </c:if>
 
                 </div>
+                <div style="padding-bottom:10px">
+                	<c:if test="${nextArticleId != 0 }">
+                		<div>
+                			<a href="../article/detail?id=${nextArticleId }"> 다음 글 : ${nextArticle.getTitle() }</a>
+                		</div>
+                	</c:if>
+                	<c:if test="${prevArticleId != 0 }">
+                		<div>
+                			<a href="../article/detail?id=${prevArticleId }"> 이전 글 : ${prevArticle.getTitle() }</a>
+                		</div>
+                	</c:if>
+                </div>
             </div>
         </div>
 

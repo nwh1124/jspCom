@@ -127,6 +127,31 @@ public class UsrArticleController extends Controller {
 		if( article == null ) {
 			return msgAndBack(req, id + " 번 게시물은 존재하지 않습니다.");
 		}
+				
+		List<Article> articles = articleService.getArticlesByBoardId(3);
+		
+		Article prevArticle = null;
+		int prevArticleIndex = article.getId() + 1;
+		int prevArticleId = 0;
+		
+		if(prevArticleIndex <= articles.size()) {
+			prevArticle = articles.get(prevArticleIndex - 1);
+			prevArticleId = prevArticle.getId();
+		}
+		
+		Article nextArticle = null;
+		int nextArticleIndex = article.getId() - 1;
+		int nextArticleId = 0;
+		
+		if(nextArticleIndex > 0) {
+			nextArticle = articles.get(nextArticleIndex - 1);
+			nextArticleId = nextArticle.getId();
+		}
+			
+		req.setAttribute("prevArticle", prevArticle);
+		req.setAttribute("prevArticleId", prevArticleId);
+		req.setAttribute("nextArticle", nextArticle);
+		req.setAttribute("nextArticleId", nextArticleId);
 		
 		req.setAttribute("article", article);
 		req.setAttribute("replys", replys);

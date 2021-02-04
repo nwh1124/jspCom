@@ -137,7 +137,6 @@ public class MemberService {
 		String siteName = App.getSite();
 		String siteMailUrl = App.getMailUrl();
 		String title = "[" + siteName + "] 가입을 축하합니다!";
-		String tempPassword = Util.getTempPassword(6);
 		String body = "<h1>" + actor.getNickname() + " 님의 가입을 축하합니다!</h1>";
 		body += "<div>" + siteName + "는 Path of Exile의 팬 커뮤니티로 다양한 스타터, 공략, 가이드 등을 제공할 예정입니다.</div>";
 		body += "<a href=\"" + siteMailUrl + "\" target=\"_blank\">" + siteName +"로 가기</a>";

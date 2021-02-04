@@ -45,7 +45,8 @@ public class UsrMemberController extends Controller {
 		joinArgs.put("email", email);
 		joinArgs.put("phoneNum", phoneNum);
 				
-		ResultData sendTempLoginPwToEmailRs = memberService.sendEmailToJoiner(new Member(joinArgs));
+		memberService.doJoin(joinArgs);
+		ResultData sendTempLoginPwToEmailRs = memberService.sendEmailToJoiner(memberService.getMemberByLoginId(loginId));
 		
 		return msgAndReplace(req, sendTempLoginPwToEmailRs.getMsg(), "../member/login");
 	}

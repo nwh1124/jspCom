@@ -52,7 +52,7 @@
    </div>
    
 		<form class="con member-findLoginPw" action="doFindLoginPw" method="POST" onsubmit="return doFindLoginPwForm__submit(this); return false;" target="_blank">
-		  <div>Name</div>
+		  <div>LoginId</div>
 		  <input type="text" placeholder="로그인 아이디를 입력해주세요." name="loginId">
 		  <div>Email</div>
 		  <input type="email" placeholder="Email 주소를 입력해주세요." name="email">

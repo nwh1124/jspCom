@@ -12,6 +12,12 @@
 <t:layout >
 	<jsp:attribute name="bodyContent">
 	    
+	    <div class="middle-bar">
+    		<div class="img-box">
+    			<img src="../../jspCommunity/img/witch.jpg"/>
+    		</div>
+	    </div>
+	    
 	    <div class="title-bar padding-0-10 con-min-width">
 	      <h1 class="con">
 	        <span><i class="fas fa-home"></i></span>

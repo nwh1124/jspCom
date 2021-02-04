@@ -252,8 +252,25 @@ a {
 /* 하단바 끝 */
 
 /* 인덱스 시작 */
+/* 미들 바 이미 시작 */
+
+.middle-bar > .img-box{
+  text-align:center; 
+  max-height: 600px;
+  overflow: hidden; 
+  margin-bottom:10px;
+}
+
+.middle-bar > .img-box > img{
+  width:1920px;
+  max-height: initial;
+  margin-top: -5%;
+}
+
+/* 미들 바 이미 끝 */
+
+/* 최신 글 목록 시작 */
 .index__latest-articles{
-  border-top:3px solid;
   padding-left:5px;
   padding-right:5px;
   padding-top:10px;
@@ -288,6 +305,7 @@ a {
   margin-top:10px;
   margin-bottom:10px;
 }
+/* 최신 글 목록 끝 */
 /* 인덱스 끝 */
 
 /* 게시물 등록 시작 */

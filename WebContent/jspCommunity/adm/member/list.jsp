@@ -10,7 +10,7 @@
 <%@ include file="../../part/head.jspf" %>
 
 <t:layout >
-	<jsp:attribute name="contentBody">
+	<jsp:attribute name="bodyContent">
 		<h1><c:out value="${pageTitle}"/></h1>
 		<a href="../../usr/article/list?boardId=3">게시물 목록</a>
 		<hr>

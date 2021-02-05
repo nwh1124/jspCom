@@ -98,4 +98,8 @@ public class ArticleService {
 		articleDao.doModifyReply(replyId, relTypeCode, relId, body, memberId);
 	}
 
+	public void updateArticleRecommendsCountPlus(int relId) {
+		articleDao.updateArticleRecommendsCountPlus(relId);		
+	}
+
 }

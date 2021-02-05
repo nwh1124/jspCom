@@ -56,7 +56,7 @@ public class MemberService {
 	public ResultData sendTempLoginPwToEmail(Member actor) {
 		
 		// 메일 제목과 내용 만들기
-		String siteName = App.getSite();
+		String siteName = App.getSiteName();
 		String siteLoginUrl = App.getLoginUrl();
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Util.getTempPassword(6);
@@ -134,7 +134,7 @@ public class MemberService {
 	public ResultData sendEmailToJoiner(Member actor) {
 		
 		// 메일 제목과 내용 만들기
-		String siteName = App.getSite();
+		String siteName = App.getSiteName();
 		String siteMailUrl = App.getMailUrl();
 		String title = "[" + siteName + "] 가입을 축하합니다!";
 		String body = "<h1>" + actor.getNickname() + " 님의 가입을 축하합니다!</h1>";

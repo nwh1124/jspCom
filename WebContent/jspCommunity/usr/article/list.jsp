@@ -124,7 +124,10 @@
                                 </td>
                                 <td>
                                     <a href="../article/detail?id=${article.id }" class="article-list-box__title article-list-box__title--pc hover-link">
-                                        ${article.getTitle() }
+                                        <span>${article.getTitle() }</span>
+                                        <c:if test="${article.getCommentsCount() > 0 }">
+                                        	<span class="article-list-box__title__commentsCount">[${article.getCommentsCount() }]</span>
+                                       	</c:if>
                                     </a>
                                 </td>
                                 <td>

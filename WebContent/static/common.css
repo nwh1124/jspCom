@@ -639,6 +639,10 @@ a {
   text-overflow:ellipsis;
 }
 
+.article-list-box__title__commentsCount {
+	font-size:0.9rem;
+}
+
 .article-list-box__hitsCount{
 	display:block;
   text-align:center;

@@ -442,4 +442,16 @@ public class ArticleDao {
 		
 	}
 
+	public void updateArticleRecommendsCountPlus(int relId) {
+				
+		SecSql sql = new SecSql();
+		
+		sql.append("UPDATE article");
+		sql.append("SET commentsCount = commentsCount + 1");
+		sql.append("WHERE id = ?", relId);
+		
+		MysqlUtil.update(sql);
+		
+	}
+
 }

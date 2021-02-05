@@ -275,6 +275,7 @@ public class UsrArticleController extends Controller {
 		String body = req.getParameter("replyBody");
 		
 		articleService.doWriteReply(relTypeCode, relId, body, memberId);
+		articleService.updateArticleRecommendsCountPlus(relId);
 		
 		return msgAndReplace(req, "댓글이 등록되었습니다.", "../article/detail?id=" + relId);
 	}

@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS jspCommunity;
+DROP DATABASE IF EXISTS jspCommunityReal;
 
-CREATE DATABASE jspCommunity;
+CREATE DATABASE jspCommunityReal;
 
-USE jspCommunity;
+USE jspCommunityReal;
 
 CREATE TABLE article(
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

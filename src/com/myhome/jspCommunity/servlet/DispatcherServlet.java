@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.myhome.jspCommunity.App;
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dto.Member;
 import com.myhome.util.Util;
@@ -56,34 +57,37 @@ public abstract class DispatcherServlet extends HttpServlet{
 		String requestUri = req.getRequestURI();
 		String[] requestUriBits = requestUri.split("/");
 		
-		if(requestUriBits.length < 5) {
+		int minBitsCount = 5;
+		
+		if ( App.isProductMode() ) {
+			minBitsCount = 4;
+		}		
+		
+		if(requestUriBits.length < minBitsCount) {
 			resp.getWriter().append("<h1>올바른 요청이 아닙니다</h1>");
 			return null;
 		}
 		
-//		MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");
-//		서버 연결 전까지 쓰이던 간단한 연결법
+		if ( App.isProductMode() ) {
+			MysqlUtil.setDBInfo("127.0.0.1", "sbsstLocal", "sbs123414", "jspCommunityReal");			
+		}else {		
+			MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");	
+			MysqlUtil.setDevMode(true);
+		}		
 		
-		String profilesActive = System.getProperty("spring.profiles.active");
-		
-		boolean isProductionMode = false;
+		int controllerTypeNameIndex = 2;
+		int controllerNameIndex = 3;
+		int actionMethodNameIndex = 4;
 
-		if (profilesActive != null && profilesActive.equals("production")) {
-		  isProductionMode = true;
+		if ( App.isProductMode() ) {
+			controllerTypeNameIndex = 1;
+			controllerNameIndex = 2;
+			actionMethodNameIndex = 3;
 		}
-				
-		if ( isProductionMode ) {
-		  MysqlUtil.setDBInfo("127.0.0.1", "sbsstLocal", "sbs123414", "jspCommunity");
-		}
-		else {
-		  MysqlUtil.setDBInfo("127.0.0.1", "sbsst", "sbs123414", "jspCommunity");			
-		}
-		
-		// 마리아DB 서버 연결 이후 연결법
 
-		String controllerTypeName = requestUriBits[2];
-		String controllerName = requestUriBits[3];
-		String actionMethodName = requestUriBits[4];
+		String controllerTypeName = requestUriBits[controllerTypeNameIndex];
+		String controllerName = requestUriBits[controllerNameIndex];
+		String actionMethodName = requestUriBits[actionMethodNameIndex];
 		
 		String actionUrl = "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
 		

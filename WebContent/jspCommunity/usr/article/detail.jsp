@@ -110,25 +110,30 @@
                                             function deleteActive(Id) {
                                                 if ($('.article-detail__reply-view__writer-info__body-modify--' + Id).hasClass('block')) {
                                                     $('.article-detail__reply-view__writer-info__body-modify--' + Id).removeClass('block');
+                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('block');
+                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('btn');
                                                 } else {
                                                     $('.article-detail__reply-view__writer-info__body-modify--' + Id).addClass('block');
+                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).addClass('block');
+                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).addClass('btn');
                                                 }
 
                                             }
                                         </script>
                                         
                                         <a class="article-detail__reply-view__writer-info__modify" style="cursor:pointer" onclick="deleteActive(${reply.getId()});">수정</a>
-                                        <a class="article-detail__reply-view__writer-info__delete" href="deleteReply?replyBody=${reply.getBody() }&relTypeCode=${reply.getRelTypeCode()}&relId=${reply.getRelId()}&memberId=${loginedMemberId}&replyId=${reply.getId()}">삭제</a>
+                                        <a class="article-detail__reply-view__writer-info__delete" href="../reply/doDelete?replyBody=${reply.getBody() }&relTypeCode=${reply.getRelTypeCode()}&relId=${reply.getRelId()}&memberId=${loginedMemberId}&replyId=${reply.getId()}">삭제</a>
                                     </c:if>
 
                                     <div>${reply.getBody() }</div>
                                     
-                                    <form action="modifyReply">
+                                    <form action="../reply/doModify">
                                         <input type="hidden" name="relTypeCode" value="${reply.getRelTypeCode()}" />
                                         <input type="hidden" name="relId" value="${reply.getRelId()}" />
                                         <input type="hidden" name="memberId" value="${reply.getMemberId()}" />
                                         <input type="hidden" name="replyId" value="${reply.getId()}" />
-                                        <input class="article-detail__reply-view__writer-info__body-modify--${reply.getId() }" style="display:none; width:100%; height:30px; border:1px solid #dfdfdf; margin-right:15px; margin-top:5px;" name="replyBody" value="${reply.getBody() }">
+                                        <input class="article-detail__reply-view__writer-info__body-modify--${reply.getId() } replyBody" name="replyBody" value="${reply.getBody() }">
+                                        <input class="article-detail__reply-view__writer-info__body-modify__submit--${reply.getId() } replyBtn" type="submit" value="수정하기"/>
                                     </form>
                                 </li>
                             </c:if>
@@ -171,8 +176,8 @@
                         <div class="article-detail__reply-write__info">
                             <span>댓글 작성</span>
                         </div>
-                        <form class="article-detail__reply-write__form" action="writeReply" onsubmit="return writeReplyForm__submit(this); return false">
-                            <input name="memberId" value="${article.getMemberId()}" hidden>
+                        <form class="article-detail__reply-write__form" action="../reply/doWrite" onsubmit="return writeReplyForm__submit(this); return false">
+                            <input name="memberId" value="${loginedMemberId}" hidden>
                             <input name="relId" value="${article.getId() }" hidden>
                             <input name="relTypeCode" value="article" hidden>
                             <input class="article-detail__reply-write__form-input" name="replyBody" type="text" />

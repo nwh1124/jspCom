@@ -86,18 +86,6 @@ public class ArticleService {
 		return articleDao.getReplyByArticleId(id);
 	}
 
-	public void doWriteReply(String relTypeCode, int relId, String body, int memberId) {
-		articleDao.doWriteReply(relTypeCode, relId, body, memberId);
-	}
-
-	public void doDeleteReply(int replyId,String relTypeCode, int relId, String body, int memberId) {
-		articleDao.doDeleteReply(replyId, relTypeCode, relId, body, memberId);
-	}
-
-	public void doModifyReply(int replyId, String relTypeCode, int relId, String body, int memberId) {
-		articleDao.doModifyReply(replyId, relTypeCode, relId, body, memberId);
-	}
-
 	public void updateArticleRecommendsCountPlus(int relId) {
 		articleDao.updateArticleRecommendsCountPlus(relId);		
 	}

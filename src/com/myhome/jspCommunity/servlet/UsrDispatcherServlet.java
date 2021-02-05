@@ -14,6 +14,7 @@ import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.controller.UsrArticleController;
 import com.myhome.jspCommunity.controller.UsrHomeController;
 import com.myhome.jspCommunity.controller.UsrMemberController;
+import com.myhome.jspCommunity.controller.UsrReplyController;
 import com.myhome.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 
@@ -87,12 +88,16 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = articleController.doRecommend(req,resp);
 			}else if(actionMethodName.equals("cancelRecommend")) {
 				jspPath = articleController.cancelRecommend(req,resp);
-			}else if(actionMethodName.equals("writeReply")) {
-				jspPath = articleController.doWriteReply(req,resp);
-			}else if(actionMethodName.equals("modifyReply")) {
-				jspPath = articleController.doModifyReply(req,resp);
-			}else if(actionMethodName.equals("deleteReply")) {
-				jspPath = articleController.doDeleteReply(req,resp);
+			}
+		}else if(controllerName.equals("reply")) {
+			UsrReplyController replyController = Container.replyController;
+			
+			if(actionMethodName.equals("doWrite")) {
+				jspPath = replyController.doWrite(req,resp);
+			}else if(actionMethodName.equals("doModify")) {
+				jspPath = replyController.doModify(req,resp);
+			}else if(actionMethodName.equals("doDelete")) {
+				jspPath = replyController.doDelete(req,resp);
 			}
 		}
 		

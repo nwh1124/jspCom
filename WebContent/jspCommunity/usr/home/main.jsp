@@ -12,9 +12,15 @@
 <t:layout >
 	<jsp:attribute name="bodyContent">
 	    
-	    <div class="middle-bar">
+	    <div class="middle-bar visible-md-up">
     		<div class="img-box">
-    			<img src="../../jspCommunity/img/witch.jpg"/>
+    			<img src="../../img/main-middle-bar.jpg"/>
+    		</div>
+	    </div>
+	    
+	    <div class="middle-bar visible-sm-down">
+    		<div class="img-box">
+    			<img src="../../img/main-middle-bar_mobile.jpg"/>
     		</div>
 	    </div>
 	    

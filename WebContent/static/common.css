@@ -253,18 +253,35 @@ a {
 
 /* 인덱스 시작 */
 /* 미들 바 이미 시작 */
+@media(min-width:801px){
+  .middle-bar > .img-box{
+    text-align:center; 
+    max-height: 600px;
+    overflow: hidden; 
+    margin-bottom:10px;
+  }
 
-.middle-bar > .img-box{
-  text-align:center; 
-  max-height: 600px;
-  overflow: hidden; 
-  margin-bottom:10px;
+  .middle-bar > .img-box > img{
+    width:1920px;
+    max-height: initial;
+    margin-top: -5%;
+  }
 }
 
-.middle-bar > .img-box > img{
-  width:1920px;
-  max-height: initial;
-  margin-top: -5%;
+@media(max-width:800px){
+  .middle-bar > .img-box{
+    text-align:center; 
+    max-height: 300px;
+    overflow: hidden; 
+    margin-bottom:10px;
+  }
+
+  .middle-bar > .img-box > img{
+    height:350px;
+    max-height: initial;
+    margin-top: -10%;
+    margin-left: -20%;
+  }
 }
 
 /* 미들 바 이미 끝 */

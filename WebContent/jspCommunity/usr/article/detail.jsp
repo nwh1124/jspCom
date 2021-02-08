@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pageTitle" value="게시물 상세" />
+<c:set var="pageTitle" value="Article Detail" />
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ include file="../../part/head.jspf" %>
@@ -196,16 +196,16 @@
                     <c:if test="${loginedMemberId > 0}">
 
                         <c:if test="${memberGivePointBefore == -1 }">
-                            <a class="article-detail__recommend btn" href="../article/recommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Recommend</a>
-                            <a class="article-detail__recommend btn btn-danger" href="../article/recommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">DisRecommend</a>
+                            <a class="article-detail__recommend btn" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Recommend</a>
+                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">DisRecommend</a>
                         </c:if>
 
                         <c:if test="${memberGivePointBefore == 1 }">
-                            <a class="article-detail__recommend btn" href="../article/cancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Cancel Recommend</a>
+                            <a class="article-detail__recommend btn" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Cancel Recommend</a>
                         </c:if>
 
                         <c:if test="${memberGivePointBefore == 2 }">
-                            <a class="article-detail__recommend btn btn-danger" href="../article/cancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">Cancel DisRecommend</a>
+                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">Cancel DisRecommend</a>
                         </c:if>
 
                     </c:if>
@@ -214,12 +214,12 @@
                 <div style="padding-bottom:10px">
                 	<c:if test="${nextArticleId != 0 }">
                 		<div>
-                			<a href="../article/detail?id=${nextArticleId }"> 다음 글 : ${nextArticle.getTitle() }</a>
+                			<a href="../article/detail?id=${nextArticleId }&boardId=${param.boardId}"> 다음 글 : ${nextArticle.getTitle() }</a>
                 		</div>
                 	</c:if>
                 	<c:if test="${prevArticleId != 0 }">
                 		<div>
-                			<a href="../article/detail?id=${prevArticleId }"> 이전 글 : ${prevArticle.getTitle() }</a>
+                			<a href="../article/detail?id=${prevArticleId }&boardId=${param.boardId}"> 이전 글 : ${prevArticle.getTitle() }</a>
                 		</div>
                 	</c:if>
                 </div>

@@ -114,10 +114,12 @@ public class UsrArticleController extends Controller {
 		HttpSession session = req.getSession();
 		
 		int id = Util.getAsInt(req.getParameter("id"), 0);
+		int boardId = Util.getAsInt(req.getParameter("boardId"), 0);
+		int articleBoardIdCnt = 0;
 		int memberGivePointBefore = 0;
 		
 		if(session.getAttribute("loginedMemberId") != null) {
-			memberGivePointBefore = articleService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
+			memberGivePointBefore = Container.recommendService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
 		}		
 		
 		articleService.updateHitsCount(id);
@@ -128,23 +130,29 @@ public class UsrArticleController extends Controller {
 			return msgAndBack(req, id + " 번 게시물은 존재하지 않습니다.");
 		}
 				
-		List<Article> articles = articleService.getArticlesByBoardId(3);
+		List<Article> articles = articleService.getArticlesByBoardId(boardId);
+		
+		for(int i = 0; i < articles.size(); i++) {
+			if(article.getId() == articles.get(i).getId()) {
+				articleBoardIdCnt = i;
+			}
+		};
 		
 		Article prevArticle = null;
-		int prevArticleIndex = article.getId() + 1;
+		int prevArticleIndex = articleBoardIdCnt + 1;
 		int prevArticleId = 0;
 		
-		if(prevArticleIndex <= articles.size()) {
-			prevArticle = articles.get(prevArticleIndex - 1);
+		if( prevArticleIndex < articles.size()) {
+			prevArticle = articles.get(articleBoardIdCnt + 1);
 			prevArticleId = prevArticle.getId();
 		}
 		
 		Article nextArticle = null;
-		int nextArticleIndex = article.getId() - 1;
+		int nextArticleIndex = articleBoardIdCnt;
 		int nextArticleId = 0;
 		
 		if(nextArticleIndex > 0) {
-			nextArticle = articles.get(nextArticleIndex - 1);
+			nextArticle = articles.get(articleBoardIdCnt - 1);
 			nextArticleId = nextArticle.getId();
 		}
 			
@@ -196,75 +204,6 @@ public class UsrArticleController extends Controller {
 
 	public String showModify(HttpServletRequest req, HttpServletResponse resp) {
 		return "usr/article/modify";
-	}
-
-	public String doRecommend(HttpServletRequest req, HttpServletResponse resp) {
-				
-		int relId = Util.getAsInt(req.getParameter("id"), 0);
-		int memberId = Util.getAsInt(req.getParameter("memberId"), 0);
-		int point = Util.getAsInt(req.getParameter("point"), 0);
-		String relTypeCode = req.getParameter("relTypeCode");		
-
-		int memberGivePointBefore = articleService.isAlraedyRecommend(relTypeCode, relId, memberId);
-
-		if ( memberGivePointBefore == 1 ) {	
-			return msgAndBack(req, "이미 추천한 게시물입니다.");
-		}
-
-		if ( memberGivePointBefore == 2 ) {
-			return msgAndBack(req, "이미 비추천한 게시물입니다.");
-		}
-		
-		if ( memberGivePointBefore == -1 ) {
-			articleService.doRecommend(relTypeCode, relId, memberId, point);
-			
-			if(point == 1) {
-				return msgAndReplace(req, "추천되었습니다.", String.format("../article/detail?id=%d", relId));
-			}
-			if(point == 2) {
-				return msgAndReplace(req, "비추천되었습니다.", String.format("../article/detail?id=%d", relId));
-			}			
-			
-		}
-		
-		return msgAndBack(req, "잘못된 접근입니다.");
-		
-	}
-
-	public String cancelRecommend(HttpServletRequest req, HttpServletResponse resp) {
-		
-		int relId = Util.getAsInt(req.getParameter("id"), 0);
-		int memberId = Util.getAsInt(req.getParameter("memberId"), 0);
-		int point = Util.getAsInt(req.getParameter("point"), 0);
-		String relTypeCode = req.getParameter("relTypeCode");		
-
-		int memberGivePointBefore = articleService.isAlraedyRecommend(relTypeCode, relId, memberId);
-		
-		if( memberGivePointBefore == -1 ) {
-			return msgAndBack(req, "추천/비추천한 게시물만 취소할 수 있습니다.");
-		}
-		
-		if( memberGivePointBefore == 1 ) {
-			if(point == 2) {
-				return msgAndBack(req, "추천한 게시물만 추천 취소할 수 있습니다.");
-			}
-			if(point == 1) {
-				articleService.cancelRecommend(relTypeCode, relId, memberId, point);
-				return msgAndReplace(req, "추천이 취소되었습니다.", String.format("../article/detail?id=%d", relId));
-			}
-		}
-		
-		if( memberGivePointBefore == 2 ) {
-			if(point == 1) {
-				return msgAndBack(req, "비추천한 게시물만 비추천을 취소할 수 있습니다.");
-			}
-			if(point == 2) {
-				articleService.cancelRecommend(relTypeCode, relId, memberId, point);
-				return msgAndReplace(req, "비추천이 취소되었습니다.", String.format("../article/detail?id=%d", relId));
-			}
-		}
-		
-		return msgAndBack(req, "잘못된 접근입니다.");
 	}
 
 }

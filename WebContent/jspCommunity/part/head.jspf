@@ -12,7 +12,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 
-<title><c:out value="${pageTitle}"/></title>
+<c:set var="pageCommon" value="Path of Atlas | "/>
+<title><c:out value="${pageCommon}${pageTitle}"/></title>
 
 <!-- 반응형 필수 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">

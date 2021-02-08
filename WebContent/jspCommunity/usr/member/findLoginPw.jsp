@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pageTitle" value="비밀번호 찾기"/>
+<c:set var="pageTitle" value="Find Login PW"/>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <%@ include file="../../part/head.jspf" %>

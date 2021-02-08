@@ -38,11 +38,40 @@
             </a>    
           </li>
           <li>
-            <a href="../article/list?boardId=3" class="flex flex-ai-c height-100p">
+            <a class="flex flex-ai-c height-100p">
               <span><i class="far fa-comment-alt"></i></span>
               <span class="visible-md-up">BOARD</span>
             </a>
+            <ul class="visible-md-up">
+              <li>             
+             	<span>
+             		<i class="far fa-comments"></i>
+               		<span>Boards</span>               		
+				</span>
+                <ul>
+                  <li>
+                    <a href="../article/list?boardId=2">
+                    	<i class="fas fa-exclamation-circle"></i>
+                      <span>Notice Board</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="../article/list?boardId=1">
+                    	<i class="far fa-comment-dots"></i>
+                      <span>Free Board</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="../article/list?boardId=3">
+                	<i class="fas fa-scroll"></i>
+                  <span>GuestBook</span>
+                </a>
+              </li>
+            </ul>
           </li> 
+        
           <c:if test="${loginedMemberId > 0 }">
           <li> 
             <a href="../member/whoami" class="flex flex-ai-c height-100p">
@@ -64,8 +93,8 @@
               <span class="visible-md-up">LOGOUT</span>
             </a>
           </c:if>
-          </li>
-        </ul>
+          </li>           
+        </ul>        
       </nav>
     </div>
   </header>

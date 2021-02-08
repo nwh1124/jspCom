@@ -3,6 +3,7 @@ package com.myhome.jspCommunity.container;
 import com.myhome.jspCommunity.controller.UsrArticleController;
 import com.myhome.jspCommunity.controller.UsrHomeController;
 import com.myhome.jspCommunity.controller.UsrMemberController;
+import com.myhome.jspCommunity.controller.UsrRecommendController;
 import com.myhome.jspCommunity.controller.UsrReplyController;
 import com.myhome.jspCommunity.controller.AdmMemberController;
 
@@ -16,6 +17,7 @@ import com.myhome.jspCommunity.service.ArticleService;
 import com.myhome.jspCommunity.service.BoardService;
 import com.myhome.jspCommunity.service.AttrService;
 import com.myhome.jspCommunity.service.MemberService;
+import com.myhome.jspCommunity.service.RecommendService;
 import com.myhome.jspCommunity.service.EmailService;
 import com.myhome.jspCommunity.service.ReplyService;
 
@@ -33,16 +35,22 @@ public class Container {
 
 	public static AttrService attrService;
 	public static EmailService emailService;	
-	public static ArticleService articleService;
+	public static ReplyService replyService;
+	public static RecommendService recommendService;
 	public static MemberService memberService;
 	public static BoardService boardService;
-	public static ReplyService replyService;
+	public static ArticleService articleService;
 	
-	public static UsrArticleController articleController;
-	public static UsrMemberController memberController;	
-	public static AdmMemberController admMemberController;
+	public static UsrRecommendController recommendController;
 	public static UsrHomeController homeController;
 	public static UsrReplyController replyController;
+	public static UsrArticleController articleController;
+	public static UsrMemberController memberController;
+	public static AdmMemberController admMemberController;
+
+		
+
+	
 		
 	static {
 		
@@ -54,6 +62,7 @@ public class Container {
 		boardDao = new BoardDao();
 		replyDao = new ReplyDao();
 		
+		recommendService = new RecommendService();
 		attrService = new AttrService();
 		emailService = new EmailService();
 		articleService = new ArticleService();
@@ -61,6 +70,7 @@ public class Container {
 		boardService = new BoardService();
 		replyService = new ReplyService();
 		
+		recommendController = new UsrRecommendController();
 		articleController = new UsrArticleController();
 		memberController = new UsrMemberController();
 		admMemberController = new AdmMemberController();

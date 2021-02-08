@@ -130,6 +130,7 @@ a {
 /* 커스텀 시작 */
 :root {
   --site-width:1200px;
+  --top-bar-height:80px;
 }
 
 @media ( min-width: 801px ) {
@@ -157,10 +158,17 @@ a {
   min-height:100vh;
   display:flex;
   flex-direction:column;
+  
+/*  background:url(../img/main-bg.jpg); */
+  
 }
 
 .body-content > main {
   flex-grow:1;
+}
+
+.body-content > main > .con{
+  background-color:white;
 }
 /* 바디콘텐트 끝 */
 
@@ -229,6 +237,84 @@ a {
   margin-left:5px;
 }
 
+.top-bar__menu-box-1 > ul > li > ul {
+  display:none;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul { 
+  display:flex;
+  background-color:black;
+  color:white;
+  position:absolute;
+  top:var(--top-bar-height);
+  left:0;
+  width:100%;
+  height:calc(var(--top-bar-height)/1.5);
+  justify-content:center;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li{ 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.1rem;
+  width:calc(100%/3);
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > span,
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  width:50%;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > span > i,
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > a > i {
+	margin-right:5px;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > span,
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > a{ 
+  background-color:white;
+  color:black;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li > ul{
+  display:none;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > ul{
+  display:flex;
+  flex-direction:column;
+  background-color:black;
+  color:white;
+  position:absolute;
+  top:100%;
+  width:calc(100%/6);
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > ul > li {
+  display:flex;
+  width:100;
+  justify-content:center;
+  align-items:center;
+  height:calc(var(--top-bar-height)/2);
+}
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > ul > li:hover > a{
+  background-color:white;
+  color:black;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.top-bar__menu-box-1 > ul > li:hover > ul > li:hover > ul > li:hover > a > i{
+	margin-right:5px;
+}
 /* 탑바 끝 */
 
 /* 타이틀 시작 */
@@ -270,17 +356,17 @@ a {
 
 @media(max-width:800px){
   .middle-bar > .img-box{
-    text-align:center; 
+    display:flex;
+    justify-content:center;
     max-height: 300px;
     overflow: hidden; 
     margin-bottom:10px;
   }
 
   .middle-bar > .img-box > img{
-    height:350px;
     max-height: initial;
-    margin-top: -10%;
-    margin-left: -20%;
+    margin-top: -0%;
+    margin-left: -0%;
   }
 }
 
@@ -700,6 +786,13 @@ a {
 
   .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) {
     margin-top:10px;
+  }
+
+  .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) > span:first-child {
+    width:90px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
 
   .article-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:nth-child(2) > span:nth-child(2n) {

@@ -14,6 +14,7 @@ import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.controller.UsrArticleController;
 import com.myhome.jspCommunity.controller.UsrHomeController;
 import com.myhome.jspCommunity.controller.UsrMemberController;
+import com.myhome.jspCommunity.controller.UsrRecommendController;
 import com.myhome.jspCommunity.controller.UsrReplyController;
 import com.myhome.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
@@ -84,11 +85,8 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = articleController.showWrite(req,resp);
 			}else if(actionMethodName.equals("modify")) {
 				jspPath = articleController.showModify(req,resp);
-			}else if(actionMethodName.equals("recommend")) {
-				jspPath = articleController.doRecommend(req,resp);
-			}else if(actionMethodName.equals("cancelRecommend")) {
-				jspPath = articleController.cancelRecommend(req,resp);
 			}
+			
 		}else if(controllerName.equals("reply")) {
 			UsrReplyController replyController = Container.replyController;
 			
@@ -98,6 +96,15 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 				jspPath = replyController.doModify(req,resp);
 			}else if(actionMethodName.equals("doDelete")) {
 				jspPath = replyController.doDelete(req,resp);
+			}
+			
+		}else if(controllerName.equals("recommend")) {
+			UsrRecommendController recommendController = Container.recommendController;
+			
+			if(actionMethodName.equals("doRecommend")) {
+				jspPath = recommendController.doRecommend(req,resp);
+			}else if(actionMethodName.equals("doCancelRecommend")) {
+				jspPath = recommendController.doCancelRecommend(req,resp);
 			}
 		}
 		

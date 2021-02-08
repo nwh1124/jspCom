@@ -70,18 +70,6 @@ public class ArticleService {
 		articleDao.updateHitsCount(id);		
 	}
 
-	public int isAlraedyRecommend(String relTypeCode, int relId, int memberId) {
-		return articleDao.isAlraedyRecommend(relTypeCode, relId, memberId);
-	}
-
-	public void doRecommend(String relTypeCode, int relId, int memberId, int point) {
-		articleDao.doRecommend(relTypeCode, relId, memberId, point);		
-	}
-
-	public void cancelRecommend(String relTypeCode, int relId, int memberId, int point) {
-		articleDao.cancelRecommend(relTypeCode, relId, memberId, point);
-	}
-
 	public List<Reply> getReplyByArticleId(int id) {
 		return articleDao.getReplyByArticleId(id);
 	}

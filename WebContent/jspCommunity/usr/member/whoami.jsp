@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pageTitle" value="회원 정보"/>
+<c:set var="pageTitle" value="Member Info"/>
 <c:set var="member" value="${loginedMember }"/>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>

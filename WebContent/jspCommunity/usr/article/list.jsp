@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pageTitle" value="게시물 목록" />
+<c:set var="pageTitle" value="Article List" />
 <c:set var="itemsInAPage" value="10" />
 <c:set var="btnsInAPageIndex" value="10" />
 <c:set var="articleCount" value="${articles.size() }" />
@@ -22,7 +22,7 @@
         <div class="title-bar padding-0-10 con-min-width">
             <h1 class="con">
                 <span><i class="fas fa-list"></i></span>
-                <span>게시물 리스트</span>
+                <span>${board.getName() } 게시판</span>
             </h1>
         </div>
 
@@ -123,7 +123,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="../article/detail?id=${article.id }" class="article-list-box__title article-list-box__title--pc hover-link">
+                                    <a href="../article/detail?id=${article.id }&boardId=${param.boardId}" class="article-list-box__title article-list-box__title--pc hover-link">
                                         <span>${article.getTitle() }</span>
                                         <c:if test="${article.getCommentsCount() > 0 }">
                                         	<span class="article-list-box__title__commentsCount">[${article.getCommentsCount() }]</span>
@@ -144,7 +144,7 @@
                                     <div class="flex">
                                         <span class="article-list-box__id article-list-box__id--mobile">${article.getId() }</span>
 
-                                        <a href="../article/detail?id=${article.id }" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">
+                                        <a href="../article/detail?id=${article.id }&boardId=${param.boardId}" class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">
                                             ${article.getTitle() }
                                         </a>
                                     </div>

@@ -107,7 +107,7 @@
                                         <script>
                                             let Id;
 
-                                            function deleteActive(Id) {
+                                            function modifyActive(Id) {
                                                 if ($('.article-detail__reply-view__writer-info__body-modify--' + Id).hasClass('block')) {
                                                     $('.article-detail__reply-view__writer-info__body-modify--' + Id).removeClass('block');
                                                     $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('block');
@@ -119,22 +119,62 @@
                                                 }
 
                                             }
+
+                                            let replyId;
+
+                                            function writeReReply(replyId) {
+                                                if ($('.article-detail__reply-view__reply-bottom__reply-write--' + Id).hasClass('block')) {
+                                                    $('.article-detail__reply-view__reply-bottom__reply-write--' + Id).removeClass('block');
+                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).removeClass('block');
+                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).removeClass('btn');
+                                                } else {
+                                                    $('.article-detail__reply-view__reply-bottom__reply-write--' + Id).addClass('block');
+                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).addClass('block');
+                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).addClass('btn');
+                                                }
+
+                                            }
                                         </script>
                                         
-                                        <a class="article-detail__reply-view__writer-info__modify" style="cursor:pointer" onclick="deleteActive(${reply.getId()});">수정</a>
-                                        <a class="article-detail__reply-view__writer-info__delete" href="../reply/doDelete?replyBody=${reply.getBody() }&relTypeCode=${reply.getRelTypeCode()}&relId=${reply.getRelId()}&memberId=${loginedMemberId}&replyId=${reply.getId()}">삭제</a>
+                                        <a class="article-detail__reply-view__writer-info__modify" style="cursor:pointer" onclick="modifyActive(${reply.getId()});">수정</a>
+                                        <a class="article-detail__reply-view__writer-info__delete" href="../reply/doDelete?replyBody=${reply.getBody() }&relTypeCode=${reply.getRelTypeCode()}&relId=${reply.getRelId()}&memberId=${loginedMemberId}&replyId=${reply.getId()}&boardId=${param.boardId}">삭제</a>
                                     </c:if>
 
                                     <div>${reply.getBody() }</div>
                                     
                                     <form action="../reply/doModify">
+                                        <input type="hidden" name="boardId" value="${param.boardId}" />
                                         <input type="hidden" name="relTypeCode" value="${reply.getRelTypeCode()}" />
                                         <input type="hidden" name="relId" value="${reply.getRelId()}" />
                                         <input type="hidden" name="memberId" value="${reply.getMemberId()}" />
                                         <input type="hidden" name="replyId" value="${reply.getId()}" />
                                         <input class="article-detail__reply-view__writer-info__body-modify--${reply.getId() } replyBody" name="replyBody" value="${reply.getBody() }">
                                         <input class="article-detail__reply-view__writer-info__body-modify__submit--${reply.getId() } replyBtn" type="submit" value="수정하기"/>
-                                    </form>
+                                    </form>                                   
+
+                                    
+                                    <div class="article-detail__reply-view__reply-bottom">
+                                    	<a class="article-detail__reply-view__reply-bottom__reply-write" style="cursor:pointer" onclick="writeReReply(${reply.getId()});">대댓글</a>
+	                                    <div>
+	                                      <a href="#">
+	                                        <i class="far fa-thumbs-up"></i>
+	                                        <span></span>
+	                                      </a>
+	                                      <a href="#">
+	                                        <i class="far fa-thumbs-down"></i>
+	                                        <span></span>
+	                                      </a>
+	                                    </div>
+	                                    <form class="reReply-form" action="../reply/doWriteReReply">
+	                                        <input type="hidden" name="boardId" value="${param.boardId}" />
+	                                        <input type="hidden" name="relTypeCode" value="${reply.getRelTypeCode()}" />
+	                                        <input type="hidden" name="relId" value="${reply.getRelId()}" />
+	                                        <input type="hidden" name="memberId" value="${reply.getMemberId()}" />
+	                                        <input type="hidden" name="replyId" value="${reply.getId()}" />
+	                                        <input class="article-detail__reply-view__reply-bottom__reply-write--${reply.getId() } reReplyBody" name="reReplyBody" value="">
+	                                        <input class="article-detail__reply-view__reply-bottom__reply-write__submit--${reply.getId() } reReplyBtn" type="submit" value="댓글쓰기"/>
+	                                    </form>                                    
+                                  	</div>
                                 </li>
                             </c:if>
                             <c:if test="${reply.getDelStatus() == 1 }">
@@ -177,6 +217,8 @@
                             <span>댓글 작성</span>
                         </div>
                         <form class="article-detail__reply-write__form" action="../reply/doWrite" onsubmit="return writeReplyForm__submit(this); return false">
+                        
+                            <input type="hidden" name="boardId" value="${param.boardId}" />
                             <input name="memberId" value="${loginedMemberId}" hidden>
                             <input name="relId" value="${article.getId() }" hidden>
                             <input name="relTypeCode" value="article" hidden>
@@ -188,7 +230,7 @@
 
                 <div class="btn-wrap">
                     <c:if test="${loginedMemberId == article.getMemberId() }">
-                        <a class="btn-warning btn" href="../article/modify?id=${article.getId() }&title=${article.getTitle() }&body=${article.getBody()}">Modify</a>
+                        <a class="btn-warning btn" href="../article/modify?id=${article.getId() }&title=${article.getTitle() }&body=${article.getBody()}&boardId=${param.boardId}">Modify</a>
                         <a class="btn-danger btn" href="../article/delete?id=${article.getId() }">Delete</a>
                     </c:if>
                     <a class="btn btn-success" href="../article/list?boardId=3">List</a>

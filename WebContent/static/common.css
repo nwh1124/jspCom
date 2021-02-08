@@ -231,13 +231,14 @@ a {
 .top-bar__menu-box-1 > ul > li:hover > a {
   background-color:white;
   color:black;
+  transition:0.5s;
 }
 
 .top-bar__menu-box-1 > ul > li > a > span:last-child {
   margin-left:5px;
 }
 
-.top-bar__menu-box-1 > ul > li > ul {
+.top-bar__menu-box-1 > ul > li > a + ul {
   display:none;
 }
 
@@ -279,6 +280,7 @@ a {
 .top-bar__menu-box-1 > ul > li:hover > ul > li:hover > a{ 
   background-color:white;
   color:black;
+  transition:0.3s;
 }
 
 .top-bar__menu-box-1 > ul > li:hover > ul > li > ul{
@@ -835,6 +837,37 @@ a {
 
 .article-detail__reply-view__writer-info > .deletedReply{
 	color:#afafaf;
+}
+
+.article-detail__reply-view__reply-bottom {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.article-detail__reply-view__reply-bottom > a{
+  font-size:0.9rem;
+  margin-top:5px;
+}
+
+.article-detail__reply-view__reply-bottom > div{
+  font-size:0.9rem;
+  
+}
+
+.reReplyBody{
+	display:none; 
+	width:100%;
+	height:30px; 
+	border:1px solid #dfdfdf; 
+	margin-right:15px; 
+	margin-top:5px;
+}	
+.reReplyBtn{
+	display:none;
+}	
+.reReply-form{
+	display:none;
 }
 /* 댓글 뷰 끝 */
 

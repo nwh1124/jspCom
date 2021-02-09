@@ -1,6 +1,9 @@
 package com.myhome.jspCommunity.service;
 
+import java.util.List;
+
 import com.myhome.jspCommunity.dao.recommendDao;
+import com.myhome.jspCommunity.dto.Reply;
 
 public class RecommendService {
 

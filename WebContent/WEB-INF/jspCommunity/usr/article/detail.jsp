@@ -93,49 +93,54 @@
                     <span hidden>${article.body}</span>
                     <div class="toast-ui-viewer"></div>
                 </div>
+                
+		         <script>	
+		             let Id;
+		
+		             function modifyActive(Id) {
+		                 if ($('.article-detail__reply-view__writer-info__body-modify--' + Id).hasClass('block')) {
+		                     $('.article-detail__reply-view__writer-info__body-modify--' + Id).removeClass('block');
+		                     $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('block');
+		                     $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('btn');
+		                 } else {
+		                     $('.article-detail__reply-view__writer-info__body-modify--' + Id).addClass('block');
+		                     $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).addClass('block');
+		                     $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).addClass('btn');
+		                 }
+		
+		             }		
+		             
+		             let replyId;
+	    			
+   		             function writeReReply(replyId) {   			    			
+   		                 if ($('.article-detail__reply-view__reply-bottom__reply-write--' + replyId).hasClass('block')) {
+   		                     $('.article-detail__reply-view__reply-bottom__reply-write--' + replyId).removeClass('block');
+   		                     $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + replyId).removeClass('block');
+   		                     $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + replyId).removeClass('btn');
+   		                     $('.article-detail__reply-view__reply-bottom__reReplys__reReply--' + replyId).removeClass('block');
+   		                 } else {
+   		                     $('.article-detail__reply-view__reply-bottom__reply-write--' + replyId).addClass('block');
+   		                     $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + replyId).addClass('block');
+   		                     $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + replyId).addClass('btn');
+   		                     $('.article-detail__reply-view__reply-bottom__reReplys__reReply--' + replyId).addClass('block');
+   		                 }
+   		
+   		             }
+		         </script>
 
                 <div class="article-detail__reply-view">
                     <ul class="article-detail__reply-view__writer-info flex flex-column">
                         <c:forEach var="reply" items="${replys}">
                             <c:if test="${reply.getDelStatus() == 0 }">
+                            
+
                                 <li class="">
                                     <span>${reply.getExtra__nickname() }</span>
                                     <span>${reply.getRegDate() }</span>
+                                    
+
 
                                     <c:if test="${reply.getMemberId() == loginedMemberId }">
-
-                                        <script>
-                                            let Id;
-
-                                            function modifyActive(Id) {
-                                                if ($('.article-detail__reply-view__writer-info__body-modify--' + Id).hasClass('block')) {
-                                                    $('.article-detail__reply-view__writer-info__body-modify--' + Id).removeClass('block');
-                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('block');
-                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).removeClass('btn');
-                                                } else {
-                                                    $('.article-detail__reply-view__writer-info__body-modify--' + Id).addClass('block');
-                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).addClass('block');
-                                                    $('.article-detail__reply-view__writer-info__body-modify__submit--' + Id).addClass('btn');
-                                                }
-
-                                            }
-
-                                            let replyId;
-
-                                            function writeReReply(replyId) {
-                                                if ($('.article-detail__reply-view__reply-bottom__reply-write--' + Id).hasClass('block')) {
-                                                    $('.article-detail__reply-view__reply-bottom__reply-write--' + Id).removeClass('block');
-                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).removeClass('block');
-                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).removeClass('btn');
-                                                } else {
-                                                    $('.article-detail__reply-view__reply-bottom__reply-write--' + Id).addClass('block');
-                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).addClass('block');
-                                                    $('.article-detail__reply-view__reply-bottom__reply-write__submit--' + Id).addClass('btn');
-                                                }
-
-                                            }
-                                        </script>
-                                        
                                         <a class="article-detail__reply-view__writer-info__modify" style="cursor:pointer" onclick="modifyActive(${reply.getId()});">수정</a>
                                         <a class="article-detail__reply-view__writer-info__delete" href="../reply/doDelete?replyBody=${reply.getBody() }&relTypeCode=${reply.getRelTypeCode()}&relId=${reply.getRelId()}&memberId=${loginedMemberId}&replyId=${reply.getId()}&boardId=${param.boardId}">삭제</a>
                                     </c:if>
@@ -154,7 +159,12 @@
 
                                     
                                     <div class="article-detail__reply-view__reply-bottom">
-                                    	<a class="article-detail__reply-view__reply-bottom__reply-write" style="cursor:pointer" onclick="writeReReply(${reply.getId()});">대댓글</a>
+                                    	<c:if test="${loginedMemberId > 0 }">
+                                    		<a class="article-detail__reply-view__reply-bottom__reply-write" style="cursor:pointer" onclick="writeReReply(${reply.getId()});">대댓글</a>
+                                    	</c:if>
+                                    	<c:if test="${loginedMemberId <= 0 }">
+                                    		<a> </a>
+                                    	</c:if>
 	                                    <div>
 	                                      <a href="#">
 	                                        <i class="far fa-thumbs-up"></i>
@@ -164,17 +174,32 @@
 	                                        <i class="far fa-thumbs-down"></i>
 	                                        <span></span>
 	                                      </a>
-	                                    </div>
-	                                    <form class="reReply-form" action="../reply/doWriteReReply">
-	                                        <input type="hidden" name="boardId" value="${param.boardId}" />
-	                                        <input type="hidden" name="relTypeCode" value="${reply.getRelTypeCode()}" />
-	                                        <input type="hidden" name="relId" value="${reply.getRelId()}" />
-	                                        <input type="hidden" name="memberId" value="${reply.getMemberId()}" />
-	                                        <input type="hidden" name="replyId" value="${reply.getId()}" />
-	                                        <input class="article-detail__reply-view__reply-bottom__reply-write--${reply.getId() } reReplyBody" name="reReplyBody" value="">
-	                                        <input class="article-detail__reply-view__reply-bottom__reply-write__submit--${reply.getId() } reReplyBtn" type="submit" value="댓글쓰기"/>
-	                                    </form>                                    
+                                    	</div>                                   
                                   	</div>
+                                    	<div>
+                                    		<ul class="article-detail__reply-view__reply-bottom__reReplys">
+	                                    	<c:forEach var="reReply" items="${reReplys }">
+	                                    		<c:if test="${reply.getId() == reReply.getRelId()}">
+	                                    			<li class="article-detail__reply-view__reply-bottom__reReplys__reReply--${reply.getId() }">
+	                                    				<div class="reReplys__top">
+		                                    				<span>${reReply.getExtra__nickname()}</span>
+		                                    				<span>${reReply.getRegDate() }</span>
+		                                    			</div>
+			                                    		<span>${reReply.getBody() }</span>
+			                                    	</li>
+		                                    	</c:if>
+	                                    	</c:forEach>
+	                                    	</ul>
+                                    	</div>
+                                    <form class="reReply-form" action="../reply/doWrite">
+                                        <input type="hidden" name="boardId" value="${param.boardId}" />
+                                        <input type="hidden" name="relTypeCode" value="reply" />
+                                        <input type="hidden" name="relId" value="${reply.getId()}" />
+                                        <input type="hidden" name="memberId" value="${loginedMemberId}" />
+                                        <input type="hidden" name="articleId" value="${param.id}" />
+                                        <input class="article-detail__reply-view__reply-bottom__reply-write--${reply.getId() } reReplyBody" name="replyBody" value="">
+                                        <input class="article-detail__reply-view__reply-bottom__reply-write__submit--${reply.getId() } reReplyBtn" type="submit" value="대댓글 쓰기"/>
+                                    </form> 
                                 </li>
                             </c:if>
                             <c:if test="${reply.getDelStatus() == 1 }">
@@ -222,6 +247,7 @@
                             <input name="memberId" value="${loginedMemberId}" hidden>
                             <input name="relId" value="${article.getId() }" hidden>
                             <input name="relTypeCode" value="article" hidden>
+                            <input name="articleId" value="${article.getId() }" hidden>
                             <input class="article-detail__reply-write__form-input" name="replyBody" type="text" />
                             <input class="btn article-detail__reply-write__form-btn" type="submit" value="댓글 쓰기">
                         </form>
@@ -238,16 +264,16 @@
                     <c:if test="${loginedMemberId > 0}">
 
                         <c:if test="${memberGivePointBefore == -1 }">
-                            <a class="article-detail__recommend btn" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Recommend</a>
-                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">DisRecommend</a>
+                            <a class="article-detail__recommend btn" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}">Recommend</a>
+                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}">DisRecommend</a>
                         </c:if>
 
                         <c:if test="${memberGivePointBefore == 1 }">
-                            <a class="article-detail__recommend btn" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1">Cancel Recommend</a>
+                            <a class="article-detail__recommend btn" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}">Cancel Recommend</a>
                         </c:if>
 
                         <c:if test="${memberGivePointBefore == 2 }">
-                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2">Cancel DisRecommend</a>
+                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}">Cancel DisRecommend</a>
                         </c:if>
 
                     </c:if>

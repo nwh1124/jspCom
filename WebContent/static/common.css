@@ -819,18 +819,18 @@ a {
   margin-right:10px;
 }
 
-.article-detail__reply-view__writer-info li {
+.article-detail__reply-view__writer-info > li {
   border-top:1px solid #dfdfdf;
   padding-top:10px;
   padding-bottom:10px;
 }
 
-.article-detail__reply-view__writer-info li > span:first-child{
+.article-detail__reply-view__writer-info > li > span:first-child{
   font-size:1.2rem;
   margin-right:5px;
 }
 
-.article-detail__reply-view__writer-info li > div{
+.article-detail__reply-view__writer-info > li > div{
   font-size:1.2rem;
   margin-top:5px;
 }
@@ -864,9 +864,6 @@ a {
 	margin-top:5px;
 }	
 .reReplyBtn{
-	display:none;
-}	
-.reReply-form{
 	display:none;
 }
 /* 댓글 뷰 끝 */
@@ -926,6 +923,33 @@ a {
 	display:none;
 }	
 /* 댓글 수정 끝 */
+
+/* 대댓글 시작 */
+.article-detail__reply-view__reply-bottom__reply-write{
+  margin-left:10px;
+}
+
+.article-detail__reply-view__reply-bottom__reReplys{
+	margin-left:10px;	
+  padding-left:5px;
+}
+
+.article-detail__reply-view__reply-bottom__reReplys > li {
+	display:none;
+	font-size:16px;
+	border-top:1px solid #dfdfdf;
+	padding-top:5px;
+  margin-top:5px;
+}
+.article-detail__reply-view__reply-bottom__reReplys > li > div{
+  margin-bottom:5px;
+}
+
+.reReply-form{
+	margin-left:10px;
+}
+
+/* 대댓글 끝 */
 
 /* 댓글 끝 */
 

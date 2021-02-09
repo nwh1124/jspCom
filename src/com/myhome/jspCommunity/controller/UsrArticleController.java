@@ -122,6 +122,8 @@ public class UsrArticleController extends Controller {
 			memberGivePointBefore = Container.recommendService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
 		}		
 		
+		List<Reply> reReplys = Container.replyService.getReReplys();
+		
 		articleService.updateHitsCount(id);
 		List<Reply> replys = articleService.getReplyByArticleId(id);
 		Article article = articleService.getArticleById(id);
@@ -163,6 +165,7 @@ public class UsrArticleController extends Controller {
 		
 		req.setAttribute("article", article);
 		req.setAttribute("replys", replys);
+		req.setAttribute("reReplys", reReplys);
 		req.setAttribute("memberGivePointBefore", memberGivePointBefore);
 		
 		return "usr/article/detail";

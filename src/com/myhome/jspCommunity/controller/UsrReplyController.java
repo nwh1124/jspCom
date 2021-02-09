@@ -1,9 +1,13 @@
 package com.myhome.jspCommunity.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.myhome.jspCommunity.container.Container;
+import com.myhome.jspCommunity.dto.Reply;
 import com.myhome.jspCommunity.service.ReplyService;
 import com.myhome.util.Util;
 
@@ -15,13 +19,14 @@ public class UsrReplyController extends Controller{
 		int memberId = Util.getAsInt(req.getParameter("memberId"), 0);
 		int relId = Util.getAsInt(req.getParameter("relId"), 0);
 		int boardId = Util.getAsInt(req.getParameter("boardId"), 0);
+		int articleId = Util.getAsInt(req.getParameter("articleId"), 0);
 		String relTypeCode = req.getParameter("relTypeCode");
 		String body = req.getParameter("replyBody");
 		
 		replyService.doWriteReply(relTypeCode, relId, body, memberId);
 		Container.articleService.updateArticleRecommendsCountPlus(relId);
 		
-		return msgAndReplace(req, "댓글이 등록되었습니다.", "../article/detail?id=" + relId + "&boardId=" + boardId);
+		return msgAndReplace(req, "댓글이 등록되었습니다.", "../article/detail?id=" + articleId + "&boardId=" + boardId);
 	}
 
 	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
@@ -50,6 +55,26 @@ public class UsrReplyController extends Controller{
 		
 		replyService.doDeleteReply(replyId, relTypeCode, relId, body, memberId);
 		return msgAndReplace(req, "댓글이 삭제되었습니다", "../article/detail?id=" + relId + "&boardId=" + boardId);
+	}
+
+	public String getReReplys(HttpServletRequest req, HttpServletResponse resp) {
+		
+		List<String> jsonReReplys = new ArrayList<String>();
+		String relTypeCode = req.getParameter("relTypeCode");
+		int relId = Util.getAsInt(req.getParameter("relId"), 0);
+		
+		System.out.println(relTypeCode);
+		System.out.println(relId);
+		System.out.println("확인");
+		
+		List<Reply> reReplys = replyService.getReReplys(relTypeCode, relId);
+		
+		for(int i = 0; i < reReplys.size(); i++) {
+			jsonReReplys.set(i, Util.getJsonText(reReplys.get(i)));
+			System.out.println(jsonReReplys.get(i));
+		}
+		
+		return null;
 	}
 	
 }

@@ -1,7 +1,11 @@
 package com.myhome.jspCommunity.service;
 
+import java.util.List;
+
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dao.ReplyDao;
+import com.myhome.jspCommunity.dao.recommendDao;
+import com.myhome.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 import com.sbs.example.jspCommunity.mysqlutil.SecSql;
 
@@ -22,6 +26,18 @@ public class ReplyService {
 
 	public void doDeleteReply(int replyId, String relTypeCode, int relId, String body, int memberId) {
 		replyDao.doDeleteReply(replyId, relTypeCode, relId, body, memberId);
+	}
+
+	public List<Reply> getReReplys(String relTypeCode, int relId) {
+		return ReplyDao.getReReplys(relTypeCode, relId);
+	}
+
+	public List<Reply> getReReplysByArticleId(String string, int id) {
+		return ReplyDao.getReReplysByArticleId("article", id);
+	}
+
+	public List<Reply> getReReplys() {
+		return ReplyDao.getReReplys();
 	}
 
 }

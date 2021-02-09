@@ -89,5 +89,4 @@ public class UsrRecommendController extends Controller{
 		
 		return msgAndBack(req, "잘못된 접근입니다.");
 	}
-
 }

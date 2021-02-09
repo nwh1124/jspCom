@@ -136,8 +136,8 @@
 
                                 <li class="">
                                     <span>${reply.getExtra__nickname() }</span>
-                                    <span>${reply.getRegDate() }</span>
-                                    
+                                    <span>${reply.getRegDate() }</span>                                    
+                                    <span>좋아요 : 0</span>
 
 
                                     <c:if test="${reply.getMemberId() == loginedMemberId }">
@@ -168,11 +168,9 @@
 	                                    <div>
 	                                      <a href="#">
 	                                        <i class="far fa-thumbs-up"></i>
-	                                        <span></span>
 	                                      </a>
 	                                      <a href="#">
 	                                        <i class="far fa-thumbs-down"></i>
-	                                        <span></span>
 	                                      </a>
                                     	</div>                                   
                                   	</div>

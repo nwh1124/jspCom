@@ -21,31 +21,47 @@ public class UsrRecommendController extends Controller{
 
 	public String doRecommend(HttpServletRequest req, HttpServletResponse resp) {
 		
-		int relId = Util.getAsInt(req.getParameter("id"), 0);
+		int articleId = Util.getAsInt(req.getParameter("articleId"), 0);
+		int relId = Util.getAsInt(req.getParameter("relId"), 0);
 		int memberId = Util.getAsInt(req.getParameter("memberId"), 0);
 		int point = Util.getAsInt(req.getParameter("point"), 0);
 		String relTypeCode = req.getParameter("relTypeCode");	
 		
 		int boardId = Util.getAsInt(req.getParameter("boardId"), 0);
-
-		int memberGivePointBefore = recommendService.isAlraedyRecommend(relTypeCode, relId, memberId);
-
-		if ( memberGivePointBefore == 1 ) {	
-			return msgAndBack(req, "이미 추천한 게시물입니다.");
+		
+		if( memberId == 0 ) {
+			return msgAndReplace(req, "로그인 후 이용해주세요.", "../article/detail?id=" + articleId + "&boardId=" + boardId);
 		}
 
-		if ( memberGivePointBefore == 2 ) {
-			return msgAndBack(req, "이미 비추천한 게시물입니다.");
+		int memberGiveArticlePointBefore = recommendService.isAlraedyRecommend(relTypeCode, relId, memberId);
+
+		if ( memberGiveArticlePointBefore == 1 ) {	
+			if(relTypeCode.equals("article")) {
+				return msgAndBack(req, "이미 추천한 게시물입니다.");
+			}	
+			if(relTypeCode.equals("reply")) {
+				return msgAndBack(req, "이미 추천한 댓글입니다.");
+			}
+			
+		}
+
+		if ( memberGiveArticlePointBefore == 2 ) {			
+			if(relTypeCode.equals("article")) {
+				return msgAndBack(req, "이미 비추천한 게시물입니다.");
+			}			
+			if(relTypeCode.equals("reply")) {
+				return msgAndBack(req, "이미 비추천한 댓글입니다.");
+			}
 		}
 		
-		if ( memberGivePointBefore == -1 ) {
+		if ( memberGiveArticlePointBefore == -1 ) {
 			recommendService.doRecommend(relTypeCode, relId, memberId, point);
 			
 			if(point == 1) {
-				return msgAndReplace(req, "추천되었습니다.", String.format("../article/detail?id=%d&boardId=%d", relId, boardId));
+				return msgAndReplace(req, "추천되었습니다.", String.format("../article/detail?id=%d&boardId=%d", articleId, boardId));
 			}
 			if(point == 2) {
-				return msgAndReplace(req, "비추천되었습니다.", String.format("../article/detail?id=%d&boardId=%d", relId, boardId));
+				return msgAndReplace(req, "비추천되었습니다.", String.format("../article/detail?id=%d&boardId=%d", articleId, boardId));
 			}			
 			
 		}
@@ -55,7 +71,8 @@ public class UsrRecommendController extends Controller{
 
 	public String doCancelRecommend(HttpServletRequest req, HttpServletResponse resp) {
 		
-		int relId = Util.getAsInt(req.getParameter("id"), 0);
+		int articleId = Util.getAsInt(req.getParameter("articleId"), 0);
+		int relId = Util.getAsInt(req.getParameter("relId"), 0);
 		int memberId = Util.getAsInt(req.getParameter("memberId"), 0);
 		int point = Util.getAsInt(req.getParameter("point"), 0);
 		String relTypeCode = req.getParameter("relTypeCode");	
@@ -73,7 +90,7 @@ public class UsrRecommendController extends Controller{
 			}
 			if(point == 1) {
 				recommendService.cancelRecommend(relTypeCode, relId, memberId, point);
-				return msgAndReplace(req, "추천이 취소되었습니다.", String.format("../article/detail?id=%d&boardId=%d", relId, boardId));
+				return msgAndReplace(req, "추천이 취소되었습니다.", String.format("../article/detail?id=%d&boardId=%d", articleId, boardId));
 			}
 		}
 		
@@ -83,7 +100,7 @@ public class UsrRecommendController extends Controller{
 			}
 			if(point == 2) {
 				recommendService.cancelRecommend(relTypeCode, relId, memberId, point);
-				return msgAndReplace(req, "비추천이 취소되었습니다.", String.format("../article/detail?id=%d&boardId=%d", relId, boardId));
+				return msgAndReplace(req, "비추천이 취소되었습니다.", String.format("../article/detail?id=%d&boardId=%d", articleId, boardId));
 			}
 		}
 		

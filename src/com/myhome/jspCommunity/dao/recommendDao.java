@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.myhome.jspCommunity.dto.Recommend;
 import com.myhome.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 import com.sbs.example.jspCommunity.mysqlutil.SecSql;
@@ -80,6 +81,28 @@ public class recommendDao {
 						
 		MysqlUtil.update(sql);
 		
+	}
+
+	public static List<Recommend> isReplyAlraedyRecommend(int articleId, int memberId) {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT Rec.*");
+		sql.append("FROM recommend AS Rec");
+		sql.append("LEFT JOIN reply AS R");
+		sql.append("ON Rec.relId = R.id");
+		sql.append("WHERE R.relTypeCode = 'article'");		
+		sql.append("AND R.relid = ?", articleId);
+		sql.append("AND Rec.memberId = ?", memberId);	
+						
+		List<Map<String, Object>> listMap = MysqlUtil.selectRows(sql);
+		List<Recommend> recommends = new ArrayList<>();
+		
+		for(Map<String, Object> map : listMap) {
+			recommends.add(new Recommend(map));
+		}
+		
+		return recommends;
 	}
 
 }

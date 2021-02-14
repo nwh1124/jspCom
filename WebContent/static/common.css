@@ -831,7 +831,7 @@ a {
 }
 
 .article-detail__reply-view__writer-info > li > div{
-  font-size:1.2rem;
+  font-size:1rem;
   margin-top:5px;
 }
 
@@ -853,6 +853,10 @@ a {
 .article-detail__reply-view__reply-bottom > div{
   font-size:0.9rem;
   
+}
+
+.article-detail__reply-view__reply-bottom > div > a{
+	margin-right:10px;
 }
 
 .reReplyBody{

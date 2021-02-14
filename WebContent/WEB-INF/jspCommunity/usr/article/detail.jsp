@@ -136,8 +136,7 @@
 
                                 <li class="">
                                     <span>${reply.getExtra__nickname() }</span>
-                                    <span>${reply.getRegDate() }</span>                                    
-                                    <span>좋아요 : 0</span>
+                                    <span>${reply.getRegDate() }</span>  
 
 
                                     <c:if test="${reply.getMemberId() == loginedMemberId }">
@@ -166,13 +165,37 @@
                                     		<a> </a>
                                     	</c:if>
 	                                    <div>
-	                                      <a href="#">
-	                                        <i class="far fa-thumbs-up"></i>
-	                                      </a>
-	                                      <a href="#">
-	                                        <i class="far fa-thumbs-down"></i>
-	                                      </a>
-                                    	</div>                                   
+	                                    	<c:forEach var="recommend" items="${memberGiveReplyPointBefore }">
+                                    			<c:if test="${ recommend.getRelId() == reply.getId() }">
+							
+							                        <c:if test="${recommend.getPoint() == 1 }">
+			                			              <a href="../recommend/doCancelRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
+				                                        <i class="far fa-thumbs-up" style="background-color:red;"></i>
+				                                      </a>
+							                        </c:if>
+							
+							                        <c:if test="${recommend.getPoint() == 2 }">
+						                              <a href="../recommend/doCancelRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
+				                                        <i class="far fa-thumbs-down" style="background-color:blue;"></i>
+				                                      </a> 
+							                        </c:if>
+							                        
+	                                    		</c:if>
+	                                    	</c:forEach>
+	                                    	
+                                   			<c:if test="${recommend.getPoint() <= 0}">
+				                              <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
+		                                        <i class="far fa-thumbs-up"></i>
+		                                      </a>
+		                                      <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
+		                                        <i class="far fa-thumbs-down"></i>
+		                                      </a>   
+					                        </c:if>
+					                        
+					                                    
+	                                                                     		                                  
+                                   			<span>좋아요 : 0</span>   
+                                    	</div>              
                                   	</div>
                                     	<div>
                                     		<ul class="article-detail__reply-view__reply-bottom__reReplys">
@@ -261,17 +284,17 @@
 
                     <c:if test="${loginedMemberId > 0}">
 
-                        <c:if test="${memberGivePointBefore == -1 }">
-                            <a class="article-detail__recommend btn" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}">Recommend</a>
-                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}">DisRecommend</a>
+                        <c:if test="${memberGiveArticlePointBefore == -1 }">
+                            <a class="article-detail__recommend btn" href="../recommend/doRecommend?relTypeCode=article&relId=${article.getId() }&articleId=${article.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}">Recommend</a>
+                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doRecommend?relTypeCode=article&relId=${article.getId() }&articleId=${article.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}">DisRecommend</a>
                         </c:if>
 
-                        <c:if test="${memberGivePointBefore == 1 }">
-                            <a class="article-detail__recommend btn" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}">Cancel Recommend</a>
+                        <c:if test="${memberGiveArticlePointBefore == 1 }">
+                            <a class="article-detail__recommend btn" href="../recommend/doCancelRecommend?relTypeCode=article&relId=${article.getId() }&articleId=${article.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}">Cancel Recommend</a>
                         </c:if>
 
-                        <c:if test="${memberGivePointBefore == 2 }">
-                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doCancelRecommend?relTypeCode=article&id=${article.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}">Cancel DisRecommend</a>
+                        <c:if test="${memberGiveArticlePointBefore == 2 }">
+                            <a class="article-detail__recommend btn btn-danger" href="../recommend/doCancelRecommend?relTypeCode=article&relId=${article.getId() }&articleId=${article.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}">Cancel DisRecommend</a>
                         </c:if>
 
                     </c:if>

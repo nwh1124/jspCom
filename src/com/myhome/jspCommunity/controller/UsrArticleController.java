@@ -14,6 +14,7 @@ import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dto.Article;
 import com.myhome.jspCommunity.dto.Board;
 import com.myhome.jspCommunity.dto.Member;
+import com.myhome.jspCommunity.dto.Recommend;
 import com.myhome.jspCommunity.dto.Reply;
 import com.myhome.jspCommunity.service.ArticleService;
 import com.myhome.jspCommunity.service.BoardService;
@@ -116,10 +117,12 @@ public class UsrArticleController extends Controller {
 		int id = Util.getAsInt(req.getParameter("id"), 0);
 		int boardId = Util.getAsInt(req.getParameter("boardId"), 0);
 		int articleBoardIdCnt = 0;
-		int memberGivePointBefore = 0;
+		int memberGiveArticlePointBefore = 0;
+		List<Recommend> memberGiveReplyPointBefore = null;
 		
 		if(session.getAttribute("loginedMemberId") != null) {
-			memberGivePointBefore = Container.recommendService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
+			memberGiveArticlePointBefore = Container.recommendService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
+			memberGiveReplyPointBefore = Container.recommendService.isReplyAlraedyRecommend(id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
 		}		
 		
 		List<Reply> reReplys = Container.replyService.getReReplys();
@@ -166,7 +169,10 @@ public class UsrArticleController extends Controller {
 		req.setAttribute("article", article);
 		req.setAttribute("replys", replys);
 		req.setAttribute("reReplys", reReplys);
-		req.setAttribute("memberGivePointBefore", memberGivePointBefore);
+		req.setAttribute("memberGiveArticlePointBefore", memberGiveArticlePointBefore);
+		req.setAttribute("memberGiveReplyPointBefore", memberGiveReplyPointBefore);	
+		
+		System.out.println(memberGiveReplyPointBefore);
 		
 		return "usr/article/detail";
 	}

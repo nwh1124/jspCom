@@ -27,7 +27,14 @@ public class Recommend {
 		this.relTypeCode = (String)map.get("relTypeCode");
 		this.memberId = (int)map.get("memberId");
 		this.relId = (int)map.get("relId");
-		this.point = (int)map.get("point");
+
+		if( map.get("point") == null || map.isEmpty() ) {
+			this.point = -1;			
+		}
+		else {
+			this.point = (int)map.get("point");			
+		}
+			
 
 	}
 

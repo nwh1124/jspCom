@@ -9,16 +9,15 @@ import com.myhome.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 import com.sbs.example.jspCommunity.mysqlutil.SecSql;
 
-public class recommendDao {
+public class RecommendDao {
 
 	public static int isAlraedyRecommend(String relTypeCode, int relId, int memberId) {
 		
 		SecSql sql = new SecSql();
 		
-		sql.append("SELECT point");
-		sql.append("FROM recommend");
-		sql.append("WHERE relTypeCode = ");
-		sql.append("?", relTypeCode);
+		sql.append("SELECT Rec.point");
+		sql.append("FROM recommend AS Rec");
+		sql.append("WHERE relTypeCode = ?", relTypeCode);
 		sql.append("AND relId = ?", relId);
 		sql.append("AND memberId = ?", memberId);
 						
@@ -87,15 +86,27 @@ public class recommendDao {
 		
 		SecSql sql = new SecSql();
 		
-		sql.append("SELECT Rec.*");
-		sql.append("FROM recommend AS Rec");
-		sql.append("LEFT JOIN reply AS R");
-		sql.append("ON Rec.relId = R.id");
-		sql.append("WHERE R.relTypeCode = 'article'");		
-		sql.append("AND R.relid = ?", articleId);
-		sql.append("AND Rec.memberId = ?", memberId);	
+//		sql.append("SELECT R.*, Rec.point");
+//		sql.append("FROM reply AS R");
+//		sql.append("LEFT JOIN recommend AS Rec");
+//		sql.append("ON R.id = Rec.relId");
+//		sql.append("WHERE R.relTypeCode = 'article'");		
+//		sql.append("AND R.relid = ?", articleId);
+//		sql.append("AND R.delDate IS NULL");
+//		sql.append("AND R.memberId = ?", memberId);	
+		
+		sql.append("SELECT R.*");
+		sql.append("FROM recommend as R");
+		sql.append("WHERE 1");		
+		sql.append("AND R.memberId = ?", memberId);	
+		sql.append("AND relTypeCode = 'reply'");
 						
 		List<Map<String, Object>> listMap = MysqlUtil.selectRows(sql);
+		
+		if(listMap.isEmpty()) {
+			return null;
+		}
+		
 		List<Recommend> recommends = new ArrayList<>();
 		
 		for(Map<String, Object> map : listMap) {

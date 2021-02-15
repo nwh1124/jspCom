@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.myhome.jspCommunity.dto.Recommend;
 import com.myhome.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 import com.sbs.example.jspCommunity.mysqlutil.SecSql;

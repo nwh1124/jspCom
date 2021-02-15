@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.myhome.jspCommunity.container.Container;
 import com.myhome.jspCommunity.dao.ReplyDao;
-import com.myhome.jspCommunity.dao.recommendDao;
+import com.myhome.jspCommunity.dao.RecommendDao;
+import com.myhome.jspCommunity.dto.Recommend;
 import com.myhome.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.mysqlutil.MysqlUtil;
 import com.sbs.example.jspCommunity.mysqlutil.SecSql;

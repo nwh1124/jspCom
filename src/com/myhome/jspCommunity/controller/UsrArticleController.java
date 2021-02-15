@@ -119,6 +119,7 @@ public class UsrArticleController extends Controller {
 		int articleBoardIdCnt = 0;
 		int memberGiveArticlePointBefore = 0;
 		List<Recommend> memberGiveReplyPointBefore = null;
+		List<Recommend> replyRecommendsCount;
 		
 		if(session.getAttribute("loginedMemberId") != null) {
 			memberGiveArticlePointBefore = Container.recommendService.isAlraedyRecommend("article", id, Util.getAsInt(session.getAttribute("loginedMemberId"), 0));
@@ -142,6 +143,8 @@ public class UsrArticleController extends Controller {
 				articleBoardIdCnt = i;
 			}
 		};
+		
+		replyRecommendsCount = Container.recommendService.replyRecommendsCount();
 		
 		Article prevArticle = null;
 		int prevArticleIndex = articleBoardIdCnt + 1;
@@ -169,10 +172,12 @@ public class UsrArticleController extends Controller {
 		req.setAttribute("article", article);
 		req.setAttribute("replys", replys);
 		req.setAttribute("reReplys", reReplys);
+		
 		req.setAttribute("memberGiveArticlePointBefore", memberGiveArticlePointBefore);
 		req.setAttribute("memberGiveReplyPointBefore", memberGiveReplyPointBefore);	
+		req.setAttribute("replyRecommendsCount", replyRecommendsCount);
 		
-		System.out.println(memberGiveReplyPointBefore);
+		System.out.println(replyRecommendsCount);
 		
 		return "usr/article/detail";
 	}

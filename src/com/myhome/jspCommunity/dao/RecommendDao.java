@@ -116,5 +116,30 @@ public class RecommendDao {
 		return recommends;
 	}
 
+	public static List<Recommend> replyRecommendsCount() {
+		
+		SecSql sql = new SecSql();
+		
+		sql.append("SELECT Rec.*, CAST(SUM(IF(Rec.`point` = 2, -1, 1 )) AS INT ) AS pointSum");
+		sql.append("FROM recommend AS Rec");
+		sql.append("WHERE 1");
+		sql.append("AND relTypeCode = 'reply'");
+		sql.append("GROUP BY relId");
+		
+		List<Map<String, Object>> listMap = MysqlUtil.selectRows(sql);
+		
+		if(listMap.isEmpty()) {
+			return null;
+		}
+		
+		List<Recommend> recommends = new ArrayList<>();
+		
+		for(Map<String, Object> map : listMap) {
+			recommends.add(new Recommend(map));
+		}
+		
+		return recommends;
+	}
+
 }
 

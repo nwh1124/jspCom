@@ -25,4 +25,8 @@ public class RecommendService {
 		return RecommendDao.isReplyAlraedyRecommend(articleId, memberId);
 	}
 
+	public List<Recommend> replyRecommendsCount() {
+		return RecommendDao.replyRecommendsCount();
+	}
+
 }

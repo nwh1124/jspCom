@@ -2,6 +2,8 @@ package com.myhome.jspCommunity.dto;
 
 import java.util.Map;
 
+import com.myhome.util.Util;
+
 import lombok.Data;
 
 @Data
@@ -14,6 +16,7 @@ public class Recommend {
 	private int memberId;
 	private int relId;
 	private int point;
+	private int pointSum;
 		
 	public Recommend() {
 		
@@ -33,6 +36,13 @@ public class Recommend {
 		}
 		else {
 			this.point = (int)map.get("point");			
+		}
+
+		if( map.get("pointSum") == null || map.isEmpty() ) {
+			this.pointSum = -1;			
+		}
+		else {
+			this.pointSum = (int) map.get("pointSum");			
 		}
 			
 

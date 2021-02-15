@@ -165,40 +165,54 @@
                                     		<a> </a>
                                     	</c:if>
 	                                    <div>
-	                                    	<c:if test="${memberGiveReplyPointBefore == null }">
-                                    			<a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
-			                                        <i class="far fa-thumbs-up"></i>
-			                                      </a>
-			                                      <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
-			                                        <i class="far fa-thumbs-down"></i>
-			                                      </a>
-	                                    	</c:if>
-	                                    	<c:forEach var="recommend" items="${memberGiveReplyPointBefore }">
-	                                    		<c:if test="${recommend.getRelId() == reply.getId() }">
-							                        <c:if test="${recommend.getPoint() == 1 }">
-			                			              <a href="../recommend/doCancelRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
-				                                        <i class="far fa-thumbs-up" style="background-color:red;"></i>
-				                                      </a>
+		                                    	<c:set var="isFindReply" value="1"/>
+		                                    	<c:forEach var="recommend" items="${memberGiveReplyPointBefore }">
+		                                    		<c:if test="${recommend.getRelId() == reply.getId() }">
+								                        <c:if test="${recommend.getPoint() == 1 }">
+				                			              <a href="../recommend/doCancelRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
+					                                        <i class="far fa-thumbs-up" style="background-color:red;"></i>
+					                                      </a>
+					                                      <c:set var="isFindReply" value="2"/>
+								                        </c:if>
+								
+								                        <c:if test="${recommend.getPoint() == 2 }">
+							                              <a href="../recommend/doCancelRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
+					                                        <i class="far fa-thumbs-down" style="background-color:blue;"></i>
+					                                      </a>
+					                                      <c:set var="isFindReply" value="2"/>
+								                        </c:if>
+								                        
+								                        <c:if test="${recommend.getPoint() <= 0 || recommend.getPoint() == null}">
+							                              <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
+					                                        <i class="far fa-thumbs-up"></i>
+					                                      </a>
+					                                      <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
+					                                        <i class="far fa-thumbs-down"></i>
+					                                      </a>   
+					                                      <c:set var="isFindReply" value="2"/>
+								                        </c:if>
 							                        </c:if>
-							
-							                        <c:if test="${recommend.getPoint() == 2 }">
-						                              <a href="../recommend/doCancelRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
-				                                        <i class="far fa-thumbs-down" style="background-color:blue;"></i>
-				                                      </a> 
-							                        </c:if>
-							                        
-							                        <c:if test="${recommend.getPoint() <= 0 || recommend.getPoint() == null}">
-						                              <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
-				                                        <i class="far fa-thumbs-up"></i>
-				                                      </a>
-				                                      <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
-				                                        <i class="far fa-thumbs-down"></i>
-				                                      </a>   
-							                        </c:if>
-						                        </c:if>
-	                                    	</c:forEach>          
-	                                                                     		                                  
-                                   			<span>좋아요 : 0</span>   
+		                                    	</c:forEach> 
+							                        <c:if test="${isFindReply == 1 }">
+							                        	<a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=1&boardId=${param.boardId}&articleId=${article.getId()}">
+					                                        <i class="far fa-thumbs-up"></i>
+					                                      </a>
+					                                      <a href="../recommend/doRecommend?relTypeCode=reply&relId=${reply.getId() }&memberId=${loginedMemberId}&point=2&boardId=${param.boardId}&articleId=${article.getId()}">
+					                                        <i class="far fa-thumbs-down"></i>
+					                                      </a>
+					                                      <c:set var="isFindReply" value="2"/>
+							                        </c:if>       		                                  
+                                   			
+                                   		<c:set var="replyRecommenCountValid" value="true"/>	
+					                	<c:forEach var="replyRecCount" items="${replyRecommendsCount }">
+					                		<c:if test="${replyRecCount.getRelId() == reply.getId() }">
+					                			<span>좋아요 : ${replyRecCount.getPointSum() }</span>		
+					                			<c:set var="replyRecommenCountValid" value="false"/>	
+					                		</c:if>							                	
+					                	</c:forEach>       
+					                	<c:if test="${replyRecommenCountValid == true }">
+                                   			<span>좋아요 : 0</span>
+                                		</c:if>
                                     	</div>              
                                   	</div>
                                     	<div>

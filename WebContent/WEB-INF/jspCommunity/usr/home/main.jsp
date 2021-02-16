@@ -40,7 +40,7 @@
 	          <ul class="index__latest-articles__articles">
               <c:forEach var="article" items="${latestArticles }">
 	            <li>
-	              <a href="../article/detail?id=${article.getId() }">
+	              <a href="../article/detail?id=${article.getId()}&boardId=${article.getBoardId() }">
 	              	<span>
 	                  ${article.getTitle() }
 	                </span>

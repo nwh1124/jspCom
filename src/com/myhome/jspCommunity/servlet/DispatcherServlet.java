@@ -109,16 +109,22 @@ public abstract class DispatcherServlet extends HttpServlet{
 		req.setAttribute("loginedMemberId", loginedMemberId);
 		req.setAttribute("loginedMember", loginedMember);
 		
-		String currentUri = req.getRequestURI();
-		
+		String currentUrl = req.getRequestURI();
+
 		if (req.getQueryString() != null) {
-			currentUri += "?" + req.getQueryString();
+			currentUrl += "?" + req.getQueryString();
 		}
+
+		String encodedCurrentUrl = Util.getUrlEncoded(currentUrl);
+
+		req.setAttribute("currentUrl", currentUrl);
+		req.setAttribute("encodedCurrentUrl", encodedCurrentUrl);
 		
-		String encodedCurrentUri = Util.getUriEncoded(currentUri);
-		
-		req.setAttribute("currentUri", currentUri);
-		req.setAttribute("encodedCurrentUri", encodedCurrentUri);
+		Map<String, Object> param = Util.getParamMap(req);
+		String paramJson = Util.getJsonText(param);
+
+		req.setAttribute("paramMap", param);
+		req.setAttribute("paramJson", paramJson);
 		
 		// 데이터 추가 인터셉터 끝
 		// 로그인 요구 필터링 시작
@@ -139,7 +145,7 @@ public abstract class DispatcherServlet extends HttpServlet{
 			
 			if( (boolean)req.getAttribute("isLogined") == false ) {
 				req.setAttribute("alertMsg", "로그인 후 이용해주세요.");
-				req.setAttribute("replaceUrl", "../member/login?afterLoginUrl=" + encodedCurrentUri);
+				req.setAttribute("replaceUrl", "../member/login?afterLoginUrl=" + encodedCurrentUrl);
 				
 				RequestDispatcher rd = req.getRequestDispatcher("/jspCommunity/common/redirect.jsp");
 				rd.forward(req, resp);

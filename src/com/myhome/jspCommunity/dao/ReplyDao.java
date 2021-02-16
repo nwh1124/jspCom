@@ -11,7 +11,7 @@ import com.sbs.example.jspCommunity.mysqlutil.SecSql;
 
 public class ReplyDao {
 
-	public void doWriteReply(String relTypeCode, int relId, String body, int memberId) {
+	public int doWriteReply(String relTypeCode, int relId, String body, int memberId) {
 		
 		SecSql sql = new SecSql();
 		
@@ -23,11 +23,11 @@ public class ReplyDao {
 		sql.append(", relId = ?", relId);
 		sql.append(", body = ?", body);
 		
-		MysqlUtil.update(sql);
+		return MysqlUtil.insert(sql);
 		
 	}
 
-	public void doModifyReply(int replyId, String relTypeCode, int relId, String body, int memberId) {
+	public int doModifyReply(int replyId, String relTypeCode, int relId, String body, int memberId) {
 		
 		SecSql sql = new SecSql();
 		
@@ -39,7 +39,7 @@ public class ReplyDao {
 		sql.append("AND relId = ?", relId);
 		sql.append("AND id = ?", replyId);
 		
-		MysqlUtil.update(sql);
+		return MysqlUtil.update(sql);
 		
 	}
 

@@ -17,12 +17,12 @@ public class ReplyService {
 		replyDao = Container.replyDao; 
 	}
 
-	public void doWriteReply(String relTypeCode, int relId, String body, int memberId) {
-		replyDao.doWriteReply(relTypeCode, relId, body, memberId);
+	public int doWriteReply(String relTypeCode, int relId, String body, int memberId) {		
+		return replyDao.doWriteReply(relTypeCode, relId, body, memberId);
 	}
 
-	public void doModifyReply(int replyId, String relTypeCode, int relId, String body, int memberId) {
-		replyDao.doModifyReply(replyId, relTypeCode, relId, body, memberId);
+	public int doModifyReply(int replyId, String relTypeCode, int relId, String body, int memberId) {
+		return replyDao.doModifyReply(replyId, relTypeCode, relId, body, memberId);
 	}
 
 	public void doDeleteReply(int replyId, String relTypeCode, int relId, String body, int memberId) {

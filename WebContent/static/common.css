@@ -518,6 +518,15 @@ a {
   border-top:1px solid #dfdfdf;
   flex-grow:1;
 }
+
+.article-detail__reply-view__writer-info  li  div{
+    transition:background-color 1s;
+}
+
+.article-detail__reply-view__writer-info  li  div.focus{
+	background-color:#dfdfdf;
+    transition:background-color 0s;
+}
 /* 게시물 상세 끝 */
 
 

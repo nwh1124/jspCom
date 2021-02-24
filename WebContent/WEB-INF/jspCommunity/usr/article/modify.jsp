@@ -52,7 +52,8 @@
    
 	<form class="con article-modify" action="doModify" method="POST" onsubmit="return doModifyForm__submit(this); return false;">
 	  <input type="hidden" value="${param.id}" name="articleId">
- 		  <input type="hidden" name="body">
+	  <input type="hidden" value="${param.boardId}" name="boardId">
+	  <input type="hidden" name="body">
 	  <input class="member-modify__title" type="text" name="title" size="80" maxlength="80" placeholder="제목을 입력해주세요." value="${param.title}">
 	  <script type="text/x-template"></script>
 	  <div class="toast-ui-editor">${param.body }</div>

@@ -201,14 +201,15 @@ public class UsrArticleController extends Controller {
 	}
 
 	public String doModify(HttpServletRequest req, HttpServletResponse resp) {
-				
+
+		int boardId = Util.getAsInt(req.getParameter("boardId"), 0);
 		int articleId = Util.getAsInt(req.getParameter("articleId"), 0);
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
 		
 		articleService.doModify(articleId, title, body);
 		
-		return msgAndReplace(req, "수정되었습니다.", "detail?id=" + articleId);
+		return msgAndReplace(req, "수정되었습니다.", "detail?id=" + articleId + "&boardId=" + boardId);
 		
 	}
 
